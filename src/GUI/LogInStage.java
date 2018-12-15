@@ -14,10 +14,11 @@ public class LogInStage extends Application{
 	@Override
     public void start(Stage theStage) {
 		try {			
-			Parent root = FXMLLoader.load(getClass().getResource("LogInStage.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/view/LogInStage.fxml"));
 			theStage.setTitle( "RJB" );
 			Scene theScene = new Scene( root, 400, 300);
-			theScene.setFill(new ImagePattern(new Image("RJB.png")));
+			//Image image = new Image("./Resoures/RJB.png");
+			//theScene.setFill(new ImagePattern(image));
 			theStage.setScene( theScene );
 			theStage.show();
         } catch (IOException e) {

@@ -20,8 +20,6 @@ public class DataManager {
 		put("job1", "London");
 	}};
 	
-	public static Job job = null;
-	
 	public static ObservableList<Job> data =  FXCollections.observableArrayList();
 	//public static ObservableList<Item> inItems =  FXCollections.observableArrayList();
 	

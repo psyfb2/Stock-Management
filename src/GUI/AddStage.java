@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 public class AddStage {
 	public AddStage(Stage theStage) {
 		try {			
-			Parent root = FXMLLoader.load(getClass().getResource("AddStage.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/view/AddStage.fxml"));
 			theStage.setTitle( "RJB" );
 			Scene theScene = new Scene( root );
 			theStage.setScene( theScene );
