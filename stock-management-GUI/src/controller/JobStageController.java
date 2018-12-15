@@ -25,7 +25,8 @@ public class JobStageController {
 	@FXML TableColumn<Job, String> itemsCol;
 	
 	
-	@FXML public void initialize() {				
+	@FXML public void initialize() {
+		DataManager.jobTable = jobTable;
 		nameCol.setCellValueFactory(new PropertyValueFactory<Job, String>("name"));
 		locationCol.setCellValueFactory(new PropertyValueFactory<Job, String>("location"));
 		itemsCol.setCellValueFactory(new PropertyValueFactory<Job, String>("items"));
@@ -33,13 +34,12 @@ public class JobStageController {
 		jobTable.setRowFactory(tv->{
 			TableRow<Job> row = new TableRow<Job>();
 			row.setOnMouseClicked(event->{
-				if(event.getClickCount() == 2 && (!row.isEmpty())) {
+				if(event.getClickCount() == 1 && (!row.isEmpty())) {
 					Job job = row.getItem();
+					DataManager.job = job;
 					double xLocation = event.getScreenX();
 					double yLocation = event.getScreenY();
 					new StockStage(new Stage(), xLocation, yLocation);
-					//System.out.println(job.getName());
-					
 				}
 			});
 			return row;

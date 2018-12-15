@@ -25,8 +25,8 @@ public class StockStageController {
 	    stage.close();
 	}
 	
-	@FXML private void closeStage() {
+	/*@FXML private void closeStage() {
 		Stage stage = (Stage)stockOutButton.getScene().getWindow();
 	    stage.close();
-	}
+	}*/
 }
