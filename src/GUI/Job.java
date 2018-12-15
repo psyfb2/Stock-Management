@@ -24,4 +24,8 @@ public class Job {
 	public String getItems() {
 		return items.get();
 	}
+	
+	public void setItems(String items) {
+		this.items.set(items);
+	}
 }

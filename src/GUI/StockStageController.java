@@ -10,7 +10,6 @@ public class StockStageController {
 	@FXML Button stockInButton;
 	@FXML Button stockOutButton;
 	
-	
 	@FXML private void onStockInbuttonClicked() {
 		new StockInStage(new Stage());
 		Stage stage = (Stage)stockInButton.getScene().getWindow();

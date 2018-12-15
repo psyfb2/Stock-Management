@@ -9,15 +9,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class JobStageController {
-
 	@FXML Button showButton;
 	@FXML Button addButton;
 	@FXML TableView<Job> jobTable;
 	@FXML TableColumn<Job, String> nameCol;
 	@FXML TableColumn<Job, String> locationCol;
 	@FXML TableColumn<Job, String> itemsCol;
-	
-	
+		
 	@FXML public void initialize() {				
 		nameCol.setCellValueFactory(new PropertyValueFactory<Job, String>("name"));
 		locationCol.setCellValueFactory(new PropertyValueFactory<Job, String>("location"));
@@ -31,8 +29,8 @@ public class JobStageController {
 					double xLocation = event.getScreenX();
 					double yLocation = event.getScreenY();
 					new StockStage(new Stage(), xLocation, yLocation);
-					//System.out.println(job.getName());
-					
+					DataManager.job = job;
+					System.out.println(job.getItems());					
 				}
 			});
 			return row;
@@ -46,14 +44,6 @@ public class JobStageController {
 	
 	@FXML private void addClicked() {
 		new AddStage(new Stage());
-	}
-	
-	@FXML private void inClicked() {
-		new StockInStage(new Stage());
-	}
-	
-	@FXML private void outClicked() {
-		new StockOutStage(new Stage());
 	}
 	
 	@FXML private void showClicked() {

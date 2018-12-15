@@ -18,14 +18,14 @@ public class StockInStageController {
 	@FXML private TableColumn<Item, String> quantityCol;
 	private int countScanner = 0;
 	private static ObservableList<Item> inItems =  FXCollections.observableArrayList();
-	public StringBuilder items;
+	private static String jobItems;
 	
 	@FXML public void initialize() {				
 		itemCol.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
 		quantityCol.setCellValueFactory(new PropertyValueFactory<Item, String>("quantity"));		
 		inTable.setItems(inItems);		
-		quantityCol.setCellFactory(TextFieldTableCell.forTableColumn());	
-		items = new StringBuilder();
+		quantityCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		jobItems = new String();
 	}
 	
 	@FXML private void scannerClicked() {
@@ -42,13 +42,14 @@ public class StockInStageController {
 			if(DataManager.items.containsKey(item)) {
 				int value = Integer.parseInt(DataManager.items.get(item)) + Integer.parseInt(quantity);
 				DataManager.items.put(item, String.valueOf(value));
-				items.append(items + " * " + String.valueOf(value) + " ");				
+				jobItems = jobItems + item + " * " + String.valueOf(value) + " ";				
 			}else {
 				DataManager.items.put(item, quantity);
-				items.append(items + " * " + String.valueOf(quantity) + " ");
+				jobItems = jobItems + item + " * " + quantity + " ";
 			}
 			
 		}
+		//DataManager.job.setItems(jobItems);
 		Stage stage = (Stage)confirmButton.getScene().getWindow();
 	    stage.close();
 	}	
