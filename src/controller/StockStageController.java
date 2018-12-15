@@ -1,5 +1,7 @@
-package GUI;
+package controller;
 
+import GUI.StockInStage;
+import GUI.StockOutStage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;

@@ -15,9 +15,8 @@ public class StockStage {
 	public StockStage(Stage theStage, double x, double y) {
 		try {	
 			FXMLLoader loader = new FXMLLoader();
-			Parent root = loader.load(getClass().getResource("StockStage.fxml"));
+			Parent root = loader.load(getClass().getResource("/view/StockStage.fxml"));
 			controller = loader.getController();
-			controller.items;
 			theStage.setTitle( "RJB" );
 			Scene theScene = new Scene( root );
 			theStage.setX(x);
@@ -29,5 +28,4 @@ public class StockStage {
 			e.printStackTrace();
 		}
     }
-	
 }

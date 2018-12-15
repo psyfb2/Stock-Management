@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#closeStage" prefHeight="69.0" prefWidth="80.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.StockStageController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#closeStage" prefHeight="69.0" prefWidth="80.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StockStageController">
    <children>
       <Button fx:id="stockInButton" layoutY="-4.0" mnemonicParsing="false" onMouseClicked="#onStockInbuttonClicked" prefHeight="36.0" prefWidth="80.0" text="stock in" />
       <Button fx:id="stockOutButton" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#onStockInbuttonClicked" prefHeight="36.0" prefWidth="80.0" text="stock out" />

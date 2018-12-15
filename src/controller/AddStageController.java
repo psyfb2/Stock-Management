@@ -1,5 +1,7 @@
-package GUI;
+package controller;
 
+import GUI.DataManager;
+import GUI.Job;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;

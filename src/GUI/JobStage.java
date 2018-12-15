@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class JobStage {
 	public JobStage(Stage theStage) {
 		try {			
-			Parent root = FXMLLoader.load(getClass().getResource("JobStage.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/view/JobStage.fxml"));
 			//Dimension   screensize   =   Toolkit.getDefaultToolkit().getScreenSize();
 			//int width = (int)screensize.getWidth();
 			//int height = (int)screensize.getHeight();
