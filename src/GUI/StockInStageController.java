@@ -18,12 +18,14 @@ public class StockInStageController {
 	@FXML private TableColumn<Item, String> quantityCol;
 	private int countScanner = 0;
 	private static ObservableList<Item> inItems =  FXCollections.observableArrayList();
+	public StringBuilder items;
 	
 	@FXML public void initialize() {				
 		itemCol.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
 		quantityCol.setCellValueFactory(new PropertyValueFactory<Item, String>("quantity"));		
 		inTable.setItems(inItems);		
-		quantityCol.setCellFactory(TextFieldTableCell.forTableColumn());		
+		quantityCol.setCellFactory(TextFieldTableCell.forTableColumn());	
+		items = new StringBuilder();
 	}
 	
 	@FXML private void scannerClicked() {
@@ -36,11 +38,14 @@ public class StockInStageController {
 		for(int i = 0; i < countScanner; i++) {
 			String item = itemCol.getCellObservableValue(i).getValue();
 			String quantity = quantityCol.getCellObservableValue(i).getValue();
+			System.out.println(quantity);
 			if(DataManager.items.containsKey(item)) {
 				int value = Integer.parseInt(DataManager.items.get(item)) + Integer.parseInt(quantity);
 				DataManager.items.put(item, String.valueOf(value));
+				items.append(items + " * " + String.valueOf(value) + " ");				
 			}else {
 				DataManager.items.put(item, quantity);
+				items.append(items + " * " + String.valueOf(quantity) + " ");
 			}
 			
 		}

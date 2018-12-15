@@ -7,13 +7,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class DataManager {
-	public static ArrayList<String> names = new ArrayList<>() {{
+	/*public static ArrayList<String> names = new ArrayList<>() {{
 		add("job1");
 		add("job2");
 	}};	
 	public static ArrayList<String> locations = new ArrayList<>() {{
 		add("London");
 		add("Nottingham");
+	}};*/
+	
+	public static HashMap<String, String> jobs = new HashMap<>() {{		
+		put("job1", "London");
 	}};
 	
 	public static ObservableList<Job> data =  FXCollections.observableArrayList();
@@ -24,8 +28,6 @@ public class DataManager {
 	
 	public static HashMap<String, String> items = new HashMap<>() {{
 		put("item1", "10");
-		put("item2", "15");
-		put("item3", "20");
 	}};
 	
 	

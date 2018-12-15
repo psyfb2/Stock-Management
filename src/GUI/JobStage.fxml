@@ -13,14 +13,14 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <TableView fx:id="jobTable" layoutX="39.0" layoutY="65.0" prefHeight="283.0" prefWidth="404.0">
+      <TableView fx:id="jobTable" layoutX="39.0" layoutY="65.0" onMouseClicked="#tableClicked" prefHeight="283.0" prefWidth="404.0">
         <columns>
-          <TableColumn fx:id="nameCol" editable="false" prefWidth="203.0" text="Name" />
-          <TableColumn fx:id="locationCol" editable="false" prefWidth="200.0" text="Location" />
+          <TableColumn fx:id="nameCol" editable="false" prefWidth="123.0" text="Name" />
+          <TableColumn fx:id="locationCol" editable="false" prefWidth="168.0" text="Location" />
+            <TableColumn fx:id="itemsCol" prefWidth="112.0" text="Items" />
         </columns>
       </TableView>
       <Button fx:id="addButton" layoutX="403.0" layoutY="356.0" mnemonicParsing="false" onMouseClicked="#addClicked" text="Add" />
-      <Button fx:id="inButton" layoutX="39.0" layoutY="356.0" mnemonicParsing="false" onMouseClicked="#inClicked" prefHeight="23.0" prefWidth="74.0" text="Stock In" />
-      <Button fx:id="outButton" layoutX="146.0" layoutY="356.0" mnemonicParsing="false" onMouseClicked="#outClicked" prefHeight="23.0" prefWidth="74.0" text="Stock Out" />
+      <Button fx:id="showButton" layoutX="39.0" layoutY="356.0" mnemonicParsing="false" onMouseClicked="#showClicked" prefHeight="23.0" prefWidth="74.0" text="All Items" />
    </children>
 </AnchorPane>

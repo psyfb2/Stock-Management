@@ -5,10 +5,12 @@ import javafx.beans.property.SimpleStringProperty;
 public class Job {
 	private SimpleStringProperty name;
 	private SimpleStringProperty location;
+	private SimpleStringProperty items;
 	
-	public Job(String name, String location) {
+	public Job(String name, String location, String items) {
 		this.name = new SimpleStringProperty(name);
 		this.location = new SimpleStringProperty(location);
+		this.items = new SimpleStringProperty(items);
 	}
 	
 	public String getName() {
@@ -17,5 +19,9 @@ public class Job {
 	
 	public String getLocation() {
 		return location.get();
+	}
+	
+	public String getItems() {
+		return items.get();
 	}
 }

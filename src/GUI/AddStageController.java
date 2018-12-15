@@ -18,9 +18,10 @@ public class AddStageController {
 	}
 	
 	@FXML private void okClicked() {
-		DataManager.names.add(nameField.getText());
-		DataManager.locations.add(locationField.getText());
-		DataManager.data.add(new Job(nameField.getText(), locationField.getText()));
+		String name = nameField.getText();
+		String location = locationField.getText();
+		DataManager.jobs.put(name, location);
+		DataManager.data.add(new Job(name, location, null));
 		Stage stage = (Stage)cancelButton.getScene().getWindow();
 	    stage.close();
 	}

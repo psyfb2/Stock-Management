@@ -19,6 +19,7 @@ public class ShowItemStageController {
 	@FXML public void initialize() {				
 		itemCol.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
 		quantityCol.setCellValueFactory(new PropertyValueFactory<Item, String>("quantity"));
+		allItems.removeAll(allItems);
 		for(String item : DataManager.items.keySet()) {
 			allItems.add(new Item(item, DataManager.items.get(item)));
 		}
