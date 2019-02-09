@@ -1,10 +1,6 @@
 # Compiled class file
 *.class
 
-# IDE specific files
-*.classpath
-*.project
-
 # Log file
 *.log
 
