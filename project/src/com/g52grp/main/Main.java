@@ -5,6 +5,7 @@ import com.g52grp.database.DatabaseConnection;
 public class Main {
 	
 	public static void main(String[] args) {
+		// only create ONE connection for the whole program (take DatabaseConnection object as a parameter for your classes)
 		DatabaseConnection test = new DatabaseConnection();
 		
 		// connection always fails in uni for some reason, must be the damn firewall

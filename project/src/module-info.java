@@ -2,6 +2,6 @@
  * @author psyfb2
  *
  */
-module project {
-	requires java.sql;
-}
+//module project {
+	//requires java.sql;
+//}

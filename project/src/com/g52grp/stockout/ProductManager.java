@@ -5,7 +5,6 @@ import com.g52grp.database.JobProduct;
 
 /**
  * @author psyfb2 - LILLY AND ME IMPLEMENT THESE METHODS IN ONE CLASS
- * REMINDER FOR ME: ALTER JobStockLink table to contain extra field quantityUsed
  */
 public interface ProductManager {
 	/**
