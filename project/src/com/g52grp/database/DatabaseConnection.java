@@ -57,8 +57,6 @@ public class DatabaseConnection {
 		return true;
 	}
 	
-	
-	
 	/**
 	 * Close connection to the mysql server
 	 * @return Whether the connection was closed successfully 
