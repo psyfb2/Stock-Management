@@ -31,10 +31,10 @@ public class DatabaseConnection {
 	
 	/**
 	 * 
-	 * @param sql SQL command to send to the mysql server
+	 * @param sql SQL query to be sent to the database, typically a SQL SELECT statement
 	 * @return ResultSet for the query, null if query was unsuccessful 
 	 */
-	public ResultSet sendSql(String sql) {
+	public ResultSet sendQuery(String sql) {
 		try {
 			Statement s = con.createStatement();
 			return s.executeQuery(sql);
@@ -42,6 +42,22 @@ public class DatabaseConnection {
 			return null;
 		}
 	}
+	
+	/**
+	 * @param sql SQL Data Manipulation Language (DML) statement, such as INSERT, UPDATE or DELETE; or an SQL statement that returns nothing, such as a DDL statement.
+	 * @return whether the sql statement was executed by the database successfully
+	 */
+	public boolean sendUpdate(String sql) {
+		try {
+			Statement s = con.createStatement();
+			s.executeUpdate(sql);
+		} catch(Exception e) {
+			return false;
+		}
+		return true;
+	}
+	
+	
 	
 	/**
 	 * Close connection to the mysql server
@@ -55,4 +71,5 @@ public class DatabaseConnection {
 		}
 		return true;
 	}
+	
 }
