@@ -21,9 +21,16 @@ public interface ProductManager {
 	
 	/**
 	 * Reduce stock amount for each product scanned out by quantityUsed stored within JobProduct object, for the Product table
-	 * And link these products which have been scanned to the job within the JobStockLink table
+	 * And link these products which have been scanned to the job within the JobStockLink tables
 	 * @param productsScannedOut List of products which have been scanned out of the depot
 	 * @return Whether this operation was successful or not (should only fail if the database is somehow unavailable)
 	 */
 	boolean decreaseStocks(JobProduct[] productsScannedOut);
+
+	/*
+	 * Check to see if product being added to a job is in stock in the main database
+	 * @param p
+	 * @return
+	 */
+	/*boolean isProductInDb(Product p);*/
 }
