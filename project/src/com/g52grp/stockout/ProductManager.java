@@ -4,11 +4,10 @@ import com.g52grp.database.Product;
 import com.g52grp.database.JobProduct;
 
 /**
- * @author psyfb2 - LILLY AND ME IMPLEMENT THESE METHODS IN ONE CLASS
+ * @author psyfb2
  */
 public interface ProductManager {
 	/**
-	 * --- LILY IMPLEMENT THIS METHOD ---
 	 * @param jobId jobID within the database of the job to look for
 	 * @return All products and there quantity used for the job
 	 *  which are registered for this job
@@ -16,7 +15,6 @@ public interface ProductManager {
 	JobProduct[] getProductsFromJobId(int jobId);
 	
 	/**
-	 * --- LILY IMPLEMENT THIS METHOD  ---
 	 * @return All products within the database
 	 */
 	Product[] getAllProducts();

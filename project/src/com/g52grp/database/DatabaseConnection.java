@@ -30,31 +30,55 @@ public class DatabaseConnection {
 	}
 	
 	/**
-	 * 
-	 * @param sql SQL query to be sent to the database, typically a SQL SELECT statement
-	 * @return ResultSet for the query, null if query was unsuccessful 
+	 * Only use for static SQL queries (e.g. CREATE, ALTER etc)
+	 * @return Statement object which can used to produce a result set
 	 */
-	public ResultSet sendQuery(String sql) {
+	public Statement getStatement() throws SQLException {
+		return con.createStatement();
+		
+	}
+	
+	/**
+	 * prepared statements are much faster then normal statements and safer (cannot do SQL Injection)
+	 * @param preparedStatement MYSQL statement e.g. insert into Emp values(?,?)
+	 * @return PreparedStatement object, you can call set methods on the preparedStatement to dynamically replace the question marks with values
+	 */
+	public PreparedStatement getPreparedStatement(String preparedStatement) throws SQLException {
+		return con.prepareStatement(preparedStatement);
+	}
+	
+	/**
+	 * Closes Statement s, very important every Statement should be closed after it is used
+	 * @param s Statement to close
+	 * @return Whether this operation was successful
+	 */
+	public boolean closeStatement(Statement s) {
+		if(s == null) {
+			return false;
+		} 
 		try {
-			Statement s = con.createStatement();
-			return s.executeQuery(sql);
-		} catch(Exception e) {
-			return null;
+			s.close();
+			return true;
+		} catch(SQLException e) {
+			return false;
 		}
 	}
 	
 	/**
-	 * @param sql SQL Data Manipulation Language (DML) statement, such as INSERT, UPDATE or DELETE; or an SQL statement that returns nothing, such as a DDL statement.
-	 * @return whether the sql statement was executed by the database successfully
+	 * Closes ResultSet s, very important every ResultSet should be closed after it is used
+	 * @param rs ResultSet to close
+	 * @return whether this operation was successful
 	 */
-	public boolean sendUpdate(String sql) {
-		try {
-			Statement s = con.createStatement();
-			s.executeUpdate(sql);
-		} catch(Exception e) {
+	public boolean closeResultSet(ResultSet rs) {
+		if(rs == null) {
 			return false;
 		}
-		return true;
+		try {
+			rs.getStatement().close();
+			return true;
+		} catch(SQLException e) {
+			return false;
+		}
 	}
 	
 	/**

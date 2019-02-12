@@ -1,6 +1,6 @@
 package com.g52grp.database;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * @author psyfb2
