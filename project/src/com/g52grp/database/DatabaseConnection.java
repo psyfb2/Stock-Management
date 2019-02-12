@@ -30,32 +30,24 @@ public class DatabaseConnection {
 	}
 	
 	/**
-	 * 
 	 * @param sql SQL query to be sent to the database, typically a SQL SELECT statement
 	 * @return ResultSet for the query, null if query was unsuccessful 
+	 * Only use for static SQL queries (e.g. CREATE, ALTER etc)
+	 * @return Statement object which can used to produce a result set
 	 */
-	public ResultSet sendQuery(String sql) {
-		try {
-			Statement s = con.createStatement();
-			return s.executeQuery(sql);
-		} catch(Exception e) {
-			return null;
-		}
+	public Statement getStatement() throws SQLException {
+		return con.createStatement();
 	}
 	
 	/**
-	 * @param sql SQL Data Manipulation Language (DML) statement, such as INSERT, UPDATE or DELETE; or an SQL statement that returns nothing, such as a DDL statement.
-	 * @return whether the sql statement was executed by the database successfully
+	 * prepared statements are much faster then normal statements and safer (cannot do SQL Injection)
+	 * @param preparedStatement MYSQL statement e.g. insert into Emp values(?,?)
+	 * @return PreparedStatement object, you can call set methods on the preparedStatement to dynamically replace the question marks with values
 	 */
-	public boolean sendUpdate(String sql) {
-		try {
-			Statement s = con.createStatement();
-			s.executeUpdate(sql);
-		} catch(Exception e) {
-			return false;
-		}
-		return true;
+	public PreparedStatement getPreparedStatement(String preparedStatement) throws SQLException {
+		return con.prepareStatement(preparedStatement);
 	}
+	
 	
 	/**
 	 * Close connection to the mysql server
@@ -69,4 +61,5 @@ public class DatabaseConnection {
 		}
 		return true;
 	}
+	
 }

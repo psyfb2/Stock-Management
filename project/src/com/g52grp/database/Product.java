@@ -15,7 +15,7 @@ public class Product {
 	private long barCode;
 	
 	public Product(int productId, String productCode, String description, int bayNumber, int rowNumber,
-			double pricePerUnit, int stock, long barCode) {
+			float pricePerUnit, int stock, long barCode) {
 		this.productId = productId;
 		this.productCode = productCode;
 		this.description = description;
