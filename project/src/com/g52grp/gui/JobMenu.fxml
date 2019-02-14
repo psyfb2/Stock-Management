@@ -6,9 +6,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.g52grp.gui.JobMenu"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.gui.JobMenuController">
+   <children>
+      <Button layoutX="270.0" layoutY="223.0" mnemonicParsing="false" onAction="#addNewJob" text="Add New Job" />
+      <TextField fx:id="siteName" layoutX="236.0" layoutY="87.0" />
+      <TextField fx:id="plotNumber" layoutX="236.0" layoutY="166.0" />
+      <Label layoutX="288.0" layoutY="56.0" text="Site Name" />
+      <Label layoutX="281.0" layoutY="135.0" text="Plot Number" />
+   </children>
 </AnchorPane>

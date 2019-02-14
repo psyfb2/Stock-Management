@@ -3,12 +3,20 @@ package com.g52grp.main;
 import com.g52grp.database.*;
 import com.g52grp.stockout.*;
 
-public class Main {
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+	
+	// only create ONE connection for the whole program (take DatabaseConnection object as a parameter for your classes)
+    public static final DatabaseConnection con = new DatabaseConnection();
 	
 	public static void main(String[] args) {
-		// only create ONE connection for the whole program (take DatabaseConnection object as a parameter for your classes)
-		DatabaseConnection test = new DatabaseConnection();
 		
+		DatabaseConnection test = con;
 		// connection always fails in uni for some reason, must be the damn firewall
 		if (test.openConnection()) {
 			ProductManager pm = new ConcreteProductManager(test);
@@ -44,12 +52,29 @@ public class Main {
 			for(Job j : jobs) {
 				System.out.println(j.getJobId() + " " + j.getSiteName());
 			}
+			launch(args);
 			
-			test.closeConnection();
 		} else {
 			System.out.println("Connection Failed");
 		}
 		
+		
+	}
+	
+	@Override
+	public void start(Stage theStage) throws Exception {
+		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("./com/g52grp/gui/JobMenu.fxml"));
+	    theStage.setTitle( "RJB Stocks" );
+	    theStage.setScene(new Scene (root,1225, 720));
+
+	    theStage.show();
+	}
+	
+	@Override
+	public void stop() throws Exception{
+	    System.out.println("Stage is closing");
+	    con.closeConnection();
+	    super.stop();
 	}
 
 }
