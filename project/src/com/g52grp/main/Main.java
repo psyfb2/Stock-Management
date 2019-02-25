@@ -19,7 +19,7 @@ public class Main extends Application {
 		DatabaseConnection test = con;
 		// connection always fails in uni for some reason, must be the damn firewall
 		if (test.openConnection()) {
-			ProductManager pm = new ConcreteProductManager(test);
+			//ProductManager pm = new ConcreteProductManager(test);
 			
 			System.out.println("Successful Connection");
 			/*
@@ -58,13 +58,12 @@ public class Main extends Application {
 			System.out.println("Connection Failed");
 		}
 		
-		
 	}
 	
 	@Override
 	public void start(Stage theStage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("./com/g52grp/gui/JobMenu.fxml"));
-	    theStage.setTitle( "RJB Stocks" );
+		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("./com/g52grp/views/JobMenu.fxml"));
+	    theStage.setTitle( "RJB - Current Jobs" );
 	    theStage.setScene(new Scene (root,1225, 720));
 
 	    theStage.show();
