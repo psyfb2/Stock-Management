@@ -26,11 +26,4 @@ public interface ProductManager {
 	 * @return Whether this operation was successful or not (should only fail if the database is somehow unavailable)
 	 */
 	boolean decreaseStocks(JobProduct[] productsScannedOut);
-
-	/*
-	 * Check to see if product being added to a job is in stock in the main database
-	 * @param p
-	 * @return
-	 */
-	/*boolean isProductInDb(Product p);*/
 }

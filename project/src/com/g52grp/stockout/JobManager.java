@@ -18,7 +18,7 @@ public interface JobManager {
 	boolean addNewJobToDb(String siteName, int plotNumber);
 	
 	/**
-	 * @return A list of all jobs retrieved from the Job table
+	 * @return A list of all jobs retrieved from the Job table, returns null if database cannot be accessed 
 	 */
 	Job[] getAllJobs();
 }
