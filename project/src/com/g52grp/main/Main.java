@@ -57,14 +57,13 @@ public class Main extends Application {
 		} else {
 			System.out.println("Connection Failed");
 		}
-		
 	}
 	
 	@Override
 	public void start(Stage theStage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("./com/g52grp/views/JobMenu.fxml"));
 	    theStage.setTitle( "RJB - Current Jobs" );
-	    theStage.setScene(new Scene (root,1225, 720));
+	    theStage.setScene(new Scene (root, 1280, 720));
 
 	    theStage.show();
 	}
