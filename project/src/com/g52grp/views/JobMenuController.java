@@ -86,6 +86,7 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	 * Fill the table to contains jobs currently stored on the database 
 	 * can call this method from other controllers, for example after updating Jobs table
 	 */
+	@Override
 	public void updateTableView() {
 		ObservableList<Job> jobsList = jobTable.getItems();
 		if(jobsList != null) {
@@ -112,7 +113,14 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 						// row was double clicked, so move to SingleJob.fxml to view this job without creating a new window
 						int jobId = row.getItem().getJobId();
 						try {
-							Parent root = FXMLLoader.load(getClass().getResource(Main.SINGLEJOBPATH_FXML));
+							FXMLLoader loader = new FXMLLoader();
+							loader.setLocation(getClass().getResource(Main.SINGLEJOBPATH_FXML));
+							Parent root = loader.load();
+							
+							// pass jobId to SingleJobController
+							SingleJobController c = loader.<SingleJobController>getController();
+							c.initData(jobId);
+
 					        Scene singleJobView = new Scene( root );
 					        
 					        Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
@@ -120,7 +128,7 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 					        theStage.setScene( singleJobView );
 					        theStage.show();
 						} catch(Exception ex) {
-							
+							ex.printStackTrace();
 						}
 					}
 				});

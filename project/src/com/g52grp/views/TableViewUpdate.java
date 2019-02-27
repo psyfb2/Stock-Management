@@ -7,7 +7,7 @@ package com.g52grp.views;
  */
 public interface TableViewUpdate {
 	/**
-	 * reload the table so it contains whats within the database
+	 * reload the table so it contains what's within the database
 	 */
 	public void updateTableView();
 }
