@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
@@ -30,7 +31,7 @@ import javafx.stage.Stage;
  * 		Add a new job
  * 		
  */
-public class JobMenuController implements Initializable {
+public class JobMenuController implements Initializable, TableUpdate {
 	@FXML Button addNewJob;
 	@FXML TableView<Job> jobTable;
 	@FXML TableColumn<Job, String> siteName;
@@ -42,10 +43,16 @@ public class JobMenuController implements Initializable {
 	 * @throws IOException Failed to load AddNewJob.fxml
 	 */
 	@FXML public void newJobModal(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("./com/g52grp/views/AddNewJob.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("./com/g52grp/views/AddNewJob.fxml"));
+		Parent root = loader.load();
 		Stage stage = new Stage();
         stage.setTitle("Add New Job");
         stage.setScene(new Scene(root, 600, 200));
+        
+        // after the AddNewJob successfully adds a new job, TableView needs to be updated
+        // so pass a reference to TableUpdate method to the controller which it will call
+        AddNewJobController controller = loader.<AddNewJobController>getController();
+        controller.initData(this);
         stage.show();
 	}
 	
@@ -60,14 +67,28 @@ public class JobMenuController implements Initializable {
 			return null;
 		}
 		ObservableList<Job> jobsList = FXCollections.observableArrayList();
-		for(Job j : jobsArr) {
-			jobsList.add(j);
-		}
+		jobsList.addAll(jobsArr);
 		return jobsList;
+	}
+	
+	/**
+	 * Fill the table to contains jobs currently stored on the database 
+	 * can call this method from other controllers, for example after updating Jobs table
+	 */
+	public void updateTable() {
+		ObservableList<Job> jobsList = jobTable.getItems();
+		if(jobsList != null) {
+			jobsList.removeAll();
+		}
+		jobTable.setItems(getJobs());
 	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		return;
+		// populate the tableview to contain all jobs
+		siteName.setCellValueFactory(new PropertyValueFactory<>("siteName"));
+		plotNumber.setCellValueFactory(new PropertyValueFactory<>("plotNumber"));
+		date.setCellValueFactory(new PropertyValueFactory<>("date"));
+		updateTable();
 	}
 }

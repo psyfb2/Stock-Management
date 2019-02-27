@@ -21,6 +21,14 @@ public class AddNewJobController {
 	@FXML TextField plotNumber;
 	@FXML Label errorMessage; // initially empty, lets user know if they have done something wrong (e.g. empty siteName or plotNumber)
 	@FXML Button addJob;
+	TableUpdate tb; // used to update the table after job is added
+	
+	/**
+	 * @param tb
+	 */
+	public void initData(TableUpdate tb) {
+		this.tb = tb;
+	}
 	
 	/**
 	 * Called when addJob button is clicked
@@ -55,5 +63,8 @@ public class AddNewJobController {
 		
 		addJob.setDisable(true);
 		errorMessage.setText("Job added successfully");
+		if(tb != null) {
+			tb.updateTable();
+		}
 	}
 }
