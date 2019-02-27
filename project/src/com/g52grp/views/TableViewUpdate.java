@@ -5,9 +5,9 @@ package com.g52grp.views;
  * Controllers containing a TableView which may need to be updated by other controller 
  * should implement this interface
  */
-public interface TableUpdate {
+public interface TableViewUpdate {
 	/**
 	 * reload the table so it contains whats within the database
 	 */
-	public void updateTable();
+	public void updateTableView();
 }

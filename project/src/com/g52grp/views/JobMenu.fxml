@@ -25,6 +25,7 @@
           <TableColumn fx:id="siteName" prefWidth="124.0" text="Site Name" />
           <TableColumn fx:id="plotNumber" prefWidth="122.0" text="Plot Number" />
             <TableColumn fx:id="date" prefWidth="124.0" text="Date" />
+            <TableColumn fx:id="jobId" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

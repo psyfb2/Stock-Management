@@ -19,9 +19,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * @author psyfb2
@@ -31,12 +33,13 @@ import javafx.stage.Stage;
  * 		Add a new job
  * 		
  */
-public class JobMenuController implements Initializable, TableUpdate {
+public class JobMenuController implements Initializable, TableViewUpdate {
 	@FXML Button addNewJob;
 	@FXML TableView<Job> jobTable;
 	@FXML TableColumn<Job, String> siteName;
 	@FXML TableColumn<Job, Integer> plotNumber;
 	@FXML TableColumn<Job, String> date;
+	@FXML TableColumn<Job, Integer> jobId; // this column is not visible to the user
 	
 	/**
 	 * Called when the addNewJob button is clicked, brings a pop up for the user to add a new job
@@ -75,7 +78,7 @@ public class JobMenuController implements Initializable, TableUpdate {
 	 * Fill the table to contains jobs currently stored on the database 
 	 * can call this method from other controllers, for example after updating Jobs table
 	 */
-	public void updateTable() {
+	public void updateTableView() {
 		ObservableList<Job> jobsList = jobTable.getItems();
 		if(jobsList != null) {
 			jobsList.removeAll();
@@ -85,10 +88,31 @@ public class JobMenuController implements Initializable, TableUpdate {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// populate the tableview to contain all jobs
+		// initialize columns
 		siteName.setCellValueFactory(new PropertyValueFactory<>("siteName"));
 		plotNumber.setCellValueFactory(new PropertyValueFactory<>("plotNumber"));
 		date.setCellValueFactory(new PropertyValueFactory<>("date"));
-		updateTable();
+		jobId.setCellValueFactory(new PropertyValueFactory<>("jobId"));
+		
+		// add double click mouse listener to detect when a row is double clicked
+		jobTable.setRowFactory(new Callback<TableView<Job>, TableRow<Job>>() {
+			@Override
+			public TableRow<Job> call(TableView<Job> param) {
+				TableRow<Job> row = new TableRow<>();
+				row.setOnMouseClicked(e -> {
+					if(e.getClickCount() == 2 && (!row.isEmpty()) ) {
+						// row was double clicked, so move to SingleJob.fxml to view this job
+						int jobId = row.getItem().getJobId();
+						
+					}
+				});
+				return row;
+			}
+		});
+		
+		// populate the table
+		updateTableView();
+
+		
 	}
 }
