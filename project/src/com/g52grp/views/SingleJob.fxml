@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.views.SingleJobController">
+   <children>
+      <TableView fx:id="jobProductTable" layoutX="140.0" layoutY="110.0" prefHeight="500.0" prefWidth="1000.0">
+        <columns>
+          <TableColumn fx:id="productCode" editable="false" prefWidth="222.0" text="Product Code" />
+          <TableColumn fx:id="description" editable="false" minWidth="0.0" prefWidth="436.0" text="Description" />
+            <TableColumn fx:id="price" editable="false" prefWidth="108.0" text="Price " />
+            <TableColumn fx:id="quantityUsed" prefWidth="115.0" text="Quantity Used" />
+            <TableColumn fx:id="stocksRemaining" editable="false" prefWidth="118.0" text="Stocks Remaining" />
+            <TableColumn fx:id="productId" editable="false" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
+        </columns>
+      </TableView>
+      <Label layoutX="140.0" layoutY="637.0" text="Total Price of Job:" />
+      <Label fx:id="totalPrice" layoutX="250.0" layoutY="637.0" prefHeight="17.0" prefWidth="104.0" />
+      <Label fx:id="jobTitle" alignment="CENTER" layoutX="139.0" layoutY="53.0" prefHeight="35.0" prefWidth="1000.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="deleteJob" layoutX="139.0" layoutY="667.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Delete Job" />
+      <Button fx:id="backButton" mnemonicParsing="false" onAction="#back" prefHeight="50.0" prefWidth="100.0" />
+   </children>
 </AnchorPane>
-

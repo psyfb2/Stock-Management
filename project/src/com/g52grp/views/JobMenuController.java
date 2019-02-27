@@ -1,5 +1,6 @@
 package com.g52grp.views;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -34,6 +37,7 @@ import javafx.util.Callback;
  * 		
  */
 public class JobMenuController implements Initializable, TableViewUpdate {
+	private JobManager jm;
 	@FXML Button addNewJob;
 	@FXML TableView<Job> jobTable;
 	@FXML TableColumn<Job, String> siteName;
@@ -41,12 +45,16 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	@FXML TableColumn<Job, String> date;
 	@FXML TableColumn<Job, Integer> jobId; // this column is not visible to the user
 	
+	public JobMenuController() {
+		jm = new ConcreteJobManager(Main.con);
+	}
+	
 	/**
 	 * Called when the addNewJob button is clicked, brings a pop up for the user to add a new job
 	 * @throws IOException Failed to load AddNewJob.fxml
 	 */
 	@FXML public void newJobModal(ActionEvent e) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("./com/g52grp/views/AddNewJob.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(Main.ADDNEWJOBPATH_FXML));
 		Parent root = loader.load();
 		Stage stage = new Stage();
         stage.setTitle("Add New Job");
@@ -56,20 +64,20 @@ public class JobMenuController implements Initializable, TableViewUpdate {
         // so pass a reference to TableUpdate method to the controller which it will call
         AddNewJobController controller = loader.<AddNewJobController>getController();
         controller.initData(this);
+        stage.getIcons().add(new Image(new FileInputStream(Main.LOGOPATH)));
         stage.show();
 	}
 	
 	/**
 	 * Load jobs from the database 
-	 * @return List of Job objects to be added to the tableview, null if could not access database
+	 * @return List of Job objects to be added to the tableview, empty List if could not access database
 	 */
 	public ObservableList<Job> getJobs() {
-		JobManager jm = new ConcreteJobManager(Main.con);
 		Job[] jobsArr = jm.getAllJobs();
-		if(jobsArr == null) {
-			return null;
-		}
 		ObservableList<Job> jobsList = FXCollections.observableArrayList();
+		if(jobsArr == null) {
+			return jobsList;
+		}
 		jobsList.addAll(jobsArr);
 		return jobsList;
 	}
@@ -101,9 +109,19 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 				TableRow<Job> row = new TableRow<>();
 				row.setOnMouseClicked(e -> {
 					if(e.getClickCount() == 2 && (!row.isEmpty()) ) {
-						// row was double clicked, so move to SingleJob.fxml to view this job
+						// row was double clicked, so move to SingleJob.fxml to view this job without creating a new window
 						int jobId = row.getItem().getJobId();
-						
+						try {
+							Parent root = FXMLLoader.load(getClass().getResource(Main.SINGLEJOBPATH_FXML));
+					        Scene singleJobView = new Scene( root );
+					        
+					        Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
+					        
+					        theStage.setScene( singleJobView );
+					        theStage.show();
+						} catch(Exception ex) {
+							
+						}
 					}
 				});
 				return row;
@@ -112,7 +130,5 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 		
 		// populate the table
 		updateTableView();
-
-		
 	}
 }

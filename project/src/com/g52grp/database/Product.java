@@ -10,7 +10,7 @@ public class Product {
 	private String description;
 	private int bayNumber;
 	private int rowNumber;
-	private double pricePerUnit;
+	private float pricePerUnit;
 	private int stock;
 	private long barCode;
 	
@@ -46,7 +46,7 @@ public class Product {
 		return rowNumber;
 	}
 
-	public double getPricePerUnit() {
+	public float getPricePerUnit() {
 		return pricePerUnit;
 	}
 

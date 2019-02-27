@@ -34,8 +34,4 @@ public class Job {
 	public String getDate() {
 		return date.toString();
 	}
-	
-	public Date getDateObject() {
-		return date;
-	}
 }
