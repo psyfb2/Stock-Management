@@ -111,15 +111,14 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 				row.setOnMouseClicked(e -> {
 					if(e.getClickCount() == 2 && (!row.isEmpty()) ) {
 						// row was double clicked, so move to SingleJob.fxml to view this job without creating a new window
-						int jobId = row.getItem().getJobId();
 						try {
-							FXMLLoader loader = new FXMLLoader();
-							loader.setLocation(getClass().getResource(Main.SINGLEJOBPATH_FXML));
+							FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(Main.SINGLEJOBPATH_FXML));
 							Parent root = loader.load();
 							
 							// pass jobId to SingleJobController
 							SingleJobController c = loader.<SingleJobController>getController();
-							c.initData(jobId);
+							Job selectedJob = row.getItem();
+							c.initData(selectedJob.getJobId(), "" + selectedJob.getSiteName() + " " + selectedJob.getPlotNumber());
 
 					        Scene singleJobView = new Scene( root );
 					        

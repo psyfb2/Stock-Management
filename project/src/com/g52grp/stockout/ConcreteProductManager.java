@@ -69,11 +69,18 @@ public class ConcreteProductManager implements ProductManager {
 			// reduce stock by quantity used for each product
 			PreparedStatement ps;
 			try {
-				ps = con.getPreparedStatement("UPDATE Stocks SET stock = stock - ? WHERE productID = ?");
-				ps.setInt(1, quantityUsed);
-				ps.setInt(2, productID);
+				// if there exists previous quantity used then 
+				// stock = stock - (new quantity used - old quantity used) 
+				// else stock = stock - new quantity used
+				ps = con.getPreparedStatement("UPDATE Stocks SET stock = CASE WHEN EXISTS(SELECT * FROM JobStockLink WHERE productID = ? and jobID = ?) THEN stock - (? - (SELECT quantityUsed FROM JobStockLink WHERE productID = ? AND jobID = ?)) ELSE stock - ? END WHERE productID = ?");
+				ps.setInt(1, productID);
+				ps.setInt(2, jobID);
+				ps.setInt(3, quantityUsed);
+				ps.setInt(4, productID);
+				ps.setInt(5, jobID);
+				ps.setInt(6, quantityUsed);
+				ps.setInt(7, productID);
 				ps.executeUpdate();
-				
 				ps.close();
 				
 				// update JobStockLink table to connect products scanned out to jobs
@@ -89,5 +96,11 @@ public class ConcreteProductManager implements ProductManager {
 			}
 		}
 		return true;
+	}
+	
+	@Override
+	public boolean decreaseStocks(JobProduct productScannedOut) {
+		JobProduct[] singleElementArr = {productScannedOut};
+		return decreaseStocks(singleElementArr);
 	}
 }

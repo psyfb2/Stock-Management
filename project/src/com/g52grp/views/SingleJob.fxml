@@ -14,9 +14,10 @@
           <TableColumn fx:id="productCode" editable="false" prefWidth="222.0" text="Product Code" />
           <TableColumn fx:id="description" editable="false" minWidth="0.0" prefWidth="436.0" text="Description" />
             <TableColumn fx:id="price" editable="false" prefWidth="108.0" text="Price " />
-            <TableColumn fx:id="quantityUsed" prefWidth="115.0" text="Quantity Used" />
-            <TableColumn fx:id="stocksRemaining" editable="false" prefWidth="118.0" text="Stocks Remaining" />
+            <TableColumn fx:id="quantityUsed" onEditCommit="#changeQuantityUsedCellEvent" prefWidth="115.0" text="Quantity Used" />
+            <TableColumn fx:id="stocksRemaining" prefWidth="118.0" text="Stocks Remaining" />
             <TableColumn fx:id="productId" editable="false" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
+            <TableColumn fx:id="barcode" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
         </columns>
       </TableView>
       <Label layoutX="140.0" layoutY="637.0" text="Total Price of Job:" />
@@ -28,5 +29,6 @@
       </Label>
       <Button fx:id="deleteJob" layoutX="139.0" layoutY="667.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Delete Job" />
       <Button fx:id="backButton" mnemonicParsing="false" onAction="#back" prefHeight="50.0" prefWidth="100.0" />
+      <Label fx:id="errorMessage" layoutX="526.0" layoutY="637.0" prefHeight="17.0" prefWidth="750.0" />
    </children>
 </AnchorPane>

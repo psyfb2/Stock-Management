@@ -1,5 +1,6 @@
 package com.g52grp.views;
 
+import java.io.FileInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -9,9 +10,6 @@ import com.g52grp.main.Main;
 import com.g52grp.stockout.ConcreteProductManager;
 import com.g52grp.stockout.ProductManager;
 
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,8 +22,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -47,11 +47,13 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	@FXML TableColumn<DisplayableJobProduct, String> productCode;
 	@FXML TableColumn<DisplayableJobProduct, String> description;
 	@FXML TableColumn<DisplayableJobProduct, Float> price;
-	@FXML TableColumn<DisplayableJobProduct, Integer> quantityUsed;
+	@FXML TableColumn<DisplayableJobProduct, String> quantityUsed; // String because needs to be editable
 	@FXML TableColumn<DisplayableJobProduct, Integer> stocksRemaining;
 	@FXML TableColumn<DisplayableJobProduct, Integer> productId; // hidden from the user
+	@FXML TableColumn<DisplayableJobProduct, Long> barcode; // hidden from the user
 	@FXML Button deleteJob;
 	@FXML Button backButton;
+	@FXML Label errorMessage;
 	
 	/**
 	 * Called when the back button is clicked (to go back to the Job Menu)
@@ -60,7 +62,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	@FXML public void back(ActionEvent e) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource(Main.JOBMENUPATH_FXML));
+			loader.setLocation(getClass().getClassLoader().getResource(Main.JOBMENUPATH_FXML));
 			Parent root = loader.load();
 			
 	        Scene jobMenuView = new Scene( root );
@@ -70,7 +72,59 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	        theStage.setScene( jobMenuView );
 	        theStage.show();
 		} catch(Exception ex) {
+			errorMessage.setText("Failed to load " + Main.JOBMENUPATH_FXML);
+		}
+	}
+	
+	/**
+	 * Called when the user attempts to change the quantity used for a product within the TableView (no other column is editable) 
+	 * @param e
+	 */
+	@FXML public void changeQuantityUsedCellEvent(@SuppressWarnings("rawtypes") CellEditEvent edittedCell) {
+		errorMessage.setText("");
+		DisplayableJobProduct jobProductSelected = jobProductTable.getSelectionModel().getSelectedItem();
+		int newQuantityUsed;
+		int oldQuantityUsed;
+		try {
+			newQuantityUsed = Integer.parseInt(edittedCell.getNewValue().toString());
+			oldQuantityUsed = Integer.parseInt(jobProductSelected.getQuantity());
+		} catch(NumberFormatException e) {
+			errorMessage.setText("Only enter numerical values for quantity");
+			jobProductTable.refresh();
+			return;
+		}
+		
+		if(newQuantityUsed < 1) {
+			errorMessage.setText("Products must have a minimum quantity used of 1");
+			jobProductTable.refresh();
+			return;
+		}
+		if(newQuantityUsed == oldQuantityUsed ) {
+			return;
+		}
+		
+		// need to confirm that there is enough stocks
+		int stockReduction = newQuantityUsed - oldQuantityUsed;
+		if( stockReduction <= jobProductSelected.getStocksRemaining() ) {
+			// convert displayable job product to normal job product, also pass stockReduction to decreaseStocks()
+			// because this is the number we would like to decrease the stocks by
+			JobProduct jobProduct = new JobProduct(jobId, new Product(jobProductSelected.getProductId(), 
+					jobProductSelected.getProductCode(), jobProductSelected.getDescription(),
+					0, 0, jobProductSelected.getPrice(), jobProductSelected.getStocksRemaining(), 
+					jobProductSelected.getBarcode()), newQuantityUsed);
+			if(!pm.decreaseStocks(jobProduct)) {
+				errorMessage.setText("Failed to modify quantity: error accessing database");
+				jobProductTable.refresh();
+				return;
+			}
 			
+			// update table so it matches the database, could call updateTableView() but this is costly
+			jobProductSelected.setQuantity(Integer.toString(newQuantityUsed));
+			jobProductSelected.setStocksRemaining(jobProductSelected.getStocksRemaining() - stockReduction);
+			jobProductTable.refresh();
+		} else {
+			errorMessage.setText("You cannot change the quantity used from " + jobProductSelected.getQuantity() + " to " + newQuantityUsed + " because you do not have enough stocks");
+			jobProductTable.refresh();
 		}
 	}
 	
@@ -83,10 +137,11 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	 * Call this from other controllers to pass information to this controller when switching scenes
 	 * @param jobId jobID within the mysql database of the job to view
 	 */
-	public void initData(int jobId) {
+	public void initData(int jobId, String jobTitle) {
 		this.jobId = jobId;
+		this.jobTitle.setText(jobTitle);
+		updateTableView();
 	}
-	
 	
 	/**
 	 * Loads products associated with the jobId given in the initData() method
@@ -94,16 +149,20 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	 */
 	public ObservableList<DisplayableJobProduct> getJobProducts() {
 		ObservableList<DisplayableJobProduct> productsForThisJobList = FXCollections.observableArrayList();
-		
 		if(jobId == -1) {
+			errorMessage.setText("Failed to load associated products: jobID was not passed to this controller");
 			return productsForThisJobList;
 		}
 		
 		JobProduct[] productsForThisJobArr = pm.getProductsFromJobId(jobId);
+		if(productsForThisJobArr == null) {
+			errorMessage.setText("Failed to load associated products: error accessing database");
+			return productsForThisJobList;
+		}
 		for(JobProduct jp : productsForThisJobArr) {
 			Product p = jp.getProduct();
 			productsForThisJobList.add(new DisplayableJobProduct(p.getProductId(),
-					p.getProductCode(), p.getDescription(), p.getPricePerUnit(), jp.getQuantityUsed(), p.getStock()) );
+					p.getProductCode(), p.getDescription(), p.getPricePerUnit(), Integer.toString(jp.getQuantityUsed()), p.getStock(), p.getBarCode()) );
 		}
 		
 		return productsForThisJobList;
@@ -112,16 +171,21 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	@Override
 	public void updateTableView() {
 		ObservableList<DisplayableJobProduct> productsForThisJob = jobProductTable.getItems();
-		if(productsForThisJob != null) {
-			productsForThisJob.removeAll();
-		}
+		productsForThisJob.removeAll();
 		jobProductTable.setItems(getJobProducts());
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// add back icon to back button
-		backButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(Main.BACKIMAGEPATH))));
+		try {
+			ImageView buttonIcon = new ImageView(new Image(new FileInputStream(Main.BACKIMAGEPATH)));
+			buttonIcon.setFitWidth(100);
+			buttonIcon.setFitHeight(50);
+			backButton.setGraphic(buttonIcon);
+		} catch(Exception e) {
+			errorMessage.setText("Failed to load " + Main.BACKIMAGEPATH);
+		}
 		
 		// initiliaze TableView columns
 		productId.setCellValueFactory(new PropertyValueFactory<>("productId"));
@@ -130,79 +194,14 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		price.setCellValueFactory(new PropertyValueFactory<>("price"));
 		quantityUsed.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 		stocksRemaining.setCellValueFactory(new PropertyValueFactory<>("stocksRemaining"));
+		barcode.setCellValueFactory(new PropertyValueFactory<>("barcode"));
+
 		
-		// populate table
-		updateTableView();
-	}
-	
-	// JobProduct contains a product object (which cannot be displayed within the TableView)
-	// so displayableJobProduct is a flat version which only contains Strings, Integer etc
-	// also here we use SimpleStringProperty, SimpleIntegerProperty etc to allow columns to be editable
-	class DisplayableJobProduct {
-		private SimpleIntegerProperty productId;
-		private SimpleStringProperty productCode;
-		private SimpleStringProperty description;
-		private SimpleFloatProperty price;
-		private SimpleIntegerProperty quantity;
-		private SimpleIntegerProperty stocksRemaining;
+		// make the quantity column editable
+		jobProductTable.setEditable(true);
+		quantityUsed.setCellFactory(TextFieldTableCell.forTableColumn());
 		
-		public DisplayableJobProduct(int productId, String productCode,
-				String description, float price, int quantity,
-				int stocksRemaining) {
-			this.productId = new SimpleIntegerProperty(productId);
-			this.productCode = new SimpleStringProperty(productCode);
-			this.description = new SimpleStringProperty(description);
-			this.price = new SimpleFloatProperty(price);
-			this.quantity = new SimpleIntegerProperty(quantity);
-			this.stocksRemaining = new SimpleIntegerProperty(stocksRemaining);
-		}
-
-		public int getProductId() {
-			return productId.get();
-		}
-
-		public void setProductId(int productId) {
-			this.productId = new SimpleIntegerProperty(productId);
-		}
-
-		public String getProductCode() {
-			return productCode.get();
-		}
-
-		public void setProductCode(String productCode) {
-			this.productCode = new SimpleStringProperty(productCode);
-		}
-
-		public String getDescription() {
-			return description.get();
-		}
-
-		public void setDescription(String description) {
-			this.description = new SimpleStringProperty(description);
-		}
-
-		public float getPrice() {
-			return price.get();
-		}
-
-		public void setPrice(float price) {
-			this.price = new SimpleFloatProperty(price);
-		}
-
-		public int getQuantity() {
-			return quantity.get();
-		}
-
-		public void setQuantity(int quantity) {
-			this.quantity = new SimpleIntegerProperty(quantity);
-		}
-
-		public int getStocksRemaining() {
-			return stocksRemaining.get();
-		}
-
-		public void setStocksRemaining(int stocksRemaining) {
-			this.stocksRemaining = new SimpleIntegerProperty(stocksRemaining);
-		}
+		// population of the table initially is done in initData()
+		// reason for this is initialize (this method) is called before jobId can be passed to this class using initData() 
 	}
 }
