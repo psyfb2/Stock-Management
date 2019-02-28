@@ -27,8 +27,7 @@ public class ConcreteProductManager implements ProductManager {
 			ps.setInt(1, jobId);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				Product p = new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), rs.getInt("bayNumber"), 
-						rs.getInt("rowNumber"), rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getLong("barCode"));
+				Product p = getProduct(rs);
 				jobProducts.add(new JobProduct(jobId, p, rs.getInt("quantityUsed")));
 			}
 			ps.close();
@@ -47,9 +46,7 @@ public class ConcreteProductManager implements ProductManager {
 			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Stocks");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				products.add(
-						new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), rs.getInt("bayNumber"), 
-								rs.getInt("rowNumber"), rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getLong("barCode")));
+				products.add(getProduct(rs));
 			}
 			ps.close();
 			Product[] productsArr = new Product[products.size()];
@@ -58,6 +55,16 @@ public class ConcreteProductManager implements ProductManager {
 		} catch(SQLException e) {
 			return null;
 		}
+	}
+	
+	@Override
+	public Product[] searchProductsByProductcode(String productcode) {
+		return searchProducts("productCode", productcode);
+	}
+
+	@Override
+	public Product[] searchProductsByDescription(String description) {
+		return searchProducts("description", description);
 	}
 
 	@Override
@@ -102,5 +109,29 @@ public class ConcreteProductManager implements ProductManager {
 	public boolean decreaseStocks(JobProduct productScannedOut) {
 		JobProduct[] singleElementArr = {productScannedOut};
 		return decreaseStocks(singleElementArr);
+	}
+	
+	private Product[] searchProducts(String columnName, String val) {
+		ArrayList<Product> products = new ArrayList<Product>();
+		try {
+			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Stocks WHERE UPPER(?) LIKE UPPER('%?%')'");
+			ps.setString(1, columnName);
+			ps.setString(1, val);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				products.add(getProduct(rs));
+			}
+			ps.close();
+			Product[] productsArr = new Product[products.size()];
+			productsArr = products.toArray(productsArr);
+			return productsArr;
+		} catch(SQLException e) {
+			return null;
+		}
+	}
+	
+	private Product getProduct(ResultSet rs) throws SQLException {
+		return new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), rs.getInt("bayNumber"), 
+				rs.getInt("rowNumber"), rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getLong("barCode"));
 	}
 }

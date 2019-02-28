@@ -20,6 +20,20 @@ public interface ProductManager {
 	Product[] getAllProducts();
 	
 	/**
+	 * Searches the database to find products which contain the given product code (it's possible for multiple products to have the same product code)
+	 * @param productcode Product code to search for
+	 * @return Array of Product objects, null if the database could not be accessed 
+	 */
+	Product[] searchProductsByProductcode(String productcode);
+	
+	/**
+	 * Searches the database to find products which contain the given description (it's possible for multiple products to have the same description)
+	 * @param description Description to search for
+	 * @return Array of Product objects, null if the database could not be accessed 
+	 */
+	Product[] searchProductsByDescription(String description);
+		
+	/**
 	 * Reduce stock amount for each product scanned out by quantityUsed stored within JobProduct object, for the Product table
 	 * And link these products which have been scanned to the job within the JobStockLink tables (if they are not already linked)
 	 * NOTE: just pass the quantityUsed within JobProduct, this method will automatically account for the difference 
