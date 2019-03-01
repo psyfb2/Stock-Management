@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="76.0" prefWidth="92.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StockStageController">
+   <children>
+      <Button fx:id="stockInButton" disable="true" layoutX="1.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#onStockInbuttonClicked" onMouseEntered="#onStockInButtonEntered" onMouseExited="#onStockInButtonExited" prefHeight="36.0" prefWidth="90.0" style="-fx-background-color: #ffffff; -fx-border-color: #1a2b3c; -fx-border-width: 0.2;" text="stock in">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="stockOutButton" layoutX="1.0" mnemonicParsing="false" onMouseClicked="#onStockOutbuttonClicked" onMouseEntered="#onStockOutButtonEntered" onMouseExited="#onStockOutButtonExited" prefHeight="36.0" prefWidth="90.0" style="-fx-background-color: #ffffff; -fx-border-color: #1a2b3c; -fx-border-width: 0.2;" text="stock out">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
