@@ -61,6 +61,6 @@ public class Product {
 	@Override
 	public String toString() {
 		// toString required for auto complete search for a product
-		return getDescription();
+		return getProductCode() + " " + getDescription();
 	}
 }

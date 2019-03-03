@@ -1,17 +1,22 @@
 package com.g52grp.views;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import org.controlsfx.control.textfield.TextFields;
 
 import com.g52grp.database.JobProduct;
 import com.g52grp.database.Product;
 import com.g52grp.main.Main;
+import com.g52grp.stockout.ConcreteJobManager;
 import com.g52grp.stockout.ConcreteProductManager;
+import com.g52grp.stockout.JobManager;
 import com.g52grp.stockout.ProductManager;
 
 import javafx.collections.FXCollections;
@@ -24,11 +29,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
@@ -47,6 +55,7 @@ import javafx.stage.Stage;
 public class SingleJobController implements Initializable, TableViewUpdate {
 	private int jobId;
 	private ProductManager pm;
+	private JobManager jm;
 	@FXML Label jobTitle;
 	@FXML Label totalPrice;
 	@FXML TableView<DisplayableJobProduct> jobProductTable;
@@ -57,7 +66,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	@FXML TableColumn<DisplayableJobProduct, Integer> stocksRemaining;
 	@FXML TableColumn<DisplayableJobProduct, Integer> productId; // hidden from the user
 	@FXML TableColumn<DisplayableJobProduct, Long> barcode; // hidden from the user
-	@FXML Button deleteJob;
+	@FXML Button deleteJobButton;
 	@FXML Button backButton;
 	@FXML Label errorMessage;
 	@FXML TextField searchProductToAdd;
@@ -84,12 +93,67 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	}
 	
 	/**
+	 * Called when the delete job button is clicked, A delete job modal will be loaded to confirm this with the user
+	 * @param e
+	 */
+	@FXML public void deleteJob(ActionEvent e) {
+		Alert confirmation = new Alert(AlertType.CONFIRMATION);
+		confirmation.setTitle("Delete Job?");
+		confirmation.setHeaderText(null);
+		confirmation.setContentText("Are you sure you want to permenantly delete this job?");
+		// add the RJB logo to the dialog box
+		Stage stage = (Stage) confirmation.getDialogPane().getScene().getWindow();
+		try {
+			stage.getIcons().add(new Image(new FileInputStream(Main.LOGOPATH)));
+		} catch (FileNotFoundException ex) {
+		}
+		Optional <ButtonType> okButton = confirmation.showAndWait();
+		
+		if(okButton.get() == ButtonType.OK) {
+			// ok button was clicked, delete this job from the database
+			jm.deleteJob(jobId);
+			back(e);
+		}
+	}
+	
+	/**
 	 * Called when the user hits enter on the searchproductToAdd text field
-	 * This will add the product to the job
+	 * This will add the product to the job if the product is not already within the job
 	 * @param e
 	 */
 	@FXML public void addProductToJobManual(ActionEvent e) {
+		// get the product code and description (separated by a space) from the user input
+		// Note that although the productCode and description are not part of the PRIMARY KEY
+		// they are marked as unique together, so no two rows can have the same product code and description
+		errorMessage.setText("");
+		if(jobId == -1) {
+			return;
+		}
+		String input = searchProductToAdd.getText();
+		String productcode;
+		String description;
+		try {
+			int splitter = input.indexOf(' ');
+			productcode = input.substring(0, splitter);
+			description = input.substring(splitter + 1, input.length());
+		} catch(IndexOutOfBoundsException ex) {
+			errorMessage.setText("'" + input + "' was not found. Please enter the exact product code and description");
+			return;
+		}
+		Product matchedProduct = pm.getProductFromProductcodeAndDescription(productcode, description);
+		if(matchedProduct == null) {
+			errorMessage.setText("'" + input + "' was not found. Please enter the exact product code and description");
+			return;
+		}
 		
+		// add this product to the job with quantity used 1
+		// if the product already exists for the job then do nothing
+		if(!pm.addProductToJob(jobId, matchedProduct.getProductId())) {
+			errorMessage.setText("Failed to add product: '" + input + "' has 0 stock remaining");
+		} else {
+			updateTableView();
+			searchProductToAdd.setText("");
+		}
 	}
 	
 	/**
@@ -127,7 +191,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			JobProduct jobProduct = new JobProduct(jobId, new Product(jobProductSelected.getProductId(), 
 					jobProductSelected.getProductCode(), jobProductSelected.getDescription(),
 					0, 0, jobProductSelected.getPrice(), jobProductSelected.getStocksRemaining(), 
-					jobProductSelected.getBarcode()), newQuantityUsed);
+					jobProductSelected.getBarcode()), stockReduction);
 			if(!pm.decreaseStocks(jobProduct)) {
 				errorMessage.setText("Failed to modify quantity: error accessing database");
 				jobProductTable.refresh();
@@ -147,6 +211,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	public SingleJobController() {
 		jobId = -1;
 		pm = new ConcreteProductManager(Main.con);
+		jm = new ConcreteJobManager(Main.con);
 	}
 	
 	/**
@@ -196,20 +261,36 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		// add back icon to back button
 		try {
 			ImageView buttonIcon = new ImageView(new Image(new FileInputStream(Main.BACKIMAGEPATH)));
-			buttonIcon.setFitWidth(100);
+			buttonIcon.setFitWidth(50);
 			buttonIcon.setFitHeight(50);
+			buttonIcon.setPreserveRatio(true);
 			backButton.setGraphic(buttonIcon);
 		} catch(Exception e) {
-			errorMessage.setText("Failed to load " + Main.BACKIMAGEPATH);
+			errorMessage.setText("Failed to load: " + Main.BACKIMAGEPATH);
+		}
+		
+		// add delete icon to delete button
+		try {
+			ImageView buttonIcon = new ImageView(new Image(new FileInputStream(Main.DELETEIMAGEPATH)));
+			buttonIcon.setFitWidth(35);
+			buttonIcon.setFitHeight(35);
+			buttonIcon.setPreserveRatio(true);
+			deleteJobButton.setGraphic(buttonIcon);
+		} catch (Exception e) {
+			errorMessage.setText("Failed to load: " + Main.DELETEIMAGEPATH);
 		}
 		
 		// auto complete text field
+		ArrayList<Product> allProducts = pm.getAllProductsArrayList();
+		
 		TextFields.bindAutoCompletion(searchProductToAdd, input -> {
-			if(input.getUserText().isEmpty()) {
+			if(input.getUserText().isEmpty() || allProducts == null) {
 				return Collections.emptyList();
 			}
-			Product[] matchedProducts = pm.searchProductsByDescriptionAndProductcode(input.getUserText(), input.getUserText());
-			return Arrays.asList(matchedProducts);
+			// search allProducts for a match with the input and return this list
+			return allProducts.stream().filter(i -> {
+				return i.toString().toLowerCase().contains(input.getUserText().toLowerCase());
+			}).collect(Collectors.toList());
 		});
 		
 		// initiliaze TableView columns
@@ -221,7 +302,6 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		stocksRemaining.setCellValueFactory(new PropertyValueFactory<>("stocksRemaining"));
 		barcode.setCellValueFactory(new PropertyValueFactory<>("barcode"));
 
-		
 		// make the quantity column editable
 		jobProductTable.setEditable(true);
 		quantityUsed.setCellFactory(TextFieldTableCell.forTableColumn());

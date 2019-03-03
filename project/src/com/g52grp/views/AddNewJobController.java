@@ -56,8 +56,7 @@ public class AddNewJobController {
 		
 		JobManager jm = new ConcreteJobManager(Main.con);
 		if(!jm.addNewJobToDb(sn, pnInt)) {
-			errorMessage.setText("Error connecting to the database!");
-			addJob.setDisable(true);
+			errorMessage.setText("The Job '" + sn + " " + pn + "' already exists!");
 			return;
 		}
 		

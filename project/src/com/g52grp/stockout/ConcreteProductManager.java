@@ -23,7 +23,7 @@ public class ConcreteProductManager implements ProductManager {
 	public JobProduct[] getProductsFromJobId(int jobId) {
 		ArrayList<JobProduct> jobProducts = new ArrayList<JobProduct>();
 		try {
-			PreparedStatement ps = con.getPreparedStatement("select * FROM JobStockLink, Stocks WHERE JobStockLink.productID = Stocks.productID AND JobStockLink.jobID = ?");
+			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM JobStockLink, Stocks WHERE JobStockLink.productID = Stocks.productID AND JobStockLink.jobID = ?");
 			ps.setInt(1, jobId);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
@@ -38,9 +38,29 @@ public class ConcreteProductManager implements ProductManager {
 			return null;
 		}
 	}
-
+	
 	@Override
-	public Product[] getAllProducts() {
+	public Product getProductFromProductcodeAndDescription(String productcode, String description) {
+		try {
+			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Stocks WHERE productCode = ? AND description = ?");
+			ps.setString(1, productcode);
+			ps.setString(2, description);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				Product p = getProduct(rs);
+				ps.close();
+				return p;
+			} else {
+				ps.close();
+				return null; // product was not found
+			}
+		} catch(SQLException e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public ArrayList<Product> getAllProductsArrayList() {
 		ArrayList<Product> products = new ArrayList<Product>();
 		try {
 			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Stocks");
@@ -49,12 +69,18 @@ public class ConcreteProductManager implements ProductManager {
 				products.add(getProduct(rs));
 			}
 			ps.close();
-			Product[] productsArr = new Product[products.size()];
-			productsArr = products.toArray(productsArr);
-			return productsArr;
+			return products;
 		} catch(SQLException e) {
 			return null;
 		}
+	}
+
+	@Override
+	public Product[] getAllProducts() {
+		ArrayList<Product> products = getAllProductsArrayList();
+		Product[] productsArr = new Product[products.size()];
+		productsArr = products.toArray(productsArr);
+		return productsArr;
 	}
 	
 	@Override
@@ -85,25 +111,17 @@ public class ConcreteProductManager implements ProductManager {
 			int productID = productScannedOut.getProduct().getProductId();
 			int quantityUsed = productScannedOut.getQuantityUsed();
 			int jobID = productScannedOut.getJobId();
-			// reduce stock by quantity used for each product
 			PreparedStatement ps;
 			try {
-				// if there exists previous quantity used then 
-				// stock = stock - (new quantity used - old quantity used) 
-				// else stock = stock - new quantity used
-				ps = con.getPreparedStatement("UPDATE Stocks SET stock = CASE WHEN EXISTS(SELECT * FROM JobStockLink WHERE productID = ? and jobID = ?) THEN stock - (? - (SELECT quantityUsed FROM JobStockLink WHERE productID = ? AND jobID = ?)) ELSE stock - ? END WHERE productID = ?");
-				ps.setInt(1, productID);
-				ps.setInt(2, jobID);
-				ps.setInt(3, quantityUsed);
-				ps.setInt(4, productID);
-				ps.setInt(5, jobID);
-				ps.setInt(6, quantityUsed);
-				ps.setInt(7, productID);
+				// reduce stock by quantity used
+				ps = con.getPreparedStatement("UPDATE Stocks SET stock = stock - ? WHERE productID = ?");
+				ps.setInt(1, quantityUsed);
+				ps.setInt(2, productID);
 				ps.executeUpdate();
 				ps.close();
 				
 				// update JobStockLink table to connect products scanned out to jobs
-				ps = con.getPreparedStatement("INSERT INTO JobStockLink (jobID, productID, quantityUsed) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE quantityUsed = ?");
+				ps = con.getPreparedStatement("INSERT INTO JobStockLink (jobID, productID, quantityUsed) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE quantityUsed = quantityUsed + ?");
 				ps.setInt(1, jobID);
 				ps.setInt(2, productID);
 				ps.setInt(3, quantityUsed);
@@ -121,6 +139,40 @@ public class ConcreteProductManager implements ProductManager {
 	public boolean decreaseStocks(JobProduct productScannedOut) {
 		JobProduct[] singleElementArr = {productScannedOut};
 		return decreaseStocks(singleElementArr);
+	}
+	
+	@Override
+	public boolean addProductToJob(int jobID, int productID) {
+		try {
+			// check the product with productID has stocks more then 0
+			PreparedStatement ps = con.getPreparedStatement("SELECT stock FROM Stocks WHERE productID = ?");
+			ps.setInt(1, productID);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next() && rs.getInt("stock") <= 0) {
+				ps.close();
+				return false;
+			}
+			ps.close();
+			
+			// decrease the stock by one if the product is not registered with the job
+			ps = con.getPreparedStatement("UPDATE Stocks SET stock = CASE WHEN EXISTS(SELECT * FROM JobStockLink WHERE productID = ? AND JobStockLink.jobID = ?) THEN stock ELSE stock - 1 END WHERE productID = ?");
+			ps.setInt(1, productID);
+			ps.setInt(2, jobID);
+			ps.setInt(3, productID);
+			ps.executeUpdate();
+			ps.close();
+			
+			// add the product to the job if it hasnt already been added
+			ps = con.getPreparedStatement("INSERT INTO JobStockLink (jobID, productID, quantityUsed) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE quantityUsed = quantityUsed");
+			ps.setInt(1, jobID);
+			ps.setInt(2, productID);
+			ps.setInt(3, 1);
+			ps.executeUpdate();
+			ps.close();
+		} catch(SQLException e) {
+			return false;
+		}
+		return true;
 	}
 	
 	private Product getProduct(ResultSet rs) throws SQLException {

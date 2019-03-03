@@ -17,6 +17,7 @@ public class Main extends Application {
     public static final DatabaseConnection con = new DatabaseConnection();
     public static final String LOGOPATH = "./resources/rjb.png";
     public static final String BACKIMAGEPATH = "./resources/backButton.png";
+    public static final String DELETEIMAGEPATH = "./resources/deleteButton.png";
     public static final String JOBMENUPATH_FXML = "./com/g52grp/views/JobMenu.fxml";
     public static final String SINGLEJOBPATH_FXML = "./com/g52grp/views/SingleJob.fxml";
     public static final String ADDNEWJOBPATH_FXML = "./com/g52grp/views/AddNewJob.fxml";
