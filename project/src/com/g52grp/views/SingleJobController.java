@@ -2,7 +2,11 @@ package com.g52grp.views;
 
 import java.io.FileInputStream;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.ResourceBundle;
+
+import org.controlsfx.control.textfield.TextFields;
 
 import com.g52grp.database.JobProduct;
 import com.g52grp.database.Product;
@@ -24,6 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
@@ -55,6 +60,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	@FXML Button deleteJob;
 	@FXML Button backButton;
 	@FXML Label errorMessage;
+	@FXML TextField searchProductToAdd;
 	
 	/**
 	 * Called when the back button is clicked (to go back to the Job Menu)
@@ -75,6 +81,15 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		} catch(Exception ex) {
 			errorMessage.setText("Failed to load " + Main.JOBMENUPATH_FXML);
 		}
+	}
+	
+	/**
+	 * Called when the user hits enter on the searchproductToAdd text field
+	 * This will add the product to the job
+	 * @param e
+	 */
+	@FXML public void addProductToJobManual(ActionEvent e) {
+		
 	}
 	
 	/**
@@ -187,6 +202,15 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		} catch(Exception e) {
 			errorMessage.setText("Failed to load " + Main.BACKIMAGEPATH);
 		}
+		
+		// auto complete text field
+		TextFields.bindAutoCompletion(searchProductToAdd, input -> {
+			if(input.getUserText().isEmpty()) {
+				return Collections.emptyList();
+			}
+			Product[] matchedProducts = pm.searchProductsByDescriptionAndProductcode(input.getUserText(), input.getUserText());
+			return Arrays.asList(matchedProducts);
+		});
 		
 		// initiliaze TableView columns
 		productId.setCellValueFactory(new PropertyValueFactory<>("productId"));

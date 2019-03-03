@@ -57,4 +57,10 @@ public class Product {
 	public long getBarCode() {
 		return barCode;
 	}
+	
+	@Override
+	public String toString() {
+		// toString required for auto complete search for a product
+		return getDescription();
+	}
 }

@@ -58,15 +58,27 @@ public class ConcreteProductManager implements ProductManager {
 	}
 	
 	@Override
-	public Product[] searchProductsByProductcode(String productcode) {
-		return searchProducts("productCode", productcode);
-	}
+	public Product[] searchProductsByDescriptionAndProductcode(String description, String productcode) {
+		ArrayList<Product> products = new ArrayList<Product>();
+		try {
+			PreparedStatement ps;
+			ps = con.getPreparedStatement("SELECT * FROM Stocks WHERE description LIKE ? OR productCode LIKE ?");
 
-	@Override
-	public Product[] searchProductsByDescription(String description) {
-		return searchProducts("description", description);
+			ps.setString(1, "%" + description + "%");
+			ps.setString(2, "%" + productcode + "%");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				products.add(getProduct(rs));
+			}
+			ps.close();
+			Product[] productsArr = new Product[products.size()];
+			productsArr = products.toArray(productsArr);
+			return productsArr;
+		} catch(SQLException e) {
+			return null;
+		}
 	}
-
+	
 	@Override
 	public boolean decreaseStocks(JobProduct[] productsScannedOut) {
 		for(JobProduct productScannedOut : productsScannedOut) {
@@ -109,25 +121,6 @@ public class ConcreteProductManager implements ProductManager {
 	public boolean decreaseStocks(JobProduct productScannedOut) {
 		JobProduct[] singleElementArr = {productScannedOut};
 		return decreaseStocks(singleElementArr);
-	}
-	
-	private Product[] searchProducts(String columnName, String val) {
-		ArrayList<Product> products = new ArrayList<Product>();
-		try {
-			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Stocks WHERE UPPER(?) LIKE UPPER('%?%')'");
-			ps.setString(1, columnName);
-			ps.setString(1, val);
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				products.add(getProduct(rs));
-			}
-			ps.close();
-			Product[] productsArr = new Product[products.size()];
-			productsArr = products.toArray(productsArr);
-			return productsArr;
-		} catch(SQLException e) {
-			return null;
-		}
 	}
 	
 	private Product getProduct(ResultSet rs) throws SQLException {

@@ -18,21 +18,16 @@ public interface ProductManager {
 	 * @return All products within the database, null if couldn't if database could not be queried 
 	 */
 	Product[] getAllProducts();
-	
-	/**
-	 * Searches the database to find products which contain the given product code (it's possible for multiple products to have the same product code)
-	 * @param productcode Product code to search for
-	 * @return Array of Product objects, null if the database could not be accessed 
-	 */
-	Product[] searchProductsByProductcode(String productcode);
-	
-	/**
-	 * Searches the database to find products which contain the given description (it's possible for multiple products to have the same description)
-	 * @param description Description to search for
-	 * @return Array of Product objects, null if the database could not be accessed 
-	 */
-	Product[] searchProductsByDescription(String description);
 		
+	/**
+	 * Searches the database to find products which contain the given description or product code (this method combines both into one query so is more efficient)
+	 * This search is case insensitive
+	 * @param description Description to search for
+	 * @param productcode Product code to search for
+	 * @return Array of Product objects which match the search criteria, null if the database could not be accessed
+	 */
+	Product[] searchProductsByDescriptionAndProductcode(String description, String productcode);
+	
 	/**
 	 * Reduce stock amount for each product scanned out by quantityUsed stored within JobProduct object, for the Product table
 	 * And link these products which have been scanned to the job within the JobStockLink tables (if they are not already linked)
