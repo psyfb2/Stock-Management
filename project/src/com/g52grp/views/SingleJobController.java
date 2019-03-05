@@ -110,7 +110,6 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		Optional <ButtonType> okButton = confirmation.showAndWait();
 		
 		if(okButton.get() == ButtonType.OK) {
-			// ok button was clicked, delete this job from the database
 			jm.deleteJob(jobId);
 			back(e);
 		}

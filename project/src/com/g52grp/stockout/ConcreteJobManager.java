@@ -22,7 +22,8 @@ public class ConcreteJobManager implements JobManager {
 			// check this job doesn't already exist, if it does return false
 			PreparedStatement ps = con.getPreparedStatement("SELECT CASE WHEN EXISTS(SELECT * FROM Jobs WHERE siteName = ? AND plotNumber = ?) THEN 'true' ELSE 'false' END as jobExists");
 			ps.setString(1, siteName);
-			ps.setInt(1, plotNumber);
+			ps.setInt(2, plotNumber);
+			ps.toString();
 			ResultSet rs = ps.executeQuery();
 			if(rs.next() && rs.getString("jobExists").equals("true")) {
 				return false;

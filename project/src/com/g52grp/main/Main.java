@@ -25,12 +25,8 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		
 		DatabaseConnection test = con;
-		// connection always fails in uni for some reason, must be the damn firewall
 		if (test.openConnection()) {
-			System.out.println("Successful Connection");
 			launch(args);
-		} else {
-			System.out.println("Connection Failed");
 		}
 	}
 	
