@@ -21,8 +21,8 @@
             <TableColumn fx:id="barcode" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
         </columns>
       </TableView>
-      <Label layoutX="142.0" layoutY="591.0" text="Total Price of Job:" />
-      <Label fx:id="totalPrice" layoutX="252.0" layoutY="591.0" prefHeight="17.0" prefWidth="104.0" />
+      <Label layoutX="142.0" layoutY="591.0" text="Price of Job: £" />
+      <Label fx:id="totalPrice" layoutX="216.0" layoutY="591.0" prefHeight="17.0" prefWidth="100.0" />
       <Label fx:id="jobTitle" alignment="CENTER" layoutX="141.0" layoutY="7.0" prefHeight="35.0" prefWidth="1000.0">
          <font>
             <Font size="24.0" />
@@ -31,6 +31,6 @@
       <Button fx:id="deleteJobButton" layoutX="141.0" layoutY="621.0" mnemonicParsing="false" onAction="#deleteJob" prefHeight="35.0" prefWidth="120.0" text="Delete Job" />
       <Button fx:id="backButton" mnemonicParsing="false" onAction="#back" prefHeight="50.0" prefWidth="100.0" />
       <Label fx:id="errorMessage" layoutX="141.0" layoutY="564.0" prefHeight="17.0" prefWidth="1000.0" />
-      <TextField fx:id="searchProductToAdd" layoutX="356.0" layoutY="587.0" onAction="#addProductToJobManual" prefHeight="25.0" prefWidth="785.0" promptText="Search For Product" />
+      <TextField fx:id="searchProductToAdd" layoutX="356.0" layoutY="587.0" onAction="#addProductToJobManual" prefHeight="25.0" prefWidth="785.0" promptText="Enter product code or description for product to add" />
    </children>
 </AnchorPane>

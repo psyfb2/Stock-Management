@@ -76,6 +76,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	 * @param e
 	 */
 	@FXML public void back(ActionEvent e) {
+		errorMessage.setText("");
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getClassLoader().getResource(Main.JOBMENUPATH_FXML));
@@ -185,12 +186,14 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		// need to confirm that there is enough stocks
 		int stockReduction = newQuantityUsed - oldQuantityUsed;
 		if( stockReduction <= jobProductSelected.getStocksRemaining() ) {
+			
 			// convert displayable job product to normal job product, also pass stockReduction to decreaseStocks()
 			// because this is the number we would like to decrease the stocks by
 			JobProduct jobProduct = new JobProduct(jobId, new Product(jobProductSelected.getProductId(), 
 					jobProductSelected.getProductCode(), jobProductSelected.getDescription(),
 					0, 0, jobProductSelected.getPrice(), jobProductSelected.getStocksRemaining(), 
 					jobProductSelected.getBarcode()), stockReduction);
+			
 			if(!pm.decreaseStocks(jobProduct)) {
 				errorMessage.setText("Failed to modify quantity: error accessing database");
 				jobProductTable.refresh();
@@ -200,6 +203,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			// update table so it matches the database, could call updateTableView() but this is costly
 			jobProductSelected.setQuantity(Integer.toString(newQuantityUsed));
 			jobProductSelected.setStocksRemaining(jobProductSelected.getStocksRemaining() - stockReduction);
+			totalPrice.setText(Float.toString(Float.parseFloat(totalPrice.getText()) + stockReduction));
 			jobProductTable.refresh();
 		} else {
 			errorMessage.setText("You cannot change the quantity used from " + jobProductSelected.getQuantity() + " to " + newQuantityUsed + " because you do not have enough stocks");
@@ -225,10 +229,12 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	
 	/**
 	 * Loads products associated with the jobId given in the initData() method
+	 * Also loads the initial total price of job into totalPrice label
 	 * @return List of DisplayableJobProduct objects
 	 */
 	public ObservableList<DisplayableJobProduct> getJobProducts() {
 		ObservableList<DisplayableJobProduct> productsForThisJobList = FXCollections.observableArrayList();
+		
 		if(jobId == -1) {
 			errorMessage.setText("Failed to load associated products: jobID was not passed to this controller");
 			return productsForThisJobList;
@@ -239,12 +245,16 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			errorMessage.setText("Failed to load associated products: error accessing database");
 			return productsForThisJobList;
 		}
+		
+		float currentTotalPrice = 0;
 		for(JobProduct jp : productsForThisJobArr) {
 			Product p = jp.getProduct();
+			currentTotalPrice += p.getPricePerUnit() * jp.getQuantityUsed();
 			productsForThisJobList.add(new DisplayableJobProduct(p.getProductId(),
 					p.getProductCode(), p.getDescription(), p.getPricePerUnit(), Integer.toString(jp.getQuantityUsed()), p.getStock(), p.getBarCode()) );
 		}
 		
+		totalPrice.setText(Float.toString(currentTotalPrice));
 		return productsForThisJobList;
 	}
 	
