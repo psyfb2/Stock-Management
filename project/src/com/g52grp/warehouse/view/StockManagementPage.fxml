@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1797.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.warehouse.controller.StockManagementPageController">
+   <children>
+      <TableView fx:id="stockTable" layoutX="42.0" layoutY="28.0" prefHeight="519.0" prefWidth="1210.0">
+        <columns>
+          <TableColumn fx:id="idCol" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="codeCol" prefWidth="75.0" text="code" />
+            <TableColumn fx:id="descriptionCol" prefWidth="179.0" text="description" />
+            <TableColumn fx:id="barcodeCol" prefWidth="127.0" text="barcode" />
+            <TableColumn fx:id="bayNoCol" prefWidth="98.0" text="bayNo" />
+            <TableColumn fx:id="rowNoCol" prefWidth="132.0" text="rowNo" />
+            <TableColumn fx:id="pricePerUnitCol" prefWidth="162.0" text="pricePerUnit" />
+            <TableColumn fx:id="quantityCol" minWidth="0.0" prefWidth="151.0" text="quantity" />
+            <TableColumn fx:id="minQuantityCol" prefWidth="214.0" text="minimum quantity" />
+            <TableColumn fx:id="deleteCol" prefWidth="92.0" text="Delete" visible="false" />
+        </columns>
+      </TableView>
+      <Label fx:id="errorMessage" layoutX="46.0" layoutY="572.0" text="Show error message" />
+      <Button fx:id="deleteButton" layoutX="288.0" layoutY="568.0" mnemonicParsing="false" onMouseClicked="#deleteClicked" text="Delete" />
+      <Button fx:id="saveButton" layoutX="374.0" layoutY="568.0" mnemonicParsing="false" onMouseClicked="#saveClicked" text="Save" />
+      <Text fx:id="totalValue" layoutX="451.0" layoutY="585.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Show the total value" />
+      <TextField fx:id="searchProduct" layoutX="786.0" layoutY="568.0" prefHeight="25.0" prefWidth="232.0" />
+      <Text fx:id="mostUsedProduct" layoutX="580.0" layoutY="585.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Show the most used product" wrappingWidth="159.625" />
+   </children>
+</AnchorPane>

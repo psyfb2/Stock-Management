@@ -175,6 +175,41 @@ public class ConcreteProductManager implements ProductManager {
 		return true;
 	}
 	
+	//new added function
+	//delete the product in the database given the productId
+	public boolean deleteProduct(int productID){
+		PreparedStatement ps;
+		try { 
+			ps = con.getPreparedStatement("delete from Stocks where productID = ?");
+			ps.setInt(1, productID);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			return false;
+		}		
+		return true;
+	}
+	
+	//new added function
+	//show the most used product
+	public String getMostUsedProduct() {
+		String mostUsedProduct = null;
+		PreparedStatement ps;
+		try { 
+			ps = con.getPreparedStatement("SELECT MAX(sum), a.description FROM (SELECT SUM(quantityUsed) as sum, Stocks.description FROM JobStockLink, Stocks WHERE JobStockLink.productID = Stocks.productID GROUP BY Stocks.productID) a");
+			ResultSet rs = ps.executeQuery();
+			if(!rs.next()) {
+				return null;
+			}
+			mostUsedProduct = new String(rs.getString("description"));
+			ps.close();
+			return mostUsedProduct;
+		} catch (SQLException e) {
+			return null;
+		}
+		
+	}
+	
 	private Product getProduct(ResultSet rs) throws SQLException {
 		return new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), rs.getInt("bayNumber"), 
 				rs.getInt("rowNumber"), rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getLong("barCode"));
