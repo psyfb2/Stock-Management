@@ -1,5 +1,6 @@
 package com.g52grp.warehouse.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -8,12 +9,15 @@ import org.controlsfx.control.textfield.TextFields;
 
 import com.g52grp.database.Product;
 import com.g52grp.stockout.ConcreteProductManager;
-import com.g52grp.warehouse.model.Demo;
+import com.g52grp.warehouse.model.BasicParameter;
 import com.g52grp.warehouse.model.DisplayableProduct;
-
+import com.g52grp.warehouse.model.HomePage;
+import com.g52grp.warehouse.model.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -22,10 +26,67 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class StockManagementPageController {
+	
+    @FXML
+    private Pane stockManagementPane;
+
+    @FXML
+    private Button homePageButton;
+
+    @FXML
+    private Button addButton;
+
+    @FXML
+    private ImageView addImage;
+
+    @FXML
+    private Button deleteButton;
+
+    @FXML
+    private ImageView deleteImage;
+
+    @FXML
+    private Button refreshButton;
+
+    @FXML
+    private ImageView refreshImage;
+
+    @FXML
+    private Button stockButton;
+
+    @FXML
+    private Button saveButton;
+
+    @FXML
+    private ImageView saveImage;
+
+    @FXML
+    private Label erroMessage;
+    
+	@FXML 
+	private Text totalValue;
+	@FXML 
+	private Text mostUsedProduct;
+	
+	@FXML 
+	private TextField searchProduct;	
+	
+	@FXML
+	private Label totalValueLabel;
+	
+	@FXML
+	private Label mostUsedProductLabel;
 
 	@FXML private TableView<DisplayableProduct> stockTable;
 	@FXML private TableColumn<DisplayableProduct, Integer>  idCol;
@@ -40,30 +101,103 @@ public class StockManagementPageController {
 	@FXML private TableColumn<DisplayableProduct, Boolean> deleteCol;
 	
 	@FXML private Label errorMessage;
-	@FXML private Button deleteButton;
-	@FXML private Button saveButton;
-	@FXML private Text totalValue;
-	@FXML private Text mostUsedProduct;
-	@FXML private TextField searchProduct;	
 	private static ObservableList<DisplayableProduct> stocks =  FXCollections.observableArrayList();
-	private ConcreteProductManager pm = new ConcreteProductManager(Demo.con);
+	private ConcreteProductManager pm = new ConcreteProductManager(Main.con);
 	
-	@FXML public void initialize() {		
-		idCol.setCellValueFactory(new PropertyValueFactory<>("productId"));
-		codeCol.setCellValueFactory(new PropertyValueFactory<>("productCode"));
-		descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-		barcodeCol.setCellValueFactory(new PropertyValueFactory<>("barCode"));
-		bayNoCol.setCellValueFactory(new PropertyValueFactory<>("bayNumber"));
-		rowNoCol.setCellValueFactory(new PropertyValueFactory<>("rowNumber"));
-		pricePerUnitCol.setCellValueFactory(new PropertyValueFactory<>("pricePerUnit"));
-		quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-		minQuantityCol.setCellValueFactory(new PropertyValueFactory<>("minQuantity"));
-		
+    @FXML
+    private void initialize() {
+    	
+    	//initialize homePane
+    	stockManagementPane.setPrefSize(BasicParameter.getScrSize().getWidth(), BasicParameter.getScrSize().getHeight());
+    	stockManagementPane.setLayoutX(0);
+    	 stockManagementPane.setLayoutY(0);
+    	 
+    	 
+     	//initialize homePageButton
+    	 homePageButton.setPrefSize(BasicParameter.button2Width, BasicParameter.button2Height);
+    	 homePageButton.setLayoutX(0);
+    	 homePageButton.setLayoutY(0);
+
+    	 //initialize stockButton
+    	 stockButton.setPrefSize(BasicParameter.button2Width, BasicParameter.button2Height);
+    	 stockButton.setLayoutX(homePageButton.getPrefWidth());
+    	 stockButton.setLayoutY(0);
+    	 
+     	//initialize addButton
+    	 addButton.setPrefSize(BasicParameter.button3Width, BasicParameter.button3height);
+    	 addButton.setLayoutX(BasicParameter.getScrSize().getWidth()/15);
+    	 addButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100);
+    	 
+    	 //initialize addImage
+    	 addImage.setFitWidth(BasicParameter.button3Width);
+    	 addImage.setFitHeight(BasicParameter.button3height);
+    	 
+     	// initialize deleteButton
+    	 deleteButton.setPrefSize(BasicParameter.button3Width, BasicParameter.button3height);
+       	 deleteButton.setLayoutX(addButton.getLayoutX() + addButton.getPrefWidth() + BasicParameter.getScrSize().getWidth()/40);
+    	 deleteButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100);
+    	 
+    	 //initialize deleteImage
+    	 deleteImage.setFitWidth(BasicParameter.button3Width);
+    	 deleteImage.setFitHeight(BasicParameter.button3height);
+    	 
+     	//initialize refreshButton
+    	 refreshButton.setPrefSize(BasicParameter.button3Width, BasicParameter.button3height);
+       	 refreshButton.setLayoutX(deleteButton.getLayoutX() + deleteButton.getPrefWidth() + BasicParameter.getScrSize().getWidth()/40);
+    	 refreshButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100);
+    	 
+    	 //initialize refreshImage
+    	 refreshImage.setFitWidth(BasicParameter.button3Width);
+    	 refreshImage.setFitHeight(BasicParameter.button3height);
+    	 
+    	 //initialize saveButton
+    	 saveButton.setPrefSize(BasicParameter.button3Width, BasicParameter.button3height);
+       	 saveButton.setLayoutX(refreshButton.getLayoutX() + deleteButton.getPrefWidth() + BasicParameter.getScrSize().getWidth()/40);
+    	 saveButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100);
+    	 saveButton.setVisible(false);
+    	 
+    	 //initialize saveImage
+    	 saveImage.setFitWidth(BasicParameter.button3Width);
+    	 saveImage.setFitHeight(BasicParameter.button3height);
+    	 
+    	 //initialize stockTable
+    	 
+    	stockTable.setLayoutX(10);
+    	stockTable.setLayoutY(addButton.getLayoutY() + addButton.getPrefHeight()+ 10);
+    	stockTable.setPrefSize(BasicParameter.getScrSize().getWidth()-20, (BasicParameter.getScrSize().getHeight() - stockTable.getLayoutY())/4*3);
+    	
+ 		idCol.setCellValueFactory(new PropertyValueFactory<>("productId"));
+ 		idCol.setPrefWidth(stockTable.getPrefWidth()/30 *2);
+ 		
+ 		codeCol.setCellValueFactory(new PropertyValueFactory<>("productCode"));
+ 		codeCol.setPrefWidth(stockTable.getPrefWidth()/30 * 4);
+ 		
+ 		descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+ 		descriptionCol.setPrefWidth(stockTable.getPrefWidth()/30 * 8);
+ 		
+ 		barcodeCol.setCellValueFactory(new PropertyValueFactory<>("barCode"));
+ 		barcodeCol.setPrefWidth(stockTable.getPrefWidth()/30 * 4);
+ 		
+ 		bayNoCol.setCellValueFactory(new PropertyValueFactory<>("bayNumber"));
+ 		bayNoCol.setPrefWidth(stockTable.getPrefWidth()/30 * 2);
+ 		
+ 		rowNoCol.setCellValueFactory(new PropertyValueFactory<>("rowNumber"));
+ 		rowNoCol.setPrefWidth(stockTable.getPrefWidth()/30*2);
+ 		
+ 		pricePerUnitCol.setCellValueFactory(new PropertyValueFactory<>("pricePerUnit"));
+ 		pricePerUnitCol.setPrefWidth(stockTable.getPrefWidth()/30*3);
+ 		
+ 		quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+ 		quantityCol.setPrefWidth(stockTable.getPrefWidth()/30 *3);
+ 		
+ 		minQuantityCol.setCellValueFactory(new PropertyValueFactory<>("minQuantity"));
+ 		minQuantityCol.setPrefWidth(stockTable.getPrefWidth()/30 * 2);
+ 		
 		deleteCol.setCellFactory(CheckBoxTableCell.forTableColumn(deleteCol));
+	
 		deleteCol.setCellValueFactory(new PropertyValueFactory<>("delete"));
 		deleteCol.setVisible(false);
-		saveButton.setVisible(false);
-		
+ 		
 		quantityCol.setCellFactory(new Callback<TableColumn<DisplayableProduct, Integer>, TableCell<DisplayableProduct, Integer>>() {
 			@Override
 			public TableCell<DisplayableProduct, Integer> call(TableColumn<DisplayableProduct, Integer> param) {
@@ -84,13 +218,28 @@ public class StockManagementPageController {
 						}
 					}
 				};
-			}			
+			}
 		});
+		//initialize searchProduct
+		searchProduct.setLayoutX(BasicParameter.getScrSize().getWidth()/30 * 25);
+		searchProduct.setLayoutY(homePageButton.getPrefHeight() + addButton.getPrefHeight()/2);
+		searchProduct.setPrefWidth(BasicParameter.getScrSize().getWidth()/10 * 1);
 		
-		showProducts();		
+		//initialize  mostUsedProduct
+		 mostUsedProduct.setLayoutX(BasicParameter.getScrSize().getWidth()/30*7);
+		 mostUsedProduct.setLayoutY(stockTable.getLayoutY() + stockTable.getPrefHeight() + (BasicParameter.getScrSize().getHeight() - stockTable.getLayoutY() + stockTable.getPrefHeight())/100*3);
+
+		 // initialize totalValue
+		 totalValue.setLayoutX(BasicParameter.getScrSize().getWidth()/30*7);
+		 totalValue.setLayoutY(mostUsedProduct.getLayoutY() + (BasicParameter.getScrSize().getHeight() - stockTable.getLayoutY() + stockTable.getPrefHeight())/100 *3);
+		
+
+		 
+		showProducts();
 		showTotalValue();
 		showMostUsedProduct();
 		
+
 		// auto complete text field
 		ArrayList<Product> allProducts = pm.getAllProductsArrayList();		
 		TextFields.bindAutoCompletion(searchProduct, input -> {
@@ -102,28 +251,127 @@ public class StockManagementPageController {
 				return i.toString().toLowerCase().contains(input.getUserText().toLowerCase());
 			}).collect(Collectors.toList());
 		});
-	}
-	
-	@FXML private void deleteClicked() {
+		
+		searchProduct.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent key) {
+				if(key.getCode().equals(KeyCode.ENTER)) {
+					String text = searchProduct.getText();
+					int i = 0;
+					for(DisplayableProduct product : stockTable.getItems()) {
+						if((product.getProductCode() + " " + product.getDescription()).equals(text)) {
+							stockTable.getSelectionModel().select(i);
+						}
+						i++;
+					}
+				}
+			}
+			
+		});
+    }
+    
+    
+    @FXML
+    void addButtonClicked(MouseEvent event) {
+
+    }
+
+    @FXML
+    void homePageButtonClicked(MouseEvent event) {
+    	Stage theStage = (Stage)homePageButton.getScene().getWindow();
+    	try {
+			new HomePage(theStage);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+
+    @FXML
+    void refreshButtonClicked(MouseEvent event) {
+
+    }
+    
+	 @FXML
+	 private void deleteButtonClicked() {
+ 		idCol.setPrefWidth(stockTable.getPrefWidth()/100 *7);
+ 		
+ 		codeCol.setPrefWidth(stockTable.getPrefWidth()/100 *10);
+ 		
+ 		descriptionCol.setPrefWidth(stockTable.getPrefWidth()/100 * 25);
+ 		
+ 		barcodeCol.setPrefWidth(stockTable.getPrefWidth()/100 * 15);
+ 		
+ 		bayNoCol.setPrefWidth(stockTable.getPrefWidth()/100 * 7);
+ 		
+ 		rowNoCol.setPrefWidth(stockTable.getPrefWidth()/100 * 7);
+ 		
+ 		pricePerUnitCol.setPrefWidth(stockTable.getPrefWidth()/100 * 7);
+ 		
+ 		quantityCol.setPrefWidth(stockTable.getPrefWidth() / 100 * 7);
+ 		
+ 		minQuantityCol.setPrefWidth(stockTable.getPrefWidth() / 100 * 7);
+ 		
+ 		deleteCol.setPrefWidth(stockTable.getPrefWidth() / 100 * 8);
+ 		
 		deleteCol.setVisible(true);
 		stockTable.setEditable(true);	
 		saveButton.setVisible(true);
 	}
 	
-	@FXML private void saveClicked() {
+	@FXML
+	private void saveButtonClicked() {
 		for(DisplayableProduct product : stockTable.getItems()) {
 			if(product.getDelete()) {
-				if(!pm.deleteProduct(product.getProductId())) {
-					errorMessage.setText("Failed to delete products: error accessing database");
-					return;
+				int id = product.getProductId();
+				ArrayList<Integer> jobIDs = pm.checkProductInUsed(id);
+				if(jobIDs != null) {
+					String warningText = product.getDescription() + " is used in job ";
+					for(int i = 0; i < jobIDs.size(); i++) {
+						if(i == jobIDs.size() - 1) {
+							warningText += jobIDs.get(i) + ". ";
+						}else {
+							warningText += jobIDs.get(i) + ", ";
+						}						
+					}
+					
+					warningText += "\nPlease delete the job(s) first.";
+					Alert alert = new Alert(Alert.AlertType.INFORMATION);
+					alert.setTitle("DeleteWarning");
+					alert.setHeaderText("");
+					alert.setContentText(warningText);
+					alert.showAndWait();
+				}else {
+					if(!pm.deleteProduct(id)) {
+						errorMessage.setText("Failed to delete products: error accessing database");
+						return;
+					}
 				}
+				
 			}
 		}
 		
+ 		idCol.setPrefWidth(stockTable.getPrefWidth()/30 *2);
+
+ 		codeCol.setPrefWidth(stockTable.getPrefWidth()/30 * 4);
+
+ 		descriptionCol.setPrefWidth(stockTable.getPrefWidth()/30 * 8);
+ 		
+ 		barcodeCol.setPrefWidth(stockTable.getPrefWidth()/30 * 4);
+
+ 		bayNoCol.setPrefWidth(stockTable.getPrefWidth()/30 * 2);
+
+ 		rowNoCol.setPrefWidth(stockTable.getPrefWidth()/30*2);
+
+ 		pricePerUnitCol.setPrefWidth(stockTable.getPrefWidth()/30*3);
+
+ 		quantityCol.setPrefWidth(stockTable.getPrefWidth()/30 *3);
+
+ 		minQuantityCol.setPrefWidth(stockTable.getPrefWidth()/30 * 2);
 		showProducts();
-		showTotalValue();
 		saveButton.setVisible(false);
-		deleteCol.setVisible(false);		
+		deleteCol.setVisible(false);
+		saveButton.setVisible(false);
 	}
 	
 	private void showProducts() {
@@ -144,18 +392,20 @@ public class StockManagementPageController {
 	
 	private void showTotalValue() {
 		double value = 0;
+		String textInfo = "total value: ";
 		for(DisplayableProduct product : stockTable.getItems()) {
 			value += product.getPricePerUnit() * product.getQuantity();
 		}
-		totalValue.setText(Double.toString(value));
+		totalValue.setText( textInfo + Double.toString(value));
 	}
-		
+	
 	private void showMostUsedProduct() {
 		String product = pm.getMostUsedProduct();
+		String textInfo = "most used product: ";
 		if(product == null) {
 			errorMessage.setText("Failed to load most used product: error accessing database");
 			return;
 		}
-		mostUsedProduct.setText(product);
+		mostUsedProduct.setText( textInfo + product);
 	}
 }
