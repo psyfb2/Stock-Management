@@ -5,7 +5,11 @@ import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
-
+/**
+ * 
+ * @author psyys4
+ *
+ */
 public class DisplayableProduct {
 	private SimpleIntegerProperty productId;
 	private SimpleStringProperty productCode;
@@ -18,6 +22,20 @@ public class DisplayableProduct {
 	private SimpleIntegerProperty minQuantity;
 	private SimpleBooleanProperty delete;
 	
+	/**
+	 * 
+	 * @param productId
+	 * @param productCode
+	 * @param description
+	 * @param barCode
+	 * @param bayNumber
+	 * @param rowNumber
+	 * @param pricePerUnit
+	 * @param quantity
+	 * @param minQuantity
+	 * 
+	 * Setting stock table parameter
+	 */
 	public DisplayableProduct(int productId, String productCode,
 			String description, long barCode, int bayNumber,
 			int rowNumber, float pricePerUnit, int quantity,

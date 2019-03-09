@@ -36,6 +36,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+/**
+ * 
+ * @author psyzh1 psyys4
+ *
+ */
 public class StockManagementPageController {
 	
     @FXML
@@ -114,51 +119,51 @@ public class StockManagementPageController {
     	 
     	 
      	//initialize homePageButton
-    	 homePageButton.setPrefSize(BasicParameter.button2Width, BasicParameter.button2Height);
+    	 homePageButton.setPrefSize(BasicParameter.getButton2Width(), BasicParameter.getButton2Height());
     	 homePageButton.setLayoutX(0);
     	 homePageButton.setLayoutY(0);
 
     	 //initialize stockButton
-    	 stockButton.setPrefSize(BasicParameter.button2Width, BasicParameter.button2Height);
+    	 stockButton.setPrefSize(BasicParameter.getButton2Width(), BasicParameter.getButton2Height());
     	 stockButton.setLayoutX(homePageButton.getPrefWidth());
     	 stockButton.setLayoutY(0);
     	 
      	//initialize addButton
-    	 addButton.setPrefSize(BasicParameter.button3Width, BasicParameter.button3height);
+    	 addButton.setPrefSize(BasicParameter.getButton3Width(), BasicParameter.getButton3Height());
     	 addButton.setLayoutX(BasicParameter.getScrSize().getWidth()/15);
     	 addButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100);
     	 
     	 //initialize addImage
-    	 addImage.setFitWidth(BasicParameter.button3Width);
-    	 addImage.setFitHeight(BasicParameter.button3height);
+    	 addImage.setFitWidth(BasicParameter.getButton3Width());
+    	 addImage.setFitHeight(BasicParameter.getButton3Height());
     	 
      	// initialize deleteButton
-    	 deleteButton.setPrefSize(BasicParameter.button3Width, BasicParameter.button3height);
+    	 deleteButton.setPrefSize(BasicParameter.getButton3Width(), BasicParameter.getButton3Height());
        	 deleteButton.setLayoutX(addButton.getLayoutX() + addButton.getPrefWidth() + BasicParameter.getScrSize().getWidth()/40);
     	 deleteButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100);
     	 
     	 //initialize deleteImage
-    	 deleteImage.setFitWidth(BasicParameter.button3Width);
-    	 deleteImage.setFitHeight(BasicParameter.button3height);
+    	 deleteImage.setFitWidth(BasicParameter.getButton3Width());
+    	 deleteImage.setFitHeight(BasicParameter.getButton3Height());
     	 
      	//initialize refreshButton
-    	 refreshButton.setPrefSize(BasicParameter.button3Width, BasicParameter.button3height);
+    	 refreshButton.setPrefSize(BasicParameter.getButton3Width(), BasicParameter.getButton3Height());
        	 refreshButton.setLayoutX(deleteButton.getLayoutX() + deleteButton.getPrefWidth() + BasicParameter.getScrSize().getWidth()/40);
     	 refreshButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100);
     	 
     	 //initialize refreshImage
-    	 refreshImage.setFitWidth(BasicParameter.button3Width);
-    	 refreshImage.setFitHeight(BasicParameter.button3height);
+    	 refreshImage.setFitWidth(BasicParameter.getButton3Width());
+    	 refreshImage.setFitHeight(BasicParameter.getButton3Height());
     	 
     	 //initialize saveButton
-    	 saveButton.setPrefSize(BasicParameter.button3Width, BasicParameter.button3height);
+    	 saveButton.setPrefSize(BasicParameter.getButton3Width(), BasicParameter.getButton3Height());
        	 saveButton.setLayoutX(refreshButton.getLayoutX() + deleteButton.getPrefWidth() + BasicParameter.getScrSize().getWidth()/40);
     	 saveButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100);
     	 saveButton.setVisible(false);
     	 
     	 //initialize saveImage
-    	 saveImage.setFitWidth(BasicParameter.button3Width);
-    	 saveImage.setFitHeight(BasicParameter.button3height);
+    	 saveImage.setFitWidth(BasicParameter.getButton3Width());
+    	 saveImage.setFitHeight(BasicParameter.getButton3Height());
     	 
     	 //initialize stockTable
     	 
@@ -374,6 +379,9 @@ public class StockManagementPageController {
 		saveButton.setVisible(false);
 	}
 	
+	/**
+	 * Refresh stockTable 
+	 */
 	private void showProducts() {
 		stocks.removeAll(stocks);
 		ArrayList<Product> allProducts = pm.getAllProductsArrayList();
@@ -390,6 +398,9 @@ public class StockManagementPageController {
 		stockTable.setItems(stocks);
 	}
 	
+	/**
+	 * Change totalValue Text with most used product.
+	 */
 	private void showTotalValue() {
 		double value = 0;
 		String textInfo = "total value: ";
@@ -399,6 +410,9 @@ public class StockManagementPageController {
 		totalValue.setText( textInfo + Double.toString(value));
 	}
 	
+	/**
+	 * Change mustUsedProduct Text with most used product.
+	 */
 	private void showMostUsedProduct() {
 		String product = pm.getMostUsedProduct();
 		String textInfo = "most used product: ";

@@ -7,6 +7,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author psyzh1
+ * Open StockManegementPage fxml
+ *
+ */
 public class StockManagementPage {
 	public StockManagementPage(Stage theStage) {
 		try {			

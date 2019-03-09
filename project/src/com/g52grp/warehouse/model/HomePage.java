@@ -8,6 +8,12 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author psyzh1
+ * Open HomePage fxml
+ *
+ */
 public class HomePage {
 	public  HomePage(Stage theStage) throws IOException {
 		theStage.setTitle( "Start" );

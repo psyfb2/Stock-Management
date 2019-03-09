@@ -27,8 +27,12 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+/**
+ * 
+ * @author psyzh1
+ *
+ */
 public class HomePageController {
-
 
     @FXML
     private Pane homePane;
@@ -57,12 +61,12 @@ public class HomePageController {
     	 homePane.setLayoutY(0);
     	 
      	//initialize homePageButton
-    	 homePageButton.setPrefSize(BasicParameter.button2Width, BasicParameter.button2Height);
+    	 homePageButton.setPrefSize(BasicParameter.getButton2Width(), BasicParameter.getButton2Height());
     	 homePageButton.setLayoutX(0);
     	 homePageButton.setLayoutY(0);
     	 
      	//initialize stockButton
-    	 stockManagementButton.setPrefSize(BasicParameter.button1Width, BasicParameter.button1Height);
+    	 stockManagementButton.setPrefSize(BasicParameter.getButton1Width(), BasicParameter.getButton1Height());
     	 stockManagementButton.setLayoutX(BasicParameter.getScrSize().getWidth()/2 - BasicParameter.getScrSize().getWidth()/4);
     	 stockManagementButton.setLayoutY( BasicParameter.getScrSize().getHeight()/4);
     	 
@@ -75,7 +79,7 @@ public class HomePageController {
      	 jobPicture.setFitHeight(jobManagementButton.getPrefHeight());
      	 
      	//initialize jobButton
-    	 jobManagementButton.setPrefSize(BasicParameter.button1Width, BasicParameter.button1Height);
+    	 jobManagementButton.setPrefSize(BasicParameter.getButton1Width(), BasicParameter.getButton1Height());
     	 jobManagementButton.setLayoutX(BasicParameter.getScrSize().getWidth()/2 + BasicParameter.getScrSize().getWidth()/16);
     	 jobManagementButton.setLayoutY( BasicParameter.getScrSize().getHeight()/4);
     	 
