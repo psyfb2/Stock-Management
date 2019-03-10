@@ -214,4 +214,28 @@ public class ConcreteProductManager implements ProductManager {
 		return new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), rs.getInt("bayNumber"), 
 				rs.getInt("rowNumber"), rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getLong("barCode"));
 	}
+
+	/**
+	 * @author psyys4
+	 * @param productID
+	 * @return ArrayList contains all product with productID used in current job.
+	 */
+	//new added function
+	//check whether the product is in used
+	public ArrayList<Integer> checkProductInUsed(int productID) {
+		ArrayList<Integer> jobIDs = new ArrayList<>();
+		PreparedStatement ps;
+		try { 
+			ps = con.getPreparedStatement("select jobID from JobStockLink where productID = ?");
+			ps.setInt(1, productID);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				jobIDs.add(rs.getInt("jobID"));
+			}			
+			ps.close();
+		} catch (SQLException e) {
+			return null;
+		}	
+		return jobIDs;
+	}
 }

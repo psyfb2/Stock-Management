@@ -30,6 +30,7 @@ public class Main extends Application {
 			System.out.println("Successful Connection");
 			launch(args);
 		} else {
+			System.out.println("error");
 			System.out.println("Connection Failed");
 		}
 	}
@@ -49,4 +50,5 @@ public class Main extends Application {
 	    con.closeConnection();
 	    super.stop();
 	}
+
 }
