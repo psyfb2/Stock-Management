@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -16,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="stockManagementPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #ffffff;" stylesheets="@../../../../../resources/stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.warehouse.controller.StockManagementPageController">
+<Pane fx:id="stockManagementPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.warehouse.controller.StockManagementPageController">
    <children>
       <Button fx:id="homePageButton" mnemonicParsing="false" onMouseClicked="#homePageButtonClicked" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Home Page" />
       <Button fx:id="addButton" layoutX="72.0" layoutY="73.0" mnemonicParsing="false" onMouseClicked="#addButtonClicked" style="-fx-background-color: #ffffff;">
@@ -85,7 +80,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="searchProduct" layoutX="60.0" layoutY="617.0" prefHeight="23.0" prefWidth="289.0" promptText="search here" />
+      <TextField fx:id="searchProduct" layoutX="60.0" layoutY="617.0" promptText="search here" />
          
    </children>
 </Pane>

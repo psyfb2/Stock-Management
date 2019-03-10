@@ -238,7 +238,9 @@ public class StockManagementPageController {
 		 // initialize totalValue
 		 totalValue.setLayoutX(BasicParameter.getScrSize().getWidth()/30*7);
 		 totalValue.setLayoutY(mostUsedProduct.getLayoutY() + (BasicParameter.getScrSize().getHeight() - stockTable.getLayoutY() + stockTable.getPrefHeight())/100 *3);
-				 
+		
+
+		 
 		showProducts();
 		showTotalValue();
 		showMostUsedProduct();
@@ -296,9 +298,7 @@ public class StockManagementPageController {
 
     @FXML
     void refreshButtonClicked(MouseEvent event) {
-		showProducts();
-		showTotalValue();
-		showMostUsedProduct();
+
     }
     
     /**
@@ -346,13 +346,13 @@ public class StockManagementPageController {
 					String warningText = product.getDescription() + " is used in job ";
 					for(int i = 0; i < jobIDs.size(); i++) {
 						if(i == jobIDs.size() - 1) {
-							warningText += jobIDs.get(i) + ".\n";
+							warningText += jobIDs.get(i) + ". ";
 						}else {
 							warningText += jobIDs.get(i) + ", ";
 						}						
 					}
 					
-					warningText += "Please delete the job(s) first.";
+					warningText += "\nPlease delete the job(s) first.";
 					Alert alert = new Alert(Alert.AlertType.INFORMATION);
 					alert.setTitle("DeleteWarning");
 					alert.setHeaderText("");
@@ -363,7 +363,8 @@ public class StockManagementPageController {
 						errorMessage.setText("Failed to delete products: error accessing database");
 						return;
 					}
-				}				
+				}
+				
 			}
 		}
 		
@@ -410,7 +411,7 @@ public class StockManagementPageController {
 	}
 	
 	/**
-	 * Change totalValue Text with total value.
+	 * Change totalValue Text with most used product.
 	 */
 	private void showTotalValue() {
 		double value = 0;

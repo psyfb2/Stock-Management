@@ -20,7 +20,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -52,8 +51,6 @@ public class HomePageController {
 
     @FXML
     private ImageView jobPicture;
-    
-    DropShadow shadow = new DropShadow();
     
     @FXML
     private void initialize() {
@@ -106,4 +103,7 @@ public class HomePageController {
     	//theStage.close();
     	new StockManagementPage(theStage);
     }
+
+
+
 }
