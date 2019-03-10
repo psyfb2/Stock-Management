@@ -80,7 +80,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="searchProduct" layoutX="60.0" layoutY="617.0" />
+      <TextField fx:id="searchProduct" layoutX="60.0" layoutY="617.0" promptText="search here" />
          
    </children>
 </Pane>

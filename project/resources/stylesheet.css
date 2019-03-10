@@ -1,42 +1,30 @@
+.table-view{
+       -fx-border-width: 0.05px; 
+	-fx-border-color: #A0A0A0;
+}
+
+.table-view:focused{
+    -fx-background-color: #E0E0E0;
+
+}
+
 .table-view .column-header{
     -fx-border-color:white lightgray white white;  
+	-fx-background-color: #B8B8B8;
 }
 
-.table-view > .virtual-flow > .scroll-bar:vertical{
-    -fx-background-insets: 0, 0 0 0 1;
-    -fx-padding: -1 -1 -1 0;
+.table-view .column-header .label{
+    -fx-alignment: center;
+
 }
 
-.table-view > .virtual-flow > .scroll-bar:horizontal{
-    -fx-background-insets: 0, 1 0 0 0;
-    -fx-padding: 0 -1 -1 -1;
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(#131313 0%, #424141 100%);
 }
 
-.table-view > .virtual-flow > .corner {
-    -fx-background-color: derive(-fx-base,-1%); /*-fx-base 是modena 预先定义的颜色*/
-}
-
-
-.table-row-cell:filled > .table-cell:selected{
-    -fx-background: -fx-selection-bar-non-focused;
-    -fx-table-cell-border-color: derive(-fx-selection-bar-non-focused, 20%);
-}
-
-.table-row-cell:filled > .table-cell:selected{
-    -fx-background: -fx-selection-bar-non-focused;
-    -fx-table-cell-border-color: derive(-fx-selection-bar-non-focused, 20%);
-}
-
-.table-row-cell {
-    -fx-background: -fx-control-inner-background;
-    -fx-background-color: -fx-table-cell-border-color, -fx-background;
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: 0;
-    -fx-text-fill: -fx-text-background-color;
-}
-
-.table-row-cell:odd {
-    -fx-background: -fx-control-inner-background-alt;
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
 }
 
 .table-cell {
@@ -45,39 +33,31 @@
     -fx-border-color: transparent -fx-table-cell-border-color transparent transparent;
     -fx-cell-size: 2.0em; /* 24 */
     -fx-text-fill: -fx-text-background-color;
+	-fx-alignment: center;
 }
 
-
-.table-view > .virtual-flow > .clipped-container > .sheet > .table-row-cell .table-cell:selected {
-    -fx-background-color: -fx-table-cell-border-color, -fx-background;
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, #F8F8F8;
     -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
 }
 
-/* The column-resize-line is shown when the user is attempting to resize a column. */
-.table-view .column-resize-line {
-    -fx-background: -fx-accent;
-    -fx-background-color: -fx-background;
-    -fx-padding: 0.0em 0.0416667em 0.0em 0.0416667em; /* 0 0.571429 0 0.571429 */
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, #F0F0F0;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */  
 }
 
-/* This is the area behind the column headers. An ideal place to specify background
-   and border colors for the whole area (not individual column-header's). */
-.table-view .column-header-background{
-    -fx-background-color: -fx-inner-border, -fx-body-color;
-    -fx-background-insets: 0, 1;
-}
 
-/* The column header row is made up of a number of column-header, one for each
-   TableColumn, and a 'filler' area that extends from the right-most column
-   to the edge of the tableview, or up to the 'column control' button. */
-.table-view .column-header,
-.table-view .filler,
-.table-view > .column-header-background > .show-hide-columns-button,
-.table-view:constrained-resize .filler{
-    -fx-background-color: -fx-box-border, -fx-inner-border, -fx-body-color;
-    -fx-background-insets: 0, 0 1 1 0, 1 2 2 1;
-    -fx-font-weight: bold;
-    -fx-size: 2em;
-    -fx-text-fill: -fx-selection-bar-text;
-    -fx-padding: 0.166667em;
+.table-cell {  
+    -fx-border-width: 0.05px; 
+	-fx-border-color: #A0A0A0;
+} 
+
+.table-row-cell:selected {
+    -fx-background-color: #A0A0A0;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+	-fx-border-insets: 0.2;
+	fx-border-color: #000000;
 }

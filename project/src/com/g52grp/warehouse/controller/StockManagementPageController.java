@@ -39,6 +39,7 @@ import javafx.util.Callback;
 /**
  * 
  * @author psyzh1 psyys4
+ * Operation of StockManagementPage
  *
  */
 public class StockManagementPageController {
@@ -196,7 +197,7 @@ public class StockManagementPageController {
  		quantityCol.setPrefWidth(stockTable.getPrefWidth()/30 *3);
  		
  		minQuantityCol.setCellValueFactory(new PropertyValueFactory<>("minQuantity"));
- 		minQuantityCol.setPrefWidth(stockTable.getPrefWidth()/30 * 2);
+ 		minQuantityCol.setPrefWidth(stockTable.getPrefWidth()/30 * 1.95);
  		
 		deleteCol.setCellFactory(CheckBoxTableCell.forTableColumn(deleteCol));
 	
@@ -212,7 +213,7 @@ public class StockManagementPageController {
 						super.updateItem(quantity, empty);
 						if(!empty) {
 							if(quantity < 5) {
-								this.setStyle("-fx-background-color: red;");															
+								this.setStyle("-fx-background-color: FF3333;");															
 							}else {
 								this.setStyle("-fx-background-color: null;");
 							}
@@ -277,12 +278,15 @@ public class StockManagementPageController {
     
     
     @FXML
-    void addButtonClicked(MouseEvent event) {
+    void addButtonClicked() {
 
     }
 
+    /**
+     * return to the HomePage
+     */
     @FXML
-    void homePageButtonClicked(MouseEvent event) {
+    void homePageButtonClicked() {
     	Stage theStage = (Stage)homePageButton.getScene().getWindow();
     	try {
 			new HomePage(theStage);
@@ -297,6 +301,10 @@ public class StockManagementPageController {
 
     }
     
+    /**
+     * Setting delete row and save button to be 
+     * visible and allow user to delete column.
+     */
 	 @FXML
 	 private void deleteButtonClicked() {
  		idCol.setPrefWidth(stockTable.getPrefWidth()/100 *7);
@@ -324,6 +332,10 @@ public class StockManagementPageController {
 		saveButton.setVisible(true);
 	}
 	
+	 /**
+	  * Save user delete operation and set save button
+	  * and delete column to be unvisible.
+	  */
 	@FXML
 	private void saveButtonClicked() {
 		for(DisplayableProduct product : stockTable.getItems()) {

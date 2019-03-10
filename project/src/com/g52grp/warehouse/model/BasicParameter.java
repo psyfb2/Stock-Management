@@ -15,10 +15,8 @@ public class BasicParameter {
 	private static Dimension scrSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private static double button1Width = scrSize.getWidth()/5;
 	private static double button1Height = button1Width/6 * 8;
-	
 	private static double button2Width = scrSize.getWidth()/14;
 	private static double button2Height = scrSize.getHeight()/40;
-	
 	private static double button3Width = scrSize.getWidth()/25;
 	private static double button3Height = scrSize.getWidth()/25;
 

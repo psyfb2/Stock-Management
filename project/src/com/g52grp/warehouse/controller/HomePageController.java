@@ -86,8 +86,6 @@ public class HomePageController {
        	//initialize jobPicture
       	 jobPicture.setFitWidth(jobManagementButton.getPrefWidth());
       	 jobPicture.setFitHeight(jobManagementButton.getPrefHeight());
-    	 
-    	 
     }
     
 
@@ -96,8 +94,11 @@ public class HomePageController {
 
     }
 
+    /**
+     * Change to stockManagementPage.
+     */
     @FXML
-    void stockManagementButtonClicked(MouseEvent event) {
+    void stockManagementButtonClicked() {
     	Stage theStage = (Stage)stockManagementButton.getScene().getWindow();
     	//theStage.close();
     	new StockManagementPage(theStage);
