@@ -78,7 +78,7 @@ public class StockManagementPageController {
     private ImageView saveImage;
 
     @FXML
-    private Label erroMessage;
+    private Label errorMessage;
     
 	@FXML 
 	private Text totalValue;
@@ -106,7 +106,6 @@ public class StockManagementPageController {
 	@FXML private TableColumn<DisplayableProduct, Integer> minQuantityCol;
 	@FXML private TableColumn<DisplayableProduct, Boolean> deleteCol;
 	
-	@FXML private Label errorMessage;
 	private static ObservableList<DisplayableProduct> stocks =  FXCollections.observableArrayList();
 	private ConcreteProductManager pm = new ConcreteProductManager(Main.con);
 	
@@ -132,7 +131,7 @@ public class StockManagementPageController {
      	//initialize addButton
     	 addButton.setPrefSize(BasicParameter.getButton3Width(), BasicParameter.getButton3Height());
     	 addButton.setLayoutX(BasicParameter.getScrSize().getWidth()/15);
-    	 addButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100);
+    	 addButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100 + 2);
     	 
     	 //initialize addImage
     	 addImage.setFitWidth(BasicParameter.getButton3Width());
@@ -141,7 +140,7 @@ public class StockManagementPageController {
      	// initialize deleteButton
     	 deleteButton.setPrefSize(BasicParameter.getButton3Width(), BasicParameter.getButton3Height());
        	 deleteButton.setLayoutX(addButton.getLayoutX() + addButton.getPrefWidth() + BasicParameter.getScrSize().getWidth()/40);
-    	 deleteButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100);
+    	 deleteButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100 + 2);
     	 
     	 //initialize deleteImage
     	 deleteImage.setFitWidth(BasicParameter.getButton3Width());
@@ -150,7 +149,7 @@ public class StockManagementPageController {
      	//initialize refreshButton
     	 refreshButton.setPrefSize(BasicParameter.getButton3Width(), BasicParameter.getButton3Height());
        	 refreshButton.setLayoutX(deleteButton.getLayoutX() + deleteButton.getPrefWidth() + BasicParameter.getScrSize().getWidth()/40);
-    	 refreshButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100);
+    	 refreshButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100 + 2);
     	 
     	 //initialize refreshImage
     	 refreshImage.setFitWidth(BasicParameter.getButton3Width());
@@ -227,9 +226,9 @@ public class StockManagementPageController {
 			}
 		});
 		//initialize searchProduct
-		searchProduct.setLayoutX(BasicParameter.getScrSize().getWidth()/30 * 25);
+		searchProduct.setPrefWidth(200);
+		searchProduct.setLayoutX(BasicParameter.getScrSize().getWidth()/30 * 25 -200);
 		searchProduct.setLayoutY(homePageButton.getPrefHeight() + addButton.getPrefHeight()/2);
-		searchProduct.setPrefWidth(BasicParameter.getScrSize().getWidth()/10 * 1);
 		
 		//initialize  mostUsedProduct
 		 mostUsedProduct.setLayoutX(BasicParameter.getScrSize().getWidth()/30*7);
@@ -274,6 +273,10 @@ public class StockManagementPageController {
 			}
 			
 		});
+		
+		//initialize errorMessage
+		errorMessage.setLayoutX(BasicParameter.getScrSize().getWidth()/2 - 200);
+		errorMessage.setLayoutY(0);
     }
     
     
@@ -334,7 +337,7 @@ public class StockManagementPageController {
 	
 	 /**
 	  * Save user delete operation and set save button
-	  * and delete column to be unvisible.
+	  * and delete column to be invisible.
 	  */
 	@FXML
 	private void saveButtonClicked() {
@@ -361,6 +364,7 @@ public class StockManagementPageController {
 				}else {
 					if(!pm.deleteProduct(id)) {
 						errorMessage.setText("Failed to delete products: error accessing database");
+						errorMessage.setVisible(true);
 						return;
 					}
 				}
@@ -399,6 +403,7 @@ public class StockManagementPageController {
 		ArrayList<Product> allProducts = pm.getAllProductsArrayList();
 		if(allProducts == null) {
 			errorMessage.setText("Failed to load products: error accessing database");
+			errorMessage.setVisible(true);
 			return;
 		}
 		
@@ -430,6 +435,7 @@ public class StockManagementPageController {
 		String textInfo = "most used product: ";
 		if(product == null) {
 			errorMessage.setText("Failed to load most used product: error accessing database");
+			errorMessage.setVisible(true);
 			return;
 		}
 		mostUsedProduct.setText( textInfo + product);
