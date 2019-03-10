@@ -61,3 +61,8 @@
 	-fx-border-insets: 0.2;
 	fx-border-color: #000000;
 }
+
+.button:hover{
+    -fx-effect: dropshadow(three-pass-box, #72b9da, 10.0,0, 0, 0);
+    -fx-cursor: hand;
+}
