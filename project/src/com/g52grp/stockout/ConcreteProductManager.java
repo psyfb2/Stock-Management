@@ -142,6 +142,25 @@ public class ConcreteProductManager implements ProductManager {
 	}
 	
 	@Override
+	public Product getProductFromBarcode(String barcode) {
+		try {
+			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Stocks WHERE barcode = ?");
+			ps.setString(1, barcode);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				Product p = getProduct(rs);
+				ps.close();
+				return p;
+			} else {
+				ps.close();
+				return null;
+			}
+		} catch(SQLException e) {
+			return null;
+		}
+	}
+	
+	@Override
 	public boolean addProductToJob(int jobID, int productID) {
 		try {
 			// check the product with productID has stocks more then 0
@@ -175,8 +194,22 @@ public class ConcreteProductManager implements ProductManager {
 		return true;
 	}
 	
+	@Override
+	public boolean removeProductFromJob(int jobID, int productID) {
+		try {
+			PreparedStatement ps = con.getPreparedStatement("DELETE FROM JobStockLink WHERE jobID = ? AND productID = ?");
+			ps.setInt(1, jobID);
+			ps.setInt(2, productID);
+			ps.executeUpdate();
+			ps.close();
+		} catch(SQLException e) {
+			return false;
+		}
+		return true;
+	}
+	
 	private Product getProduct(ResultSet rs) throws SQLException {
-		return new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), rs.getInt("bayNumber"), 
-				rs.getInt("rowNumber"), rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getLong("barCode"));
+		return new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), 
+				rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getString("barCode"));
 	}
 }

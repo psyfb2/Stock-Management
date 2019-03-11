@@ -5,22 +5,18 @@ package com.g52grp.database;
  * Represents product within Stocks table
  */
 public class Product {
-	private int productId;
+	private int productId; // unique PRIMARY KEY
 	private String productCode;
-	private String description;
-	private int bayNumber;
-	private int rowNumber;
+	private String description; // product code and description unique
 	private float pricePerUnit;
 	private int stock;
-	private long barCode;
+	private String barCode; // unique
 	
-	public Product(int productId, String productCode, String description, int bayNumber, int rowNumber,
-			float pricePerUnit, int stock, long barCode) {
+	public Product(int productId, String productCode, String description,
+			float pricePerUnit, int stock, String barCode) {
 		this.productId = productId;
 		this.productCode = productCode;
 		this.description = description;
-		this.bayNumber = bayNumber;
-		this.rowNumber = rowNumber;
 		this.pricePerUnit = pricePerUnit;
 		this.stock = stock;
 		this.barCode = barCode;
@@ -38,14 +34,6 @@ public class Product {
 		return description;
 	}
 
-	public int getBayNumber() {
-		return bayNumber;
-	}
-
-	public int getRowNumber() {
-		return rowNumber;
-	}
-
 	public float getPricePerUnit() {
 		return pricePerUnit;
 	}
@@ -54,7 +42,7 @@ public class Product {
 		return stock;
 	}
 
-	public long getBarCode() {
+	public String getBarCode() {
 		return barCode;
 	}
 	

@@ -2,7 +2,6 @@ package com.g52grp.views;
 
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -18,18 +17,18 @@ public class DisplayableJobProduct {
 	private SimpleFloatProperty price;
 	private SimpleStringProperty quantity;
 	private SimpleIntegerProperty stocksRemaining;
-	private SimpleLongProperty barcode;
+	private SimpleStringProperty barcode;
 	
 	public DisplayableJobProduct(int productId, String productCode,
 			String description, float price, String quantity,
-			int stocksRemaining, long barcode) {
+			int stocksRemaining, String barcode) {
 		this.productId = new SimpleIntegerProperty(productId);
 		this.productCode = new SimpleStringProperty(productCode);
 		this.description = new SimpleStringProperty(description);
 		this.price = new SimpleFloatProperty(price);
 		this.quantity = new SimpleStringProperty(quantity);
 		this.stocksRemaining = new SimpleIntegerProperty(stocksRemaining);
-		this.barcode = new SimpleLongProperty(barcode);
+		this.barcode = new SimpleStringProperty(barcode);
 	}
 
 	public int getProductId() {
@@ -81,11 +80,11 @@ public class DisplayableJobProduct {
 		this.stocksRemaining = new SimpleIntegerProperty(stocksRemaining);
 	}
 	
-	public long getBarcode() {
+	public String getBarcode() {
 		return barcode.get();
 	}
 	
-	public void setBarcode(long barcode) {
-		this.barcode = new SimpleLongProperty(barcode);
+	public void setBarcode(String barcode) {
+		this.barcode = new SimpleStringProperty(barcode);
 	}
 }
