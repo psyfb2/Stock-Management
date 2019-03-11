@@ -25,6 +25,8 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -121,9 +123,10 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 							c.initData(selectedJob.getJobId(), "" + selectedJob.getSiteName() + " " + selectedJob.getPlotNumber());
 
 					        Scene singleJobView = new Scene( root );
+					    
 					        
 					        Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
-					        
+
 					        theStage.setScene( singleJobView );
 					        theStage.show();
 						} catch(Exception ex) {

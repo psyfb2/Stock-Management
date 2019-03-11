@@ -23,7 +23,6 @@ public class Main extends Application {
     public static final String ADDNEWJOBPATH_FXML = "./com/g52grp/views/AddNewJob.fxml";
 	
 	public static void main(String[] args) {
-		
 		DatabaseConnection test = con;
 		if (test.openConnection()) {
 			launch(args);
