@@ -89,4 +89,12 @@ public interface ProductManager {
 	 * @return whether this operation was successful or not (should only fail if the database is somehow unavailable or if there are 0 stocks remaining for this product)
 	 */
 	boolean removeProductFromJob(int jobID, int productID);
+	
+	/**
+	 * Returns whether a product is linked to a given job
+	 * @param jobID jobID of the job to check for
+	 * @param productID productID of the job to check for
+	 * @return true if this product is registered to the job else false
+	 */
+	boolean isProductRegisteredWithJob(int jobID, int productID);
 }

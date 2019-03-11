@@ -47,9 +47,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -79,13 +76,17 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	@FXML Button backButton;
 	@FXML Label errorMessage;
 	@FXML TextField searchProductToAdd;
-	@FXML RadioButton scanInRadioButton; // selected by default
-	@FXML RadioButton scanOutRadioButton;
+	@FXML RadioButton scanInRadioButton; 
+	@FXML RadioButton scanOutRadioButton; // selected by default
 	
 	// barcode scanner is recognised as a keyboard
 	// send its input to this text hidden text field
 	@FXML TextField barcodeHiddenInput;
 	@FXML AnchorPane root;
+	
+	@FXML public void radioClicked() {
+		barcodeHiddenInput.requestFocus();
+	}
 	
 	@FXML public void focusBarcodeHiddenInput(MouseEvent e) {
 		barcodeHiddenInput.requestFocus();
@@ -104,27 +105,47 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			return;
 		}
 		
+		Product p = pm.getProductFromBarcode(barcode);
+		barcodeHiddenInput.setText("");
+		if(p == null) {
+			errorMessage.setText("Product with barcode '" + barcode + "' was not found");
+			return;
+		}
+		
 		if(scanInRadioButton.isSelected()) {
+			// first check the product scanned belongs to this job (could call isProductRegisteredWithJob)
+			// but will use tableview for efficiency, then reduce stock by -1
+			jobProductTable.getItems().stream().filter(product -> true).findFirst().ifPresent(product -> {
+				// reduce stock by -1
+				if(!pm.decreaseStocks(new JobProduct(jobId, p, -1))) {
+					errorMessage.setText("Failed to modify quantity: error accessing database");
+				}
+				int quantityUsed;
+				try {
+					quantityUsed = Integer.valueOf(product.getQuantity());
+				} catch(NumberFormatException ex) {
+					errorMessage.setText(product.getQuantity() + " could not be parsed");
+					return;
+				}
+				if(quantityUsed <= 1) { 
+					// remove the product
+					if(!pm.removeProductFromJob(jobId, p.getProductId())) {
+						errorMessage.setText("Failed to modify quantity: error accessing database");
+					}
+				}
+			});
+		} else {
 			// register scanned product to this job with quantity used 1
 			// if the product is already registered then just reduce quantity used by 1 if possible
-			Product p = pm.getProductFromBarcode(barcode);
-			if(p == null) {
-				errorMessage.setText("Product with barcode '" + barcode + "' was not found");
-				return;
-			}
 			if(p.getStock() < 1) {
 				errorMessage.setText("The Product '" + p.toString() + "' does not have enough stocks");
 				return;
 			}
 			if(!pm.decreaseStocks(new JobProduct(jobId, p, 1))) {
 				errorMessage.setText("Failed to modify quantity: error accessing database");
-			}
-			
-			
-		} else {
-			// scanning out so increase stock of the product scanned out by 1
+			}		
 		}
-		barcodeHiddenInput.setText("");
+		updateTableView();
 	}
 
 	/**

@@ -209,6 +209,22 @@ public class ConcreteProductManager implements ProductManager {
 		return true;
 	}
 	
+	@Override
+	public boolean isProductRegisteredWithJob(int jobID, int productID) {
+		try {
+			PreparedStatement ps = con.getPreparedStatement("SELECT CASE WHEN EXISTS(SELECT * FROM JobStockLink WHERE productID = ? AND jobID = ?) THEN \"true\" ELSE \"false\" END as b");
+			ps.setInt(1,  productID);
+			ps.setInt(2, jobID);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next() && rs.getString("b").equals("yes")) {
+				return true;
+			}
+			return false;
+		} catch(SQLException e) {
+			return false;
+		}
+	}
+	
 	private Product getProduct(ResultSet rs) throws SQLException {
 		return new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), 
 				rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getString("barCode"));
