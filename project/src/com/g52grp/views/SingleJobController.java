@@ -122,7 +122,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			
 			
 		} else {
-			
+			// scanning out so increase stock of the product scanned out by 1
 		}
 		barcodeHiddenInput.setText("");
 	}

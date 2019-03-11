@@ -35,11 +35,11 @@
       <Label fx:id="errorMessage" layoutX="141.0" layoutY="564.0" prefHeight="17.0" prefWidth="1000.0" />
       <TextField fx:id="searchProductToAdd" layoutX="356.0" layoutY="587.0" onAction="#addProductToJobManual" prefHeight="25.0" prefWidth="785.0" promptText="Enter product code or description for product to add" />
       <TextField fx:id="barcodeHiddenInput" layoutY="-26.0" onAction="#barcodeScanned" prefHeight="25.0" prefWidth="22.0" />
-      <RadioButton fx:id="scanInRadioButton" layoutX="136.0" layoutY="665.0" mnemonicParsing="false" selected="true" text="Scan In">
+      <RadioButton fx:id="scanInRadioButton" layoutX="141.0" layoutY="682.0" mnemonicParsing="false" selected="true" text="Scan In">
          <toggleGroup>
             <ToggleGroup fx:id="scan" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="scanOutRadioButton" layoutX="216.0" layoutY="665.0" mnemonicParsing="false" text="Scan Out" toggleGroup="$scan" />
+      <RadioButton fx:id="scanOutRadioButton" layoutX="216.0" layoutY="682.0" mnemonicParsing="false" text="Scan Out" toggleGroup="$scan" />
    </children>
 </AnchorPane>

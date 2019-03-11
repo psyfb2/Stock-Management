@@ -58,6 +58,7 @@ public class ConcreteProductManager implements ProductManager {
 			return null;
 		}
 	}
+
 	
 	@Override
 	public ArrayList<Product> getAllProductsArrayList() {
