@@ -63,13 +63,38 @@ public interface ProductManager {
 	boolean decreaseStocks(JobProduct productScannedOut);
 	
 	/**
-	 * Similair to decreaseStocks(), however only register the product with the job with a quantity used of 1.
-	 * If the job is already registered then nothing is changed (decreaseStocks() would decrease the stock by 1 even if the job existed). 
+	 * Barcode is a unique column in the database, get all the information by a product from a given barcode
+	 * @param barcode Barcode to search for
+	 * @return corresponding Product, null if none were found or if database access failed
+	 */
+	Product getProductFromBarcode(String barcode);
+	
+	/**
+	 * Similar to decreaseStocks(), however only register the product with the job with a quantity used of 1.
+	 * If the job is already registered with the product then nothing is changed (decreaseStocks() would decrease the stock by 1 even if the job existed). 
 	 * Also does check that there is enough stock unlike decreaseStocks() (i.e. if a product has 0 stock nothing will happen) 
-	 * This should be called when a user manually select product to check out for a job
+	 * This should be called when a user manually selects product to check out for a job
 	 * @param jobID jobID of the job which this product is being scanned out for
 	 * @param productID productID of the product which is being scanned out
-	 * @return whether this operation was successful or not (should only if the database is somehow unavailable or if there are 0 stocks remaining for this product)
+	 * @return whether this operation was successful or not (should only fail if the database is somehow unavailable or if there are 0 stocks remaining for this product)
 	 */
 	boolean addProductToJob(int jobID, int productID);
+	
+	/**
+	 * Removes product from a job by removing the products entry in the JobStockLink table.
+	 * Any quantity used registered for the given job and product will NOT be added back onto stocks column
+	 * in Stocks table for the given product. (can do this by calling decreaseStocks())
+	 * @param jobID jobID of the job the product is registered for
+	 * @param productID productID of the product to remove
+	 * @return whether this operation was successful or not (should only fail if the database is somehow unavailable or if there are 0 stocks remaining for this product)
+	 */
+	boolean removeProductFromJob(int jobID, int productID);
+	
+	/**
+	 * Returns whether a product is linked to a given job
+	 * @param jobID jobID of the job to check for
+	 * @param productID productID of the job to check for
+	 * @return true if this product is registered to the job else false
+	 */
+	boolean isProductRegisteredWithJob(int jobID, int productID);
 }

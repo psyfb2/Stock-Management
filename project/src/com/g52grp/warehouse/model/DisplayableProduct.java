@@ -3,7 +3,6 @@ package com.g52grp.warehouse.model;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 /**
  * 
@@ -14,9 +13,9 @@ public class DisplayableProduct {
 	private SimpleIntegerProperty productId;
 	private SimpleStringProperty productCode;
 	private SimpleStringProperty description;
-	private SimpleLongProperty barCode;
-	private SimpleIntegerProperty bayNumber;
-	private SimpleIntegerProperty rowNumber;
+	private SimpleStringProperty barCode;
+	//private SimpleIntegerProperty bayNumber;
+	//private SimpleIntegerProperty rowNumber;
 	private SimpleFloatProperty pricePerUnit;
 	private SimpleIntegerProperty quantity;
 	private SimpleIntegerProperty minQuantity;
@@ -37,15 +36,14 @@ public class DisplayableProduct {
 	 * Setting stock table parameter
 	 */
 	public DisplayableProduct(int productId, String productCode,
-			String description, long barCode, int bayNumber,
-			int rowNumber, float pricePerUnit, int quantity,
-			int minQuantity) {
+			String description, String barCode, float pricePerUnit, 
+			int quantity, int minQuantity) {
 		this.productId = new SimpleIntegerProperty(productId);
 		this.productCode = new SimpleStringProperty(productCode);
 		this.description = new SimpleStringProperty(description);
-		this.barCode = new SimpleLongProperty(barCode);
-		this.bayNumber = new SimpleIntegerProperty(bayNumber);
-		this.rowNumber = new SimpleIntegerProperty(rowNumber);
+		this.barCode = new SimpleStringProperty(barCode);
+		//this.bayNumber = new SimpleIntegerProperty(bayNumber);
+		//this.rowNumber = new SimpleIntegerProperty(rowNumber);
 		this.pricePerUnit = new SimpleFloatProperty(pricePerUnit);
 		this.quantity = new SimpleIntegerProperty(quantity);
 		this.minQuantity = new SimpleIntegerProperty(minQuantity);	
@@ -101,15 +99,15 @@ public class DisplayableProduct {
 		this.minQuantity = new SimpleIntegerProperty(minQuantity);
 	}
 	
-	public long getBarCode() {
+	public String getBarCode() {
 		return barCode.get();
 	}
 	
-	public void setBarcode(long barCode) {
-		this.barCode = new SimpleLongProperty(barCode);
+	public void setBarcode(String barCode) {
+		this.barCode = new SimpleStringProperty(barCode);
 	}
 	
-	public int getRowNumber() {
+	/*public int getRowNumber() {
 		return rowNumber.get();
 	}
 	
@@ -123,7 +121,7 @@ public class DisplayableProduct {
 	
 	public void setBayNumber(int bayNumber) {
 		this.bayNumber = new SimpleIntegerProperty(bayNumber);
-	}
+	}*/
 	
 	public boolean getDelete() {
 		return delete.get();

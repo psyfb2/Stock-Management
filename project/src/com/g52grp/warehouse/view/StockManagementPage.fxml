@@ -62,20 +62,18 @@
             <TableColumn fx:id="codeCol" prefWidth="75.0" text="code" />
             <TableColumn fx:id="descriptionCol" prefWidth="179.0" text="description" />
             <TableColumn fx:id="barcodeCol" prefWidth="127.0" text="barcode" />
-            <TableColumn fx:id="bayNoCol" prefWidth="98.0" text="bayNo" />
-            <TableColumn fx:id="rowNoCol" prefWidth="132.0" text="rowNo" />
             <TableColumn fx:id="pricePerUnitCol" prefWidth="162.0" text="pricePerUnit" />
             <TableColumn fx:id="quantityCol" minWidth="0.0" prefWidth="151.0" text="quantity" />
             <TableColumn fx:id="minQuantityCol" prefWidth="214.0" text="minimum quantity" />
             <TableColumn fx:id="deleteCol" prefWidth="92.0" text="Delete" visible="false" />
          </columns>
       </TableView>
-      <Text fx:id="totalValue" layoutX="80.0" layoutY="484.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="173.42579168081284">
+      <Text fx:id="totalValue" layoutX="80.0" layoutY="466.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="294.7591504454613">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="mostUsedProduct" layoutX="13.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="307.625">
+      <Text fx:id="mostUsedProduct" layoutX="13.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="676.2917175292969">
          <font>
             <Font size="18.0" />
          </font>

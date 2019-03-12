@@ -58,6 +58,7 @@ public class ConcreteProductManager implements ProductManager {
 			return null;
 		}
 	}
+
 	
 	@Override
 	public ArrayList<Product> getAllProductsArrayList() {
@@ -142,6 +143,25 @@ public class ConcreteProductManager implements ProductManager {
 	}
 	
 	@Override
+	public Product getProductFromBarcode(String barcode) {
+		try {
+			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Stocks WHERE barcode = ?");
+			ps.setString(1, barcode);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				Product p = getProduct(rs);
+				ps.close();
+				return p;
+			} else {
+				ps.close();
+				return null;
+			}
+		} catch(SQLException e) {
+			return null;
+		}
+	}
+	
+	@Override
 	public boolean addProductToJob(int jobID, int productID) {
 		try {
 			// check the product with productID has stocks more then 0
@@ -173,6 +193,36 @@ public class ConcreteProductManager implements ProductManager {
 			return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public boolean removeProductFromJob(int jobID, int productID) {
+		try {
+			PreparedStatement ps = con.getPreparedStatement("DELETE FROM JobStockLink WHERE jobID = ? AND productID = ?");
+			ps.setInt(1, jobID);
+			ps.setInt(2, productID);
+			ps.executeUpdate();
+			ps.close();
+		} catch(SQLException e) {
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean isProductRegisteredWithJob(int jobID, int productID) {
+		try {
+			PreparedStatement ps = con.getPreparedStatement("SELECT CASE WHEN EXISTS(SELECT * FROM JobStockLink WHERE productID = ? AND jobID = ?) THEN \"true\" ELSE \"false\" END as b");
+			ps.setInt(1,  productID);
+			ps.setInt(2, jobID);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next() && rs.getString("b").equals("yes")) {
+				return true;
+			}
+			return false;
+		} catch(SQLException e) {
+			return false;
+		}
 	}
 	
 	//new added function
@@ -209,12 +259,7 @@ public class ConcreteProductManager implements ProductManager {
 		}
 		
 	}
-	
-	private Product getProduct(ResultSet rs) throws SQLException {
-		return new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), rs.getInt("bayNumber"), 
-				rs.getInt("rowNumber"), rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getLong("barCode"));
-	}
-
+		
 	/**
 	 * @author psyys4
 	 * @param productID
@@ -237,5 +282,10 @@ public class ConcreteProductManager implements ProductManager {
 			return null;
 		}	
 		return jobIDs;
+	}
+	
+	private Product getProduct(ResultSet rs) throws SQLException {
+		return new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), 
+				rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getString("barCode"));
 	}
 }

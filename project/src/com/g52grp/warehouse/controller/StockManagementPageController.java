@@ -99,8 +99,8 @@ public class StockManagementPageController {
 	@FXML private TableColumn<DisplayableProduct, String> codeCol;
 	@FXML private TableColumn<DisplayableProduct, String> descriptionCol;
 	@FXML private TableColumn<DisplayableProduct, Long> barcodeCol;
-	@FXML private TableColumn<DisplayableProduct, Integer> bayNoCol;
-	@FXML private TableColumn<DisplayableProduct, Integer> rowNoCol;
+	//@FXML private TableColumn<DisplayableProduct, Integer> bayNoCol;
+	//@FXML private TableColumn<DisplayableProduct, Integer> rowNoCol;
 	@FXML private TableColumn<DisplayableProduct, Float> pricePerUnitCol;
 	@FXML private TableColumn<DisplayableProduct, Integer> quantityCol;
 	@FXML private TableColumn<DisplayableProduct, Integer> minQuantityCol;
@@ -181,22 +181,22 @@ public class StockManagementPageController {
  		descriptionCol.setPrefWidth(stockTable.getPrefWidth()/30 * 8);
  		
  		barcodeCol.setCellValueFactory(new PropertyValueFactory<>("barCode"));
- 		barcodeCol.setPrefWidth(stockTable.getPrefWidth()/30 * 4);
+ 		barcodeCol.setPrefWidth(stockTable.getPrefWidth()/30 * 5);
  		
- 		bayNoCol.setCellValueFactory(new PropertyValueFactory<>("bayNumber"));
+ 		/*bayNoCol.setCellValueFactory(new PropertyValueFactory<>("bayNumber"));
  		bayNoCol.setPrefWidth(stockTable.getPrefWidth()/30 * 2);
  		
  		rowNoCol.setCellValueFactory(new PropertyValueFactory<>("rowNumber"));
- 		rowNoCol.setPrefWidth(stockTable.getPrefWidth()/30*2);
+ 		rowNoCol.setPrefWidth(stockTable.getPrefWidth()/30*2);*/
  		
  		pricePerUnitCol.setCellValueFactory(new PropertyValueFactory<>("pricePerUnit"));
- 		pricePerUnitCol.setPrefWidth(stockTable.getPrefWidth()/30*3);
+ 		pricePerUnitCol.setPrefWidth(stockTable.getPrefWidth()/30*4);
  		
  		quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
- 		quantityCol.setPrefWidth(stockTable.getPrefWidth()/30 *3);
+ 		quantityCol.setPrefWidth(stockTable.getPrefWidth()/30 *4);
  		
  		minQuantityCol.setCellValueFactory(new PropertyValueFactory<>("minQuantity"));
- 		minQuantityCol.setPrefWidth(stockTable.getPrefWidth()/30 * 1.95);
+ 		minQuantityCol.setPrefWidth(stockTable.getPrefWidth()/30 * 2.95);
  		
 		deleteCol.setCellFactory(CheckBoxTableCell.forTableColumn(deleteCol));
 	
@@ -312,23 +312,23 @@ public class StockManagementPageController {
 	 private void deleteButtonClicked() {
  		idCol.setPrefWidth(stockTable.getPrefWidth()/100 *7);
  		
- 		codeCol.setPrefWidth(stockTable.getPrefWidth()/100 *10);
+ 		codeCol.setPrefWidth(stockTable.getPrefWidth()/100 *11);
  		
- 		descriptionCol.setPrefWidth(stockTable.getPrefWidth()/100 * 25);
+ 		descriptionCol.setPrefWidth(stockTable.getPrefWidth()/100 * 26);
  		
- 		barcodeCol.setPrefWidth(stockTable.getPrefWidth()/100 * 15);
+ 		barcodeCol.setPrefWidth(stockTable.getPrefWidth()/100 * 16);
  		
- 		bayNoCol.setPrefWidth(stockTable.getPrefWidth()/100 * 7);
+ 		//bayNoCol.setPrefWidth(stockTable.getPrefWidth()/100 * 7);
  		
- 		rowNoCol.setPrefWidth(stockTable.getPrefWidth()/100 * 7);
+ 		//rowNoCol.setPrefWidth(stockTable.getPrefWidth()/100 * 7);
  		
- 		pricePerUnitCol.setPrefWidth(stockTable.getPrefWidth()/100 * 7);
+ 		pricePerUnitCol.setPrefWidth(stockTable.getPrefWidth()/100 * 8);
  		
- 		quantityCol.setPrefWidth(stockTable.getPrefWidth() / 100 * 7);
+ 		quantityCol.setPrefWidth(stockTable.getPrefWidth() / 100 * 8);
  		
- 		minQuantityCol.setPrefWidth(stockTable.getPrefWidth() / 100 * 7);
+ 		minQuantityCol.setPrefWidth(stockTable.getPrefWidth() / 100 * 8);
  		
- 		deleteCol.setPrefWidth(stockTable.getPrefWidth() / 100 * 8);
+ 		deleteCol.setPrefWidth(stockTable.getPrefWidth() / 100 * 9);
  		
 		deleteCol.setVisible(true);
 		stockTable.setEditable(true);	
@@ -378,17 +378,17 @@ public class StockManagementPageController {
 
  		descriptionCol.setPrefWidth(stockTable.getPrefWidth()/30 * 8);
  		
- 		barcodeCol.setPrefWidth(stockTable.getPrefWidth()/30 * 4);
+ 		barcodeCol.setPrefWidth(stockTable.getPrefWidth()/30 * 5);
 
- 		bayNoCol.setPrefWidth(stockTable.getPrefWidth()/30 * 2);
+ 		//bayNoCol.setPrefWidth(stockTable.getPrefWidth()/30 * 2);
 
- 		rowNoCol.setPrefWidth(stockTable.getPrefWidth()/30*2);
+ 		//rowNoCol.setPrefWidth(stockTable.getPrefWidth()/30*2);
 
- 		pricePerUnitCol.setPrefWidth(stockTable.getPrefWidth()/30*3);
+ 		pricePerUnitCol.setPrefWidth(stockTable.getPrefWidth()/30*4);
 
- 		quantityCol.setPrefWidth(stockTable.getPrefWidth()/30 *3);
+ 		quantityCol.setPrefWidth(stockTable.getPrefWidth()/30 *4);
 
- 		minQuantityCol.setPrefWidth(stockTable.getPrefWidth()/30 * 2);
+ 		minQuantityCol.setPrefWidth(stockTable.getPrefWidth()/30 * 3);
 		showProducts();
 		saveButton.setVisible(false);
 		deleteCol.setVisible(false);
@@ -409,8 +409,8 @@ public class StockManagementPageController {
 		
 		for(Product product : allProducts) {
 			stocks.add(new DisplayableProduct(product.getProductId(), product.getProductCode(),
-					product.getDescription(), product.getBarCode(), product.getBayNumber(), 
-					product.getRowNumber(), product.getPricePerUnit(), product.getStock(), 5));
+					product.getDescription(), product.getBarCode(),  product.getPricePerUnit(), 
+					product.getStock(), 5));
 		}		
 		stockTable.setItems(stocks);
 	}
