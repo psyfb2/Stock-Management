@@ -19,6 +19,7 @@ import com.g52grp.stockout.ConcreteProductManager;
 import com.g52grp.stockout.JobManager;
 import com.g52grp.stockout.ProductManager;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,6 +32,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
@@ -41,6 +43,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -65,12 +71,83 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	@FXML TableColumn<DisplayableJobProduct, String> quantityUsed; // String because needs to be editable
 	@FXML TableColumn<DisplayableJobProduct, Integer> stocksRemaining;
 	@FXML TableColumn<DisplayableJobProduct, Integer> productId; // hidden from the user
-	@FXML TableColumn<DisplayableJobProduct, Long> barcode; // hidden from the user
+	@FXML TableColumn<DisplayableJobProduct, String> barcode; // hidden from the user
 	@FXML Button deleteJobButton;
 	@FXML Button backButton;
 	@FXML Label errorMessage;
 	@FXML TextField searchProductToAdd;
+	@FXML RadioButton scanInRadioButton; 
+	@FXML RadioButton scanOutRadioButton; // selected by default
 	
+	// barcode scanner is recognised as a keyboard
+	// send its input to this text hidden text field
+	@FXML TextField barcodeHiddenInput;
+	@FXML AnchorPane root;
+	
+	@FXML public void radioClicked() {
+		barcodeHiddenInput.requestFocus();
+	}
+	
+	@FXML public void focusBarcodeHiddenInput(MouseEvent e) {
+		barcodeHiddenInput.requestFocus();
+	}
+	
+	@FXML public void barcodeScanned(ActionEvent e) {
+		errorMessage.setText("");
+		int minLength = 4;
+		String barcode = barcodeHiddenInput.getText();
+		
+		if(!barcode.matches("[0-9]+")) {
+			return;
+		}
+		
+		if(barcode.length() < minLength) {
+			return;
+		}
+		
+		Product p = pm.getProductFromBarcode(barcode);
+		barcodeHiddenInput.setText("");
+		if(p == null) {
+			errorMessage.setText("Product with barcode '" + barcode + "' was not found");
+			return;
+		}
+		
+		if(scanInRadioButton.isSelected()) {
+			// first check the product scanned belongs to this job (could call isProductRegisteredWithJob)
+			// but will use tableview for efficiency, then reduce stock by -1
+			jobProductTable.getItems().stream().filter(product -> true).findFirst().ifPresent(product -> {
+				// reduce stock by -1
+				if(!pm.decreaseStocks(new JobProduct(jobId, p, -1))) {
+					errorMessage.setText("Failed to modify quantity: error accessing database");
+				}
+				int quantityUsed;
+				try {
+					quantityUsed = Integer.valueOf(product.getQuantity());
+				} catch(NumberFormatException ex) {
+					errorMessage.setText(product.getQuantity() + " could not be parsed");
+					return;
+				}
+				if(quantityUsed <= 1) { 
+					// remove the product
+					if(!pm.removeProductFromJob(jobId, p.getProductId())) {
+						errorMessage.setText("Failed to modify quantity: error accessing database");
+					}
+				}
+			});
+		} else {
+			// register scanned product to this job with quantity used 1
+			// if the product is already registered then just reduce quantity used by 1 if possible
+			if(p.getStock() < 1) {
+				errorMessage.setText("The Product '" + p.toString() + "' does not have enough stocks");
+				return;
+			}
+			if(!pm.decreaseStocks(new JobProduct(jobId, p, 1))) {
+				errorMessage.setText("Failed to modify quantity: error accessing database");
+			}		
+		}
+		updateTableView();
+	}
+
 	/**
 	 * Called when the back button is clicked (to go back to the Job Menu)
 	 * @param e
@@ -163,8 +240,10 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	@FXML public void changeQuantityUsedCellEvent(@SuppressWarnings("rawtypes") CellEditEvent edittedCell) {
 		errorMessage.setText("");
 		DisplayableJobProduct jobProductSelected = jobProductTable.getSelectionModel().getSelectedItem();
+		barcodeHiddenInput.requestFocus();
 		int newQuantityUsed;
 		int oldQuantityUsed;
+		
 		try {
 			newQuantityUsed = Integer.parseInt(edittedCell.getNewValue().toString());
 			oldQuantityUsed = Integer.parseInt(jobProductSelected.getQuantity());
@@ -174,7 +253,18 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			return;
 		}
 		
-		if(newQuantityUsed < 1) {
+		boolean removeProduct = false;
+		if(newQuantityUsed == 0) {
+			// allow the user to delete a product from a job if they set quantity used to 0
+			// display a confirmation modal to confirm this with the user
+			removeProduct = removeProductFromJob(jobProductSelected.getProductCode() + jobProductSelected.getDescription());
+			if(!removeProduct) {
+				jobProductTable.refresh();
+				return;
+			}
+		}
+		
+		if(newQuantityUsed < 0) {
 			errorMessage.setText("Products must have a minimum quantity used of 1");
 			jobProductTable.refresh();
 			return;
@@ -190,7 +280,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			// because this is the number we would like to decrease the stocks by
 			JobProduct jobProduct = new JobProduct(jobId, new Product(jobProductSelected.getProductId(), 
 					jobProductSelected.getProductCode(), jobProductSelected.getDescription(),
-					0, 0, jobProductSelected.getPrice(), jobProductSelected.getStocksRemaining(), 
+					jobProductSelected.getPrice(), jobProductSelected.getStocksRemaining(), 
 					jobProductSelected.getBarcode()), stockReduction);
 			if(!pm.decreaseStocks(jobProduct)) {
 				errorMessage.setText("Failed to modify quantity: error accessing database");
@@ -198,9 +288,20 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 				return;
 			}
 			
+			if(removeProduct) {
+				if(!pm.removeProductFromJob(jobId, jobProductSelected.getProductId())) {
+					errorMessage.setText("Failed to modify quantity: error accessing database");
+					jobProductTable.refresh();
+					return;
+				}
+				updateTableView();
+				return;
+			}
+			
 			// update table so it matches the database, could call updateTableView() but this is costly
 			jobProductSelected.setQuantity(Integer.toString(newQuantityUsed));
 			jobProductSelected.setStocksRemaining(jobProductSelected.getStocksRemaining() - stockReduction);
+			totalPrice.setText(Float.toString(Float.parseFloat(totalPrice.getText()) + stockReduction * jobProductSelected.getPrice()));
 			jobProductTable.refresh();
 		} else {
 			errorMessage.setText("You cannot change the quantity used from " + jobProductSelected.getQuantity() + " to " + newQuantityUsed + " because you do not have enough stocks");
@@ -280,6 +381,22 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			errorMessage.setText("Failed to load: " + Main.DELETEIMAGEPATH);
 		}
 		
+		// add event handlers for barcode scanner
+		Platform.runLater(() -> {
+			barcodeHiddenInput.requestFocus();
+			barcodeHiddenInput.getScene().addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+				if(key.getCode() == KeyCode.ENTER) {
+					barcodeScanned(new ActionEvent());
+				}
+				else if(!key.getText().matches("[0-9]+")) {
+					barcodeHiddenInput.setText("");
+				}
+				else {
+					barcodeHiddenInput.setText(barcodeHiddenInput.getText() + key.getText());
+				}
+	      });
+		});
+		
 		// auto complete text field
 		ArrayList<Product> allProducts = pm.getAllProductsArrayList();
 		
@@ -308,5 +425,29 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		
 		// population of the table initially is done in initData()
 		// reason for this is initialize (this method) is called before jobId can be passed to this class using initData() 
+	}
+	
+	/**
+	 * Displays confirmation to the user if they would like to delete the given product from this job
+	 * @param productName The product to remove (this is displayed to the user)
+	 * @return true if user clicked ok button, false if they cancelled
+	 */
+	private boolean removeProductFromJob(String productName) {
+		Alert confirmation = new Alert(AlertType.CONFIRMATION);
+		confirmation.setTitle("Remove Product?");
+		confirmation.setHeaderText(null);
+		confirmation.setContentText("Setting the quantity to 0 will remove " + productName + " from this job. Are you sure you would like to do this?");
+		// add the RJB logo to the dialog box
+		Stage stage = (Stage) confirmation.getDialogPane().getScene().getWindow();
+		try {
+			stage.getIcons().add(new Image(new FileInputStream(Main.LOGOPATH)));
+		} catch (FileNotFoundException ex) {
+		}
+		Optional <ButtonType> okButton = confirmation.showAndWait();
+		
+		if(okButton.get() == ButtonType.OK) {
+			return true;
+		}
+		return false;
 	}
 }

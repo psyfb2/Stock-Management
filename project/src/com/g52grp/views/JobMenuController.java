@@ -121,9 +121,9 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 							c.initData(selectedJob.getJobId(), "" + selectedJob.getSiteName() + " " + selectedJob.getPlotNumber());
 
 					        Scene singleJobView = new Scene( root );
-					        
+					
 					        Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
-					        
+
 					        theStage.setScene( singleJobView );
 					        theStage.show();
 						} catch(Exception ex) {

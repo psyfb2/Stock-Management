@@ -12,7 +12,7 @@ import com.g52grp.stockout.ConcreteProductManager;
 import com.g52grp.warehouse.model.BasicParameter;
 import com.g52grp.warehouse.model.DisplayableProduct;
 import com.g52grp.warehouse.model.HomePage;
-import com.g52grp.warehouse.model.Main;
+import com.g52grp.main.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -31,7 +31,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -99,8 +98,6 @@ public class StockManagementPageController {
 	@FXML private TableColumn<DisplayableProduct, String> codeCol;
 	@FXML private TableColumn<DisplayableProduct, String> descriptionCol;
 	@FXML private TableColumn<DisplayableProduct, Long> barcodeCol;
-	//@FXML private TableColumn<DisplayableProduct, Integer> bayNoCol;
-	//@FXML private TableColumn<DisplayableProduct, Integer> rowNoCol;
 	@FXML private TableColumn<DisplayableProduct, Float> pricePerUnitCol;
 	@FXML private TableColumn<DisplayableProduct, Integer> quantityCol;
 	@FXML private TableColumn<DisplayableProduct, Integer> minQuantityCol;
@@ -182,12 +179,6 @@ public class StockManagementPageController {
  		
  		barcodeCol.setCellValueFactory(new PropertyValueFactory<>("barCode"));
  		barcodeCol.setPrefWidth(stockTable.getPrefWidth()/30 * 5);
- 		
- 		/*bayNoCol.setCellValueFactory(new PropertyValueFactory<>("bayNumber"));
- 		bayNoCol.setPrefWidth(stockTable.getPrefWidth()/30 * 2);
- 		
- 		rowNoCol.setCellValueFactory(new PropertyValueFactory<>("rowNumber"));
- 		rowNoCol.setPrefWidth(stockTable.getPrefWidth()/30*2);*/
  		
  		pricePerUnitCol.setCellValueFactory(new PropertyValueFactory<>("pricePerUnit"));
  		pricePerUnitCol.setPrefWidth(stockTable.getPrefWidth()/30*4);

@@ -1,31 +1,22 @@
 package com.g52grp.warehouse.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
 
-import com.g52grp.database.Product;
-import com.g52grp.stockout.ConcreteProductManager;
+import java.io.IOException;
+
+import com.g52grp.main.Main;
 import com.g52grp.warehouse.model.BasicParameter;
-import com.g52grp.warehouse.model.DisplayableProduct;
-import com.g52grp.warehouse.model.Main;
 import com.g52grp.warehouse.model.StockManagementPage;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Line;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 /**
  * 
@@ -88,10 +79,16 @@ public class HomePageController {
       	 jobPicture.setFitHeight(jobManagementButton.getPrefHeight());
     }
     
-
     @FXML
-    void jobManagementButtonClicked(MouseEvent event) {
+    void jobManagementButtonClicked(MouseEvent e) throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(Main.JOBMENUPATH_FXML));
+		Parent root = loader.load();
+        Scene jobMenu = new Scene(root, 1280, 720);
+  
+        Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
 
+        theStage.setScene( jobMenu );
+        theStage.show();
     }
 
     /**
