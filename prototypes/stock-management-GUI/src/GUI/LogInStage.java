@@ -10,9 +10,10 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
+
 public class LogInStage extends Application{
 	@Override
-    public void start(Stage theStage) {
+    public void start(Stage theStage){
 		try {			
 			Parent root = FXMLLoader.load(getClass().getResource("/view/LogInStage.fxml"));
 			theStage.setTitle( "RJB" );

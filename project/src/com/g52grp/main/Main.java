@@ -1,55 +1,39 @@
 package com.g52grp.main;
 
 import com.g52grp.database.*;
-import com.g52grp.stockout.*;
+import com.g52grp.warehouse.model.HomePage;
 
-public class Main {
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+	// only create ONE connection for the whole program (take DatabaseConnection object as a parameter for your classes)
+    public static final DatabaseConnection con = new DatabaseConnection();
+    public static final String LOGOPATH = "./resources/rjb.png";
+    public static final String BACKIMAGEPATH = "./resources/backButton.png";
+    public static final String DELETEIMAGEPATH = "./resources/deleteJobButton.png";
+    public static final String JOBMENUPATH_FXML = "./com/g52grp/views/JobMenu.fxml";
+    public static final String SINGLEJOBPATH_FXML = "./com/g52grp/views/SingleJob.fxml";
+    public static final String ADDNEWJOBPATH_FXML = "./com/g52grp/views/AddNewJob.fxml";
+    public static final String HOMEPAGE_FXML = "/com/g52grp/warehouse/view/HomePage.fxml";
 	
 	public static void main(String[] args) {
-		// only create ONE connection for the whole program (take DatabaseConnection object as a parameter for your classes)
-		DatabaseConnection test = new DatabaseConnection();
-		
-		// connection always fails in uni for some reason, must be the damn firewall
-		if (test.openConnection()) {
-			ProductManager pm = new ConcreteProductManager(test);
-			
-			System.out.println("Successful Connection");
-			/*
-			Product p = new Product(1, "DetaDB171", "Lounge Plate Black Box", 0, 0, 1.0f, 10, 0);
-			JobProduct[] productsScannedOut = {new JobProduct(1, p, 5)};
-			pm.decreaseStocks(productsScannedOut);
-			*/
-			
-			/*
-			Product[] products = pm.getAllProducts();
-			for(Product p : products) {
-				System.out.println(p.getProductId() + " " + p.getDescription());
-			}
-			*/
-			
-			/*
-			JobProduct[] jobProducts= pm.getProductsFromJobId(1);
-			for(JobProduct p : jobProducts) {
-				System.out.println(p.getJobId() + " " + p.getProduct().getProductId() + " " + p.getQuantityUsed());
-			}
-			*/
-			
-			JobManager jm = new ConcreteJobManager(test);
-			/*
-			jm.addNewJobToDb("Added from java", 10);
-			*/
-			
-
-			Job[] jobs = jm.getAllJobs();
-			for(Job j : jobs) {
-				System.out.println(j.getJobId() + " " + j.getSiteName());
-			}
-			
-			test.closeConnection();
+		if (con.openConnection()) {
+			launch(args);
 		} else {
 			System.out.println("Connection Failed");
 		}
-		
+	}
+	
+	@Override
+	public void start(Stage theStage) throws Exception {
+		new HomePage(theStage);
+	}
+	
+	@Override
+	public void stop() throws Exception{
+	    con.closeConnection();
+	    super.stop();
 	}
 
 }

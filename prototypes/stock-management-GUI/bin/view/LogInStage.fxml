@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogInStageController">
+   <children>
+      <Button fx:id="enterButton" layoutX="175.0" layoutY="170.0" mnemonicParsing="false" onMouseClicked="#enterClicked" onMouseEntered="#enterEntered" onMouseExited="#enterExited" prefHeight="36.0" prefWidth="75.0" style="-fx-background-color: null;" text="Enter">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Label layoutX="68.0" layoutY="113.0" prefHeight="24.0" prefWidth="56.0" text="PIN:">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="89.0" fitWidth="344.0" layoutX="40.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
+      <PasswordField layoutX="141.0" layoutY="112.0" prefHeight="35.0" prefWidth="158.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </PasswordField>
+   </children>
+</AnchorPane>

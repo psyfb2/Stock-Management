@@ -31,7 +31,7 @@ public class Job {
 		return plotNumber;
 	}
 
-	public Date getDate() {
-		return date;
+	public String getDate() {
+		return date.toString();
 	}
 }

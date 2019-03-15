@@ -5,10 +5,11 @@ import java.sql.*;
 /**
  * @author psyfb2
  * Connect to the mysql database
+ * Tables: Jobs, Stocks, JobStockLink
  */
 public class DatabaseConnection {
 	private static final String endPoint = "stocks.cv2g2wcvs9bq.us-east-1.rds.amazonaws.com";
-	private static final String port = "3306";
+	private static final String port = "8080";
 	private static final String userName = "psyfb2";
 	private static final String pw = "G52GROUPPROJECT";
 	private static final String dbName = "stocks";

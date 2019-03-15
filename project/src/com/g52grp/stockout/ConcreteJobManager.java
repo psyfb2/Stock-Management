@@ -19,15 +19,24 @@ public class ConcreteJobManager implements JobManager {
 	@Override
 	public boolean addNewJobToDb(String siteName, int plotNumber) {
 		try {
-			PreparedStatement ps = con.getPreparedStatement("INSERT INTO Jobs (siteName, plotNumber, startDate) VALUES (?, ?, CURDATE())");
+			// check this job doesn't already exist, if it does return false
+			PreparedStatement ps = con.getPreparedStatement("SELECT CASE WHEN EXISTS(SELECT * FROM Jobs WHERE siteName = ? AND plotNumber = ?) THEN 'true' ELSE 'false' END as jobExists");
+			ps.setString(1, siteName);
+			ps.setInt(1, plotNumber);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next() && rs.getString("jobExists").equals("true")) {
+				return false;
+			}
+			
+			ps = con.getPreparedStatement("INSERT INTO Jobs (siteName, plotNumber, startDate) VALUES (?, ?, CURDATE())");
 			ps.setString(1, siteName);
 			ps.setInt(2, plotNumber);
 			ps.executeUpdate();
 			ps.close();
-			return true;
 		} catch (SQLException e) {
 			return false;
 		}
+		return true;
 	}
 
 	@Override
@@ -46,6 +55,19 @@ public class ConcreteJobManager implements JobManager {
 		} catch(SQLException e) {
 			return null;
 		}
+	}
+
+	@Override
+	public boolean deleteJob(int jobID) {
+		try {
+			PreparedStatement ps = con.getPreparedStatement("DELETE FROM Jobs WHERE jobID = ?");
+			ps.setInt(1, jobID);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			return false;
+		}
+		return true;
 	}
 
 }
