@@ -14,8 +14,6 @@ public class DisplayableProduct {
 	private SimpleStringProperty productCode;
 	private SimpleStringProperty description;
 	private SimpleStringProperty barCode;
-	//private SimpleIntegerProperty bayNumber;
-	//private SimpleIntegerProperty rowNumber;
 	private SimpleFloatProperty pricePerUnit;
 	private SimpleIntegerProperty quantity;
 	private SimpleIntegerProperty minQuantity;
@@ -27,8 +25,6 @@ public class DisplayableProduct {
 	 * @param productCode
 	 * @param description
 	 * @param barCode
-	 * @param bayNumber
-	 * @param rowNumber
 	 * @param pricePerUnit
 	 * @param quantity
 	 * @param minQuantity
@@ -42,8 +38,6 @@ public class DisplayableProduct {
 		this.productCode = new SimpleStringProperty(productCode);
 		this.description = new SimpleStringProperty(description);
 		this.barCode = new SimpleStringProperty(barCode);
-		//this.bayNumber = new SimpleIntegerProperty(bayNumber);
-		//this.rowNumber = new SimpleIntegerProperty(rowNumber);
 		this.pricePerUnit = new SimpleFloatProperty(pricePerUnit);
 		this.quantity = new SimpleIntegerProperty(quantity);
 		this.minQuantity = new SimpleIntegerProperty(minQuantity);	
@@ -94,7 +88,6 @@ public class DisplayableProduct {
 		return minQuantity.get();
 	}
 	
-
 	public void setMinQuantity(int minQuantity) {
 		this.minQuantity = new SimpleIntegerProperty(minQuantity);
 	}
@@ -106,22 +99,6 @@ public class DisplayableProduct {
 	public void setBarcode(String barCode) {
 		this.barCode = new SimpleStringProperty(barCode);
 	}
-	
-	/*public int getRowNumber() {
-		return rowNumber.get();
-	}
-	
-	public void setRowNumber(int rowNumber) {
-		this.rowNumber = new SimpleIntegerProperty(rowNumber);
-	}
-	
-	public int getBayNumber() {
-		return bayNumber.get();
-	}
-	
-	public void setBayNumber(int bayNumber) {
-		this.bayNumber = new SimpleIntegerProperty(bayNumber);
-	}*/
 	
 	public boolean getDelete() {
 		return delete.get();

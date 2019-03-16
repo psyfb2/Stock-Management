@@ -283,9 +283,31 @@ public class ConcreteProductManager implements ProductManager {
 		}	
 		return jobIDs;
 	}
+		
+	//new added function
+	//add a totally new product into the database
+	public boolean addNewProduct(String code, String description, String barCode) {
+		PreparedStatement ps;
+		try { 
+			if(barCode != null) {
+				ps = con.getPreparedStatement("insert into Stocks (productCode, description, barcode, stock) values (?, ?, ?, 0)");
+				ps.setString(3, barCode);
+			}else {
+				ps = con.getPreparedStatement("insert into Stocks (productCode, description, barcode, stock) values (?, ?, null, 0)");				
+			}
+			ps.setString(1, code);
+			ps.setString(2, description);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(e);
+			return false;
+		}		
+		return true;		
+	}
 	
 	private Product getProduct(ResultSet rs) throws SQLException {
 		return new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), 
-				rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getString("barCode"));
+				rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getString("barCode"), rs.getInt("minQuantity"));
 	}
 }

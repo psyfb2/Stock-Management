@@ -1,5 +1,6 @@
 package com.g52grp.warehouse.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +10,7 @@ import org.controlsfx.control.textfield.TextFields;
 
 import com.g52grp.database.Product;
 import com.g52grp.stockout.ConcreteProductManager;
+import com.g52grp.warehouse.model.AddProductPage;
 import com.g52grp.warehouse.model.BasicParameter;
 import com.g52grp.warehouse.model.DisplayableProduct;
 import com.g52grp.warehouse.model.HomePage;
@@ -30,8 +32,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -44,7 +48,7 @@ import javafx.util.Callback;
 public class StockManagementPageController {
 	
     @FXML
-    private Pane stockManagementPane;
+    private Button stockButton;
 
     @FXML
     private Button homePageButton;
@@ -53,146 +57,65 @@ public class StockManagementPageController {
     private Button addButton;
 
     @FXML
-    private ImageView addImage;
-
-    @FXML
     private Button deleteButton;
-
-    @FXML
-    private ImageView deleteImage;
 
     @FXML
     private Button refreshButton;
 
     @FXML
-    private ImageView refreshImage;
-
-    @FXML
-    private Button stockButton;
-
-    @FXML
     private Button saveButton;
 
     @FXML
-    private ImageView saveImage;
+    private TextField searchProduct;
+    
+
+    @FXML
+    private Text totalValue;
+
+    @FXML
+    private Text mostUsedProduct;
 
     @FXML
     private Label errorMessage;
-    
-	@FXML 
-	private Text totalValue;
-	@FXML 
-	private Text mostUsedProduct;
-	
-	@FXML 
-	private TextField searchProduct;	
-	
-	@FXML
-	private Label totalValueLabel;
-	
-	@FXML
-	private Label mostUsedProductLabel;
 
 	@FXML private TableView<DisplayableProduct> stockTable;
-	@FXML private TableColumn<DisplayableProduct, Integer>  idCol;
 	@FXML private TableColumn<DisplayableProduct, String> codeCol;
 	@FXML private TableColumn<DisplayableProduct, String> descriptionCol;
-	@FXML private TableColumn<DisplayableProduct, Long> barcodeCol;
+	@FXML private TableColumn<DisplayableProduct, String> barcodeCol;
 	@FXML private TableColumn<DisplayableProduct, Float> pricePerUnitCol;
 	@FXML private TableColumn<DisplayableProduct, Integer> quantityCol;
 	@FXML private TableColumn<DisplayableProduct, Integer> minQuantityCol;
 	@FXML private TableColumn<DisplayableProduct, Boolean> deleteCol;
+	private double[] tableWidth = new double[7];
 	
 	private static ObservableList<DisplayableProduct> stocks =  FXCollections.observableArrayList();
 	private ConcreteProductManager pm = new ConcreteProductManager(Main.con);
 	
     @FXML
     private void initialize() {
-    	
-    	//initialize homePane
-    	stockManagementPane.setPrefSize(BasicParameter.getScrSize().getWidth(), BasicParameter.getScrSize().getHeight());
-    	stockManagementPane.setLayoutX(0);
-    	 stockManagementPane.setLayoutY(0);
-    	 
-    	 
-     	//initialize homePageButton
-    	 homePageButton.setPrefSize(BasicParameter.getButton2Width(), BasicParameter.getButton2Height());
-    	 homePageButton.setLayoutX(0);
-    	 homePageButton.setLayoutY(0);
-
-    	 //initialize stockButton
-    	 stockButton.setPrefSize(BasicParameter.getButton2Width(), BasicParameter.getButton2Height());
-    	 stockButton.setLayoutX(homePageButton.getPrefWidth());
-    	 stockButton.setLayoutY(0);
-    	 
-     	//initialize addButton
-    	 addButton.setPrefSize(BasicParameter.getButton3Width(), BasicParameter.getButton3Height());
-    	 addButton.setLayoutX(BasicParameter.getScrSize().getWidth()/15);
-    	 addButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100 + 2);
-    	 
-    	 //initialize addImage
-    	 addImage.setFitWidth(BasicParameter.getButton3Width());
-    	 addImage.setFitHeight(BasicParameter.getButton3Height());
-    	 
-     	// initialize deleteButton
-    	 deleteButton.setPrefSize(BasicParameter.getButton3Width(), BasicParameter.getButton3Height());
-       	 deleteButton.setLayoutX(addButton.getLayoutX() + addButton.getPrefWidth() + BasicParameter.getScrSize().getWidth()/40);
-    	 deleteButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100 + 2);
-    	 
-    	 //initialize deleteImage
-    	 deleteImage.setFitWidth(BasicParameter.getButton3Width());
-    	 deleteImage.setFitHeight(BasicParameter.getButton3Height());
-    	 
-     	//initialize refreshButton
-    	 refreshButton.setPrefSize(BasicParameter.getButton3Width(), BasicParameter.getButton3Height());
-       	 refreshButton.setLayoutX(deleteButton.getLayoutX() + deleteButton.getPrefWidth() + BasicParameter.getScrSize().getWidth()/40);
-    	 refreshButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100 + 2);
-    	 
-    	 //initialize refreshImage
-    	 refreshImage.setFitWidth(BasicParameter.getButton3Width());
-    	 refreshImage.setFitHeight(BasicParameter.getButton3Height());
-    	 
-    	 //initialize saveButton
-    	 saveButton.setPrefSize(BasicParameter.getButton3Width(), BasicParameter.getButton3Height());
-       	 saveButton.setLayoutX(refreshButton.getLayoutX() + deleteButton.getPrefWidth() + BasicParameter.getScrSize().getWidth()/40);
-    	 saveButton.setLayoutY(homePageButton.getPrefHeight() + BasicParameter.getScrSize().getHeight()/100);
-    	 saveButton.setVisible(false);
-    	 
-    	 //initialize saveImage
-    	 saveImage.setFitWidth(BasicParameter.getButton3Width());
-    	 saveImage.setFitHeight(BasicParameter.getButton3Height());
-    	 
-    	 //initialize stockTable
-    	 
-    	stockTable.setLayoutX(10);
-    	stockTable.setLayoutY(addButton.getLayoutY() + addButton.getPrefHeight()+ 10);
-    	stockTable.setPrefSize(BasicParameter.getScrSize().getWidth()-20, (BasicParameter.getScrSize().getHeight() - stockTable.getLayoutY())/4*3);
-    	
- 		idCol.setCellValueFactory(new PropertyValueFactory<>("productId"));
- 		idCol.setPrefWidth(stockTable.getPrefWidth()/30 *2);
  		
  		codeCol.setCellValueFactory(new PropertyValueFactory<>("productCode"));
- 		codeCol.setPrefWidth(stockTable.getPrefWidth()/30 * 4);
+ 		tableWidth[0] = codeCol.getPrefWidth();
  		
  		descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
- 		descriptionCol.setPrefWidth(stockTable.getPrefWidth()/30 * 8);
+ 		tableWidth[1] = descriptionCol.getPrefWidth();
  		
  		barcodeCol.setCellValueFactory(new PropertyValueFactory<>("barCode"));
- 		barcodeCol.setPrefWidth(stockTable.getPrefWidth()/30 * 5);
+ 		tableWidth[2] = barcodeCol.getPrefWidth();
  		
  		pricePerUnitCol.setCellValueFactory(new PropertyValueFactory<>("pricePerUnit"));
- 		pricePerUnitCol.setPrefWidth(stockTable.getPrefWidth()/30*4);
+ 		tableWidth[3] = pricePerUnitCol.getPrefWidth();
  		
  		quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
- 		quantityCol.setPrefWidth(stockTable.getPrefWidth()/30 *4);
+ 		tableWidth[4] = quantityCol.getPrefWidth();
  		
  		minQuantityCol.setCellValueFactory(new PropertyValueFactory<>("minQuantity"));
- 		minQuantityCol.setPrefWidth(stockTable.getPrefWidth()/30 * 2.95);
+ 		tableWidth[5] = minQuantityCol.getPrefWidth();
  		
 		deleteCol.setCellFactory(CheckBoxTableCell.forTableColumn(deleteCol));
-	
+ 		tableWidth[6] = deleteCol.getPrefWidth();
+ 		
 		deleteCol.setCellValueFactory(new PropertyValueFactory<>("delete"));
-		deleteCol.setVisible(false);
  		
 		quantityCol.setCellFactory(new Callback<TableColumn<DisplayableProduct, Integer>, TableCell<DisplayableProduct, Integer>>() {
 			@Override
@@ -201,8 +124,8 @@ public class StockManagementPageController {
 					@Override
 					public void updateItem(Integer quantity, boolean empty) {
 						super.updateItem(quantity, empty);
-						if(!empty) {
-							if(quantity < 5) {
+						if(this.getTableRow().getItem() != null) {
+							if(quantity < this.getTableRow().getItem().getMinQuantity()) {
 								this.setStyle("-fx-background-color: FF3333;");															
 							}else {
 								this.setStyle("-fx-background-color: null;");
@@ -216,21 +139,6 @@ public class StockManagementPageController {
 				};
 			}
 		});
-		//initialize searchProduct
-		searchProduct.setPrefWidth(200);
-		searchProduct.setLayoutX(BasicParameter.getScrSize().getWidth()/30 * 25 -200);
-		searchProduct.setLayoutY(homePageButton.getPrefHeight() + addButton.getPrefHeight()/2);
-		
-		//initialize  mostUsedProduct
-		 mostUsedProduct.setLayoutX(BasicParameter.getScrSize().getWidth()/30*7);
-		 mostUsedProduct.setLayoutY(stockTable.getLayoutY() + stockTable.getPrefHeight() + (BasicParameter.getScrSize().getHeight() - stockTable.getLayoutY() + stockTable.getPrefHeight())/100*3);
-
-		 // initialize totalValue
-		 totalValue.setLayoutX(BasicParameter.getScrSize().getWidth()/30*7);
-		 totalValue.setLayoutY(mostUsedProduct.getLayoutY() + (BasicParameter.getScrSize().getHeight() - stockTable.getLayoutY() + stockTable.getPrefHeight())/100 *3);
-		
-
-		 
 		showProducts();
 		showTotalValue();
 		showMostUsedProduct();
@@ -264,16 +172,17 @@ public class StockManagementPageController {
 			}
 			
 		});
-		
-		//initialize errorMessage
-		errorMessage.setLayoutX(BasicParameter.getScrSize().getWidth()/2 - 200);
-		errorMessage.setLayoutY(0);
     }
     
     
     @FXML
     void addButtonClicked() {
-
+    	try {
+			new AddProductPage(new Stage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     /**
@@ -292,7 +201,9 @@ public class StockManagementPageController {
 
     @FXML
     void refreshButtonClicked(MouseEvent event) {
-
+		showProducts();
+		showTotalValue();
+		showMostUsedProduct();
     }
     
     /**
@@ -301,25 +212,20 @@ public class StockManagementPageController {
      */
 	 @FXML
 	 private void deleteButtonClicked() {
- 		idCol.setPrefWidth(stockTable.getPrefWidth()/100 *7);
  		
- 		codeCol.setPrefWidth(stockTable.getPrefWidth()/100 *11);
+ 		codeCol.setPrefWidth(185);
  		
- 		descriptionCol.setPrefWidth(stockTable.getPrefWidth()/100 * 26);
+ 		descriptionCol.setPrefWidth(531);
  		
- 		barcodeCol.setPrefWidth(stockTable.getPrefWidth()/100 * 16);
+ 		barcodeCol.setPrefWidth(350);
  		
- 		//bayNoCol.setPrefWidth(stockTable.getPrefWidth()/100 * 7);
+ 		pricePerUnitCol.setPrefWidth(240);
  		
- 		//rowNoCol.setPrefWidth(stockTable.getPrefWidth()/100 * 7);
+ 		quantityCol.setPrefWidth(268);
  		
- 		pricePerUnitCol.setPrefWidth(stockTable.getPrefWidth()/100 * 8);
+ 		minQuantityCol.setPrefWidth(250);
  		
- 		quantityCol.setPrefWidth(stockTable.getPrefWidth() / 100 * 8);
- 		
- 		minQuantityCol.setPrefWidth(stockTable.getPrefWidth() / 100 * 8);
- 		
- 		deleteCol.setPrefWidth(stockTable.getPrefWidth() / 100 * 9);
+ 		deleteCol.setPrefWidth(90);
  		
 		deleteCol.setVisible(true);
 		stockTable.setEditable(true);	
@@ -336,7 +242,7 @@ public class StockManagementPageController {
 			if(product.getDelete()) {
 				int id = product.getProductId();
 				ArrayList<Integer> jobIDs = pm.checkProductInUsed(id);
-				if(jobIDs != null) {
+				if(!jobIDs.isEmpty()) {
 					String warningText = product.getDescription() + " is used in job ";
 					for(int i = 0; i < jobIDs.size(); i++) {
 						if(i == jobIDs.size() - 1) {
@@ -362,28 +268,48 @@ public class StockManagementPageController {
 				
 			}
 		}
-		
- 		idCol.setPrefWidth(stockTable.getPrefWidth()/30 *2);
 
- 		codeCol.setPrefWidth(stockTable.getPrefWidth()/30 * 4);
+ 		codeCol.setPrefWidth(tableWidth[0]);
 
- 		descriptionCol.setPrefWidth(stockTable.getPrefWidth()/30 * 8);
+ 		descriptionCol.setPrefWidth(tableWidth[1]);
  		
- 		barcodeCol.setPrefWidth(stockTable.getPrefWidth()/30 * 5);
+ 		barcodeCol.setPrefWidth(tableWidth[2]);
 
- 		//bayNoCol.setPrefWidth(stockTable.getPrefWidth()/30 * 2);
+ 		pricePerUnitCol.setPrefWidth(tableWidth[3]);
 
- 		//rowNoCol.setPrefWidth(stockTable.getPrefWidth()/30*2);
+ 		quantityCol.setPrefWidth(tableWidth[4]);
 
- 		pricePerUnitCol.setPrefWidth(stockTable.getPrefWidth()/30*4);
-
- 		quantityCol.setPrefWidth(stockTable.getPrefWidth()/30 *4);
-
- 		minQuantityCol.setPrefWidth(stockTable.getPrefWidth()/30 * 3);
+ 		minQuantityCol.setPrefWidth(tableWidth[5]);
 		showProducts();
 		saveButton.setVisible(false);
 		deleteCol.setVisible(false);
 		saveButton.setVisible(false);
+	}
+	
+	@FXML
+	private void importButtonClicked() {
+		FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose a file");
+        Stage selectFile = new Stage();
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"),
+                new FileChooser.ExtensionFilter("XLS", "*.xls"), new FileChooser.ExtensionFilter("XLSX", "*.xlsx"));
+        File file = fileChooser.showOpenDialog(selectFile);
+        if (file != null) {
+            /*try {
+                bom.initBOM(ExcelUtil.importExcel(Util.getWorkbok(new FileInputStream(file), file)));
+                session.commit();
+                session.close();
+                
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }*/
+        	//System.out.println("You choose file " + file);
+        }
 	}
 	
 	/**
@@ -401,7 +327,7 @@ public class StockManagementPageController {
 		for(Product product : allProducts) {
 			stocks.add(new DisplayableProduct(product.getProductId(), product.getProductCode(),
 					product.getDescription(), product.getBarCode(),  product.getPricePerUnit(), 
-					product.getStock(), 5));
+					product.getStock(), product.getMinQuantity()));
 		}		
 		stockTable.setItems(stocks);
 	}

@@ -2,6 +2,8 @@ package com.g52grp.warehouse.model;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  * 
@@ -21,7 +23,6 @@ public class BasicParameter {
 	public static Dimension getScrSize() {
 		return scrSize;
 	}
-	
 	public static double getButton1Width() {
 		return button1Width;
 	}

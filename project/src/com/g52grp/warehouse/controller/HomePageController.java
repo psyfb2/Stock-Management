@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -24,9 +25,8 @@ import javafx.stage.Stage;
  *
  */
 public class HomePageController {
-
     @FXML
-    private Pane homePane;
+    private GridPane homePane;
 
     @FXML
     private Button homePageButton;
@@ -42,41 +42,9 @@ public class HomePageController {
 
     @FXML
     private ImageView jobPicture;
-    
     @FXML
     private void initialize() {
     	
-    	//initialize homePane
-    	 homePane.setPrefSize(BasicParameter.getScrSize().getWidth(), BasicParameter.getScrSize().getHeight());
-    	 homePane.setLayoutX(0);
-    	 homePane.setLayoutY(0);
-    	 
-     	//initialize homePageButton
-    	 homePageButton.setPrefSize(BasicParameter.getButton2Width(), BasicParameter.getButton2Height());
-    	 homePageButton.setLayoutX(0);
-    	 homePageButton.setLayoutY(0);
-    	 
-     	//initialize stockButton
-    	 stockManagementButton.setPrefSize(BasicParameter.getButton1Width(), BasicParameter.getButton1Height());
-    	 stockManagementButton.setLayoutX(BasicParameter.getScrSize().getWidth()/2 - BasicParameter.getScrSize().getWidth()/4);
-    	 stockManagementButton.setLayoutY( BasicParameter.getScrSize().getHeight()/4);
-    	 
-     	//initialize stockPicture
-     	 stockPicture.setFitWidth(stockManagementButton.getPrefWidth());
-     	 stockPicture.setFitHeight(stockManagementButton.getPrefHeight());
-     	 
-      	//initialize jobPicture
-     	 jobPicture.setFitWidth(jobManagementButton.getPrefWidth());
-     	 jobPicture.setFitHeight(jobManagementButton.getPrefHeight());
-     	 
-     	//initialize jobButton
-    	 jobManagementButton.setPrefSize(BasicParameter.getButton1Width(), BasicParameter.getButton1Height());
-    	 jobManagementButton.setLayoutX(BasicParameter.getScrSize().getWidth()/2 + BasicParameter.getScrSize().getWidth()/16);
-    	 jobManagementButton.setLayoutY( BasicParameter.getScrSize().getHeight()/4);
-    	 
-       	//initialize jobPicture
-      	 jobPicture.setFitWidth(jobManagementButton.getPrefWidth());
-      	 jobPicture.setFitHeight(jobManagementButton.getPrefHeight());
     }
     
     @FXML
@@ -100,7 +68,6 @@ public class HomePageController {
     	//theStage.close();
     	new StockManagementPage(theStage);
     }
-
 
 
 }
