@@ -11,7 +11,6 @@ import org.controlsfx.control.textfield.TextFields;
 import com.g52grp.database.Product;
 import com.g52grp.stockout.ConcreteProductManager;
 import com.g52grp.warehouse.model.AddProductPage;
-import com.g52grp.warehouse.model.BasicParameter;
 import com.g52grp.warehouse.model.DisplayableProduct;
 import com.g52grp.warehouse.model.HomePage;
 import com.g52grp.main.Main;
@@ -47,6 +46,9 @@ import javafx.util.Callback;
  */
 public class StockManagementPageController {
 	
+	@FXML
+	private GridPane pane;
+	
     @FXML
     private Button stockButton;
 
@@ -77,6 +79,10 @@ public class StockManagementPageController {
 
     @FXML
     private Label errorMessage;
+    
+    @FXML
+    private Label errorSearchMessage;
+
 
 	@FXML private TableView<DisplayableProduct> stockTable;
 	@FXML private TableColumn<DisplayableProduct, String> codeCol;
@@ -93,6 +99,7 @@ public class StockManagementPageController {
 	
     @FXML
     private void initialize() {
+    	stockTable.prefWidthProperty().bind(pane.widthProperty());
  		
  		codeCol.setCellValueFactory(new PropertyValueFactory<>("productCode"));
  		tableWidth[0] = codeCol.getPrefWidth();
@@ -162,11 +169,18 @@ public class StockManagementPageController {
 				if(key.getCode().equals(KeyCode.ENTER)) {
 					String text = searchProduct.getText();
 					int i = 0;
+					boolean findKey = false;
 					for(DisplayableProduct product : stockTable.getItems()) {
 						if((product.getProductCode() + " " + product.getDescription()).equals(text)) {
 							stockTable.getSelectionModel().select(i);
+							findKey = true;
+							errorSearchMessage.setVisible(false);
 						}
 						i++;
+					}
+					if(findKey == false) {
+						errorSearchMessage.setVisible(true);
+						errorSearchMessage.setText("The '" + text + "' item cannot be found.");
 					}
 				}
 			}

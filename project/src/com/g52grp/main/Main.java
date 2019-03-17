@@ -17,7 +17,10 @@ public class Main extends Application {
     public static final String ADDNEWJOBPATH_FXML = "./com/g52grp/views/AddNewJob.fxml";
     public static final String HOMEPAGE_FXML = "/com/g52grp/warehouse/view/HomePage.fxml";
     public static final String ADDPRODUCTPAGE_FXML = "/com/g52grp/warehouse/view/AddProductPage.fxml";
-	
+    public static final String STOCKMANAGMENTPAGE_FXML = "/com/g52grp/warehouse/view/StockManagementPage.fxml";
+    public static final String STOCKMANAGMENTPAGEFORMALLSIZE_FXML = "/com/g52grp/warehouse/view/StockManagementPageForSmallSize.fxml";
+    public static final String HOMEPAGEFORSMALLSIZE_FXML = "/com/g52grp/warehouse/view/HomePageForSmallSize.fxml";
+    
 	public static void main(String[] args) {
 		if (con.openConnection()) {
 			launch(args);

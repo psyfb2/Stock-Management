@@ -1,5 +1,6 @@
 package com.g52grp.warehouse.model;
 
+import java.awt.Toolkit;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
@@ -17,10 +18,20 @@ import com.g52grp.main.Main;
  */
 public class HomePage {
 	public  HomePage(Stage theStage) throws IOException {
-		theStage.setTitle( "Start" );
+    	String resource;
+    	double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    	double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+
+    	if(screenWidth> 1800) {
+    		resource = Main.HOMEPAGE_FXML;
+    	}
+    	else {
+    	resource = Main.HOMEPAGEFORSMALLSIZE_FXML;
+    	}
+		theStage.setTitle( "home" );
 		theStage.getIcons().add(new Image("RJB.png"));
-        Parent root = FXMLLoader.load(getClass().getResource(Main.HOMEPAGE_FXML));
-       Scene Scene = new Scene( root, BasicParameter.getScrSize().getWidth(), BasicParameter.getScrSize().getHeight());
+        Parent root = FXMLLoader.load(getClass().getResource(resource));
+       Scene Scene = new Scene( root,screenWidth, screenHeight);
 		theStage.setScene(Scene);
 		theStage.show();
 	}

@@ -14,23 +14,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;" stylesheets="@../../../../../resources/stylesheet.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.warehouse.controller.StockManagementPageController">
+<GridPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #ffffff;" stylesheets="@../../../../../resources/stylesheet.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.warehouse.controller.StockManagementPageController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="352.0" minHeight="0.0" prefHeight="27.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="1000.0" minHeight="0.0" prefHeight="15.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="1060.0" minHeight="10.0" prefHeight="85.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="1060.0" minHeight="1.0" prefHeight="1.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="1060.0" minHeight="10.0" prefHeight="759.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="352.0" minHeight="0.0" prefHeight="30.66667111714681" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="1000.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="1000.0" minHeight="0.0" prefHeight="32.66666666666667" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="1060.0" minHeight="0.0" prefHeight="68.33332824707031" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="1060.0" minHeight="1.0" prefHeight="67.33331807454428" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="1060.0" minHeight="10.0" prefHeight="319.0000152587891" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="1060.0" minHeight="10.0" prefHeight="211.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <GridPane style="-fx-background-color: #ffffff;" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="634.0" minWidth="10.0" prefWidth="81.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1235.0" minWidth="10.0" prefWidth="833.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="634.0" minWidth="10.0" prefWidth="117.66664632161459" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1235.0" minWidth="10.0" prefWidth="251.66668701171878" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="1006.0" minWidth="10.0" prefWidth="1006.0" />
         </columnConstraints>
         <rowConstraints>
@@ -38,21 +39,21 @@
         </rowConstraints>
          <children>
             <Button fx:id="stockButton" mnemonicParsing="false" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Stock" GridPane.columnIndex="1" />
+            <Button fx:id="homePageButton" mnemonicParsing="false" onMouseClicked="#homePageButtonClicked" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Home Page" />
          </children>
       </GridPane>
-      <Button fx:id="homePageButton" mnemonicParsing="false" onMouseClicked="#homePageButtonClicked" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Home Page" />
       <Line endX="1819.2928466796875" endY="-1.0000145435333252" startX="-100.0" GridPane.rowIndex="1" />
-      <GridPane prefHeight="314.0" prefWidth="1370.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+      <GridPane prefHeight="314.0" prefWidth="1370.0" GridPane.rowIndex="3">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="365.0" minWidth="10.0" prefWidth="123.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="365.0" minWidth="10.0" prefWidth="102.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="365.0" minWidth="0.0" prefWidth="92.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="746.0" minWidth="10.0" prefWidth="102.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1000.0" minWidth="1.0" prefWidth="99.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1167.0" minWidth="10.0" prefWidth="109.0" />
-            <ColumnConstraints maxWidth="1459.0" minWidth="10.0" prefWidth="498.0" />
-            <ColumnConstraints maxWidth="1459.0" minWidth="10.0" prefWidth="458.0" />
-            <ColumnConstraints maxWidth="1459.0" minWidth="10.0" prefWidth="454.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="365.0" minWidth="10.0" prefWidth="105.33333333333333" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="365.0" minWidth="10.0" prefWidth="98.66664632161458" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="365.0" minWidth="0.0" prefWidth="109.66668701171875" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="746.0" minWidth="10.0" prefWidth="105.99997965494794" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1000.0" minWidth="1.0" prefWidth="106.6666870117188" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1167.0" minWidth="10.0" prefWidth="98.00004069010413" />
+            <ColumnConstraints maxWidth="1459.0" minWidth="10.0" prefWidth="81.00002034505212" />
+            <ColumnConstraints maxWidth="1459.0" minWidth="10.0" prefWidth="425.3333536783854" />
+            <ColumnConstraints maxWidth="1459.0" minWidth="10.0" prefWidth="154.33331298828125" />
             <ColumnConstraints />
          </columnConstraints>
          <rowConstraints>
@@ -95,7 +96,6 @@
                   </ImageView>
                </graphic>
             </Button>
-            <TextField fx:id="searchProduct" prefHeight="25.0" prefWidth="610.0" promptText="search here" GridPane.columnIndex="7" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
             <Button fx:id="importButton" mnemonicParsing="false" onMouseClicked="#importButtonClicked" style="-fx-background-color: #ffffff;" GridPane.columnIndex="1">
                <graphic>
                   <ImageView fitHeight="63.0" fitWidth="74.0">
@@ -110,39 +110,41 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="16.333343505859375" minHeight="2.999999523162842" prefHeight="2.999999523162842" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="38.00000047683716" minHeight="10.0" prefHeight="38.00000047683716" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="12.333328247070312" minHeight="1.0" prefHeight="1.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="errorSearchMessage" prefHeight="15.0" prefWidth="431.0" style="-fx-background-color: #ffffff;" textFill="RED" GridPane.rowIndex="2" />
+                  <TextField fx:id="searchProduct" prefHeight="25.0" prefWidth="610.0" promptText="search here" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                  <Label fx:id="errorSearchMessage" prefHeight="29.0" prefWidth="469.0" style="-fx-background-color: #ffffff;" textFill="RED" GridPane.rowIndex="3" />
                </children>
             </GridPane>
          </children>
       </GridPane>
-      <TableView fx:id="stockTable" prefHeight="200.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
+      <TableView fx:id="stockTable" prefHeight="200.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
         <columns>
-          <TableColumn fx:id="codeCol" minWidth="0.0" prefWidth="185.99998474121094" text="code" />
-            <TableColumn fx:id="descriptionCol" prefWidth="753.0000305175781" text="description" />
-            <TableColumn fx:id="barcodeCol" prefWidth="363.0" text="barcode" />
-            <TableColumn fx:id="pricePerUnitCol" prefWidth="190.0" text="pricePerUnit" />
-            <TableColumn fx:id="quantityCol" prefWidth="216.0" text="quantity" />
-            <TableColumn fx:id="minQuantityCol" prefWidth="206.0" text="minimum quantity" />
-            <TableColumn fx:id="deleteCol" minWidth="0.0" prefWidth="2.0" text="Delete" visible="false" />
+          <TableColumn fx:id="codeCol" minWidth="0.0" prefWidth="97.33331036567688" text="code" />
+            <TableColumn fx:id="descriptionCol" prefWidth="406.6666488647461" text="description" />
+            <TableColumn fx:id="barcodeCol" prefWidth="240.66668701171875" text="barcode" />
+            <TableColumn fx:id="pricePerUnitCol" prefWidth="200.66668701171875" text="pricePerUnit" />
+            <TableColumn fx:id="quantityCol" prefWidth="174.0" text="quantity" />
+            <TableColumn fx:id="minQuantityCol" prefWidth="157.333251953125" text="minimum quantity" />
+            <TableColumn fx:id="deleteCol" minWidth="0.0" prefWidth="1.3331298828125" text="Delete" visible="false" />
         </columns>
       </TableView>
-      <GridPane GridPane.rowIndex="5">
+      <GridPane GridPane.rowIndex="6">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="671.0" minWidth="10.0" prefWidth="400.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="671.0" minWidth="10.0" prefWidth="409.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="671.0" minWidth="10.0" prefWidth="207.3333282470703" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="671.0" minWidth="10.0" prefWidth="381.6666717529297" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="642.0" minWidth="10.0" prefWidth="318.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="559.0" minWidth="10.0" prefWidth="300.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="403.0" minWidth="10.0" prefWidth="400.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="64.3333740234375" minHeight="10.0" prefHeight="54.333333333333336" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="62.333333333333336" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="88.6666259765625" minHeight="10.0" prefHeight="88.6666259765625" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Text fx:id="totalValue" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="430.0" GridPane.columnIndex="1" GridPane.rowIndex="1">

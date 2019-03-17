@@ -1,10 +1,10 @@
 package com.g52grp.warehouse.controller;
 
 
+import java.awt.Toolkit;
 import java.io.IOException;
 
 import com.g52grp.main.Main;
-import com.g52grp.warehouse.model.BasicParameter;
 import com.g52grp.warehouse.model.StockManagementPage;
 
 import javafx.fxml.FXML;
@@ -61,12 +61,28 @@ public class HomePageController {
 
     /**
      * Change to stockManagementPage.
+     * @throws IOException 
      */
     @FXML
-    void stockManagementButtonClicked() {
-    	Stage theStage = (Stage)stockManagementButton.getScene().getWindow();
-    	//theStage.close();
-    	new StockManagementPage(theStage);
+    void stockManagementButtonClicked(MouseEvent e) throws IOException {
+    	String resource;
+    	double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    	double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+
+    	if(screenWidth> 1800) {
+    		resource = Main.STOCKMANAGMENTPAGE_FXML;
+    	}
+    	else {
+    	resource = Main.STOCKMANAGMENTPAGEFORMALLSIZE_FXML;
+    	}
+    	
+    	Parent root = FXMLLoader.load(getClass().getResource(resource));
+        Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
+		theStage.setTitle( "RJB" );
+		Scene theScene = new Scene( root, screenWidth, screenHeight );
+		theStage.setScene( theScene );
+		theStage.show();
+		
     }
 
 
