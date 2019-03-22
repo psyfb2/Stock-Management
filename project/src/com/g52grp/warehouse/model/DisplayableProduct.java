@@ -16,7 +16,7 @@ public class DisplayableProduct {
 	private SimpleStringProperty barCode;
 	private SimpleFloatProperty pricePerUnit;
 	private SimpleIntegerProperty quantity;
-	private SimpleIntegerProperty minQuantity;
+	private SimpleStringProperty minQuantity;
 	private SimpleBooleanProperty delete;
 	
 	/**
@@ -33,14 +33,14 @@ public class DisplayableProduct {
 	 */
 	public DisplayableProduct(int productId, String productCode,
 			String description, String barCode, float pricePerUnit, 
-			int quantity, int minQuantity) {
+			int quantity, String minQuantity) {
 		this.productId = new SimpleIntegerProperty(productId);
 		this.productCode = new SimpleStringProperty(productCode);
 		this.description = new SimpleStringProperty(description);
 		this.barCode = new SimpleStringProperty(barCode);
 		this.pricePerUnit = new SimpleFloatProperty(pricePerUnit);
 		this.quantity = new SimpleIntegerProperty(quantity);
-		this.minQuantity = new SimpleIntegerProperty(minQuantity);	
+		this.minQuantity = new SimpleStringProperty(minQuantity);	
 		this.delete = new SimpleBooleanProperty();
 	}
 	
@@ -84,12 +84,12 @@ public class DisplayableProduct {
 		this.quantity = new SimpleIntegerProperty(quantity);
 	}
 
-	public int getMinQuantity() {
+	public String getMinQuantity() {
 		return minQuantity.get();
 	}
 	
-	public void setMinQuantity(int minQuantity) {
-		this.minQuantity = new SimpleIntegerProperty(minQuantity);
+	public void setMinQuantity(String minQuantity) {
+		this.minQuantity = new SimpleStringProperty(minQuantity);
 	}
 	
 	public String getBarCode() {

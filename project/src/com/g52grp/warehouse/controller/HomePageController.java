@@ -5,7 +5,6 @@ import java.awt.Toolkit;
 import java.io.IOException;
 
 import com.g52grp.main.Main;
-import com.g52grp.warehouse.model.StockManagementPage;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**

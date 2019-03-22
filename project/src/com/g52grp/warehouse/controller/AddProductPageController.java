@@ -1,7 +1,10 @@
 package com.g52grp.warehouse.controller;
 
+import java.awt.Toolkit;
+
 import com.g52grp.main.Main;
 import com.g52grp.stockout.ConcreteProductManager;
+import com.g52grp.views.TableViewUpdate;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,6 +33,11 @@ public class AddProductPageController {
 	private Label errorMessage;
 	
 	private ConcreteProductManager pm = new ConcreteProductManager(Main.con);
+	TableViewUpdate tb; // used to update the table after a product is added
+	
+	public void initData(TableViewUpdate tb) {
+		this.tb = tb;
+	}
 	
 	@FXML void confirmButtonClicked() {
 		String code = productCode.getText();
@@ -39,7 +47,13 @@ public class AddProductPageController {
 		if( code.length() != 0 && des.length() != 0) {
 			//check the product already exits in the database
 			if(pm.getProductFromProductcodeAndDescription(code, des) != null) {			
-				errorMessage.setText(des + " with " + code + " already exits in the warehouse.");
+				//errorMessage.setText(des + " with " + code + " already exits in the warehouse.");
+				if(Toolkit.getDefaultToolkit().getScreenSize().getWidth()  >1700) {
+					errorMessage.setText("Product " + code +  " (" + des + ") already exits in the warehouse.");	  
+				}else {
+					errorMessage.setPrefHeight(222);
+					errorMessage.setText(des + " with " + code + " already exits in the warehouse.");	
+				}
 			}else {
 				if(bar.length() == 0) {
 					bar = null;
@@ -53,7 +67,12 @@ public class AddProductPageController {
 			}
 		}else {
 			errorMessage.setText("Please enter both the code and description.");
-		}		
+		}
+		
+		if(tb != null) {
+			tb.updateTableView();
+		}
+		
 	}
 	
 	@FXML void cancelButtonClicked() {
