@@ -16,6 +16,7 @@ import com.g52grp.warehouse.model.HomePage;
 import com.g52grp.main.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -190,27 +191,18 @@ public class StockManagementPageController {
     
     
     @FXML
-    void addButtonClicked() {
-    	try {
-			new AddProductPage(new Stage());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    void addButtonClicked(MouseEvent e) throws IOException   {
+		new AddProductPage(new Stage());
+
     }
 
     /**
      * return to the HomePage
      */
     @FXML
-    void homePageButtonClicked() {
+    void homePageButtonClicked(MouseEvent e) throws IOException {
     	Stage theStage = (Stage)homePageButton.getScene().getWindow();
-    	try {
-			new HomePage(theStage);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		new HomePage(theStage);
     }
 
     @FXML

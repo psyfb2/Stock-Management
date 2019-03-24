@@ -9,6 +9,7 @@ import com.g52grp.database.Job;
 import com.g52grp.main.Main;
 import com.g52grp.stockout.ConcreteJobManager;
 import com.g52grp.stockout.JobManager;
+import com.g52grp.warehouse.model.HomePage;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,6 +45,7 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	@FXML TableColumn<Job, Integer> plotNumber;
 	@FXML TableColumn<Job, String> date;
 	@FXML TableColumn<Job, Integer> jobId; // this column is not visible to the user
+	@FXML Button homePageButton;
 	
 	public JobMenuController() {
 		jm = new ConcreteJobManager(Main.con);
@@ -66,6 +68,11 @@ public class JobMenuController implements Initializable, TableViewUpdate {
         controller.initData(this);
         stage.getIcons().add(new Image(new FileInputStream(Main.LOGOPATH)));
         stage.show();
+	}
+	
+	@FXML public void goToHomePage(ActionEvent e) throws IOException {
+		Stage theStage = (Stage)homePageButton.getScene().getWindow();
+		new HomePage(theStage);
 	}
 	
 	/**

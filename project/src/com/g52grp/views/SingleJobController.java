@@ -70,6 +70,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	@FXML TableColumn<DisplayableJobProduct, Float> price;
 	@FXML TableColumn<DisplayableJobProduct, String> quantityUsed; // String because needs to be editable
 	@FXML TableColumn<DisplayableJobProduct, Integer> stocksRemaining;
+	@FXML TableColumn<DisplayableJobProduct, Float> priceOfRow;
 	@FXML TableColumn<DisplayableJobProduct, Integer> productId; // hidden from the user
 	@FXML TableColumn<DisplayableJobProduct, String> barcode; // hidden from the user
 	@FXML Button deleteJobButton;
@@ -341,12 +342,14 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			errorMessage.setText("Failed to load associated products: error accessing database");
 			return productsForThisJobList;
 		}
+		float totalPrice = 0;
 		for(JobProduct jp : productsForThisJobArr) {
 			Product p = jp.getProduct();
 			productsForThisJobList.add(new DisplayableJobProduct(p.getProductId(),
 					p.getProductCode(), p.getDescription(), p.getPricePerUnit(), Integer.toString(jp.getQuantityUsed()), p.getStock(), p.getBarCode(), p.getMinQuantity()) );
+			totalPrice += p.getPricePerUnit() * jp.getQuantityUsed();
 		}
-		
+		this.totalPrice.setText(Float.toString(totalPrice));
 		return productsForThisJobList;
 	}
 	
@@ -417,6 +420,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		price.setCellValueFactory(new PropertyValueFactory<>("price"));
 		quantityUsed.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 		stocksRemaining.setCellValueFactory(new PropertyValueFactory<>("stocksRemaining"));
+		priceOfRow.setCellValueFactory(new PropertyValueFactory<>("priceOfRow"));
 		barcode.setCellValueFactory(new PropertyValueFactory<>("barcode"));
 
 		// make the quantity column editable

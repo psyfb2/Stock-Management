@@ -19,6 +19,7 @@ public class DisplayableJobProduct {
 	private SimpleIntegerProperty stocksRemaining;
 	private SimpleStringProperty barcode;
 	private SimpleIntegerProperty minQuantity;
+	private SimpleFloatProperty priceOfRow;
 	
 	public DisplayableJobProduct(int productId, String productCode,
 			String description, float price, String quantity,
@@ -31,6 +32,7 @@ public class DisplayableJobProduct {
 		this.stocksRemaining = new SimpleIntegerProperty(stocksRemaining);
 		this.barcode = new SimpleStringProperty(barcode);
 		this.minQuantity = new SimpleIntegerProperty(minQuantity);
+		this.priceOfRow = new SimpleFloatProperty(Integer.parseInt(quantity) * price);
 	}
 
 	public int getProductId() {
@@ -63,6 +65,7 @@ public class DisplayableJobProduct {
 
 	public void setPrice(float price) {
 		this.price = new SimpleFloatProperty(price);
+		setPriceOfRow(Integer.parseInt(quantity.get()) * price);
 	}
 
 	public String getQuantity() {
@@ -71,6 +74,7 @@ public class DisplayableJobProduct {
 
 	public void setQuantity(String quantity) {
 		this.quantity = new SimpleStringProperty(quantity);
+		setPriceOfRow(Integer.parseInt(quantity) * price.get());
 	}
 
 	public int getStocksRemaining() {
@@ -97,4 +101,13 @@ public class DisplayableJobProduct {
 	public void setMinQuantity(int minQuantity) {
 		this.minQuantity = new SimpleIntegerProperty(minQuantity);
 	}
+	
+	public float getPriceOfRow() {
+		return priceOfRow.get();
+	}
+
+	public void setPriceOfRow(float priceOfRow) {
+		this.priceOfRow = new SimpleFloatProperty(priceOfRow);
+	}
+
 }
