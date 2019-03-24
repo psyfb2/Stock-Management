@@ -72,7 +72,6 @@ public class HomePageController {
 		theStage.setTitle( "RJB" );
 		Scene theScene = new Scene( root, screenWidth, screenHeight );
 		theStage.setScene( theScene );
-		theStage.setMaximized(true);
 		theStage.show();
 		
     }
