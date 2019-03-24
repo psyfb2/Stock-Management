@@ -22,16 +22,11 @@ public class HomePage {
     	double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     	double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
-    	if(screenWidth> 1800) {
-    		resource = Main.HOMEPAGE_FXML;
-    	}
-    	else {
-    	resource = Main.HOMEPAGEFORSMALLSIZE_FXML;
-    	}
+    	resource = Main.HOMEPAGE_FXML;
 		theStage.setTitle( "home" );
 		theStage.getIcons().add(new Image("RJB.png"));
         Parent root = FXMLLoader.load(getClass().getResource(resource));
-       Scene Scene = new Scene( root,screenWidth, screenHeight);
+        Scene Scene = new Scene( root,screenWidth, screenHeight);
 		theStage.setScene(Scene);
 		theStage.show();
 	}

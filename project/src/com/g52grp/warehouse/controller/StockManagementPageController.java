@@ -36,12 +36,9 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -55,12 +52,9 @@ import javafx.util.Callback;
  */
 public class StockManagementPageController implements TableViewUpdate{
 	
-	@FXML
-	private GridPane pane;
-	
-	@FXML
-	private GridPane buttonGridpane;
-	
+    @FXML
+    private GridPane pane;
+
     @FXML
     private Button stockButton;
 
@@ -74,14 +68,19 @@ public class StockManagementPageController implements TableViewUpdate{
     private Button deleteButton;
 
     @FXML
-    private Button refreshButton;
-
-    @FXML
     private Button saveButton;
 
     @FXML
+    private Button importButton;
+
+    @FXML
+    private Label errorSearchMessage;
+
+    @FXML
     private TextField searchProduct;
-    
+
+    @FXML
+    private Label errorMinQuantityMessage;
 
     @FXML
     private Text totalValue;
@@ -91,28 +90,6 @@ public class StockManagementPageController implements TableViewUpdate{
 
     @FXML
     private Label errorMessage;
-    
-    @FXML
-    private Label errorSearchMessage;
-    
-    @FXML
-    private RowConstraints gridpaneRow2;
-    
-    @FXML
-    private RowConstraints gridpaneRow3;
-    
-    @FXML
-    private ColumnConstraints gridpaneCol;
-    
-    @FXML
-    private ColumnConstraints buttonGridpaneCol2;
-    
-    @FXML
-    private RowConstraints buttonGridpaneRow;
-    
-
-    @FXML
-    private ImageView image;
 
 
 	@FXML private TableView<DisplayableProduct> stockTable;
@@ -123,16 +100,14 @@ public class StockManagementPageController implements TableViewUpdate{
 	@FXML private TableColumn<DisplayableProduct, Integer> quantityCol;
 	@FXML private TableColumn<DisplayableProduct, String> minQuantityCol;
 	@FXML private TableColumn<DisplayableProduct, Boolean> deleteCol;
-	private double[] tableWidth = new double[7];
 	
+	private double[] tableWidth = new double[7];
 	private static ObservableList<DisplayableProduct> stocks =  FXCollections.observableArrayList();
 	private ConcreteProductManager pm = new ConcreteProductManager(Main.con);
 	
     @FXML
     private void initialize() {
-    	stockTable.prefHeightProperty().bind(gridpaneRow3.prefHeightProperty());
-    	stockTable.prefWidthProperty().bind(gridpaneCol.prefWidthProperty());
-    	stockTable.setEditable(true);
+    	//stockTable.setEditable(true);
  		
  		codeCol.setCellValueFactory(new PropertyValueFactory<>("productCode"));
  		tableWidth[0] = codeCol.getPrefWidth();
@@ -204,6 +179,7 @@ public class StockManagementPageController implements TableViewUpdate{
 		searchProduct.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent key) {
+				errorSearchMessage.setVisible(false);
 				if(key.getCode().equals(KeyCode.ENTER)) {
 					String text = searchProduct.getText();
 					int i = 0;
@@ -212,7 +188,6 @@ public class StockManagementPageController implements TableViewUpdate{
 						if((product.getProductCode() + " " + product.getDescription()).equals(text)) {
 							stockTable.getSelectionModel().select(i);
 							findKey = true;
-							errorSearchMessage.setVisible(false);
 						}
 						i++;
 					}
@@ -238,17 +213,18 @@ public class StockManagementPageController implements TableViewUpdate{
 	            			newMinQuantity = Integer.parseInt(t.getNewValue());
 	            			oldMinQuantity = Integer.parseInt(productSelected.getMinQuantity());
 	            		} catch(NumberFormatException e) {
-	            			errorMessage.setText("Please enter numerical values for minimum quantity");
+	            			errorMinQuantityMessage.setText("Please enter numerical values for minimum quantity");
 	            			stockTable.refresh();
 	            			return;
 	            		}
 	            		
 	            		if(newMinQuantity < 0) {
-	            			errorMessage.setText("Products must have a minimum quantity of 1");
+	            			errorMinQuantityMessage.setText("Products must have a minimum quantity of 1");
 	            			stockTable.refresh();
 	            			return;
 	            		}
 	            		
+	            		errorMinQuantityMessage.setText(null);
 	            		if(newMinQuantity == oldMinQuantity) {
 	            			return;
 	            		}
@@ -257,7 +233,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	            		Alert confirmation = new Alert(AlertType.CONFIRMATION);
 	            		confirmation.setTitle("Change the minimum quantity?");
 	            		confirmation.setHeaderText(null);
-	            		confirmation.setContentText("Are you sure you want to change product "+ productSelected.getDescription() +"'s minimum quanity as " + newMinQuantity + " ?");
+	            		confirmation.setContentText("Are you sure you want to change product "+ productSelected.getDescription() +"'s minimum quanity as " + newMinQuantity + "?");
 	            		// add the RJB logo to the dialog box
 	            		Stage stage = (Stage) confirmation.getDialogPane().getScene().getWindow();
 	            		try {
@@ -269,7 +245,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	            		if(button.get() == ButtonType.OK) {
 	            			// ok button was clicked, update
 	            			if(!pm.updateMinQuantity(productSelected.getProductId(), newMinQuantity)){
-	            				errorMessage.setText("Failed to update minimum quantity: error accessing database");
+	            				errorMinQuantityMessage.setText("Failed to update minimum quantity: error accessing database");
 	            				return;
 	            			};
 	            			productSelected.setMinQuantity(t.getNewValue());	            			
@@ -296,9 +272,9 @@ public class StockManagementPageController implements TableViewUpdate{
         		confirmation.setHeaderText(null);
         		if(newBarcode.length() == 0) {
     				newBarcode = null;
-    				confirmation.setContentText("Are you sure you want to delete product "+ productSelected.getDescription() +"'s barcode ?");
+    				confirmation.setContentText("Are you sure you want to delete product "+ productSelected.getDescription() +"'s barcode?");
     			}else {
-    				confirmation.setContentText("Are you sure you want to change product "+ productSelected.getDescription() +"'s barcode as " + newBarcode + " ?");
+    				confirmation.setContentText("Are you sure you want to change product "+ productSelected.getDescription() +"'s barcode as " + newBarcode + "?");
     			}
         		
         		// add the RJB logo to the dialog box
@@ -310,8 +286,7 @@ public class StockManagementPageController implements TableViewUpdate{
         		Optional <ButtonType> button = confirmation.showAndWait();
         		
         		if(button.get() == ButtonType.OK) {
-        			// ok button was clicked, update
-        			
+        			// ok button was clicked, update       			
         			if(!pm.updateBarcode(productSelected.getProductId(), newBarcode)){
         				errorMessage.setText("Failed to update the barcode: error accessing database");
         				return;
@@ -425,10 +400,11 @@ public class StockManagementPageController implements TableViewUpdate{
  		quantityCol.setPrefWidth(tableWidth[4]);
 
  		minQuantityCol.setPrefWidth(tableWidth[5]);
+ 		
+ 		deleteCol.setVisible(false);
 		showProducts();
 		saveButton.setVisible(false);
-		deleteCol.setVisible(false);
-		saveButton.setVisible(false);
+
 	}
 	
 	@FXML

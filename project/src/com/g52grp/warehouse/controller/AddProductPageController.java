@@ -51,7 +51,7 @@ public class AddProductPageController {
 				if(Toolkit.getDefaultToolkit().getScreenSize().getWidth()  >1700) {
 					errorMessage.setText("Product " + code +  " (" + des + ") already exits in the warehouse.");	  
 				}else {
-					errorMessage.setPrefHeight(222);
+					//errorMessage.setPrefHeight(222);
 					errorMessage.setText(des + " with " + code + " already exits in the warehouse.");	
 				}
 			}else {
