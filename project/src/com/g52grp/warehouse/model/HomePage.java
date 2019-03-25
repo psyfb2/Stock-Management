@@ -27,6 +27,7 @@ public class HomePage {
 		theStage.getIcons().add(new Image("RJB.png"));
         Parent root = FXMLLoader.load(getClass().getResource(resource));
         Scene Scene = new Scene( root,screenWidth, screenHeight);
+		theStage.setMaximized(true);
 		theStage.setScene(Scene);
 		theStage.show();
 	}
