@@ -1,9 +1,6 @@
 package com.g52grp.warehouse.model;
 
-import java.awt.Toolkit;
 import java.io.IOException;
-
-import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
@@ -26,18 +23,12 @@ public class HomePage {
 	private static boolean fullscreen = true;
 	
 	public  HomePage(Stage theStage) throws IOException {
-    	String resource;
 
-    	if(screenWidth> 1800) {
-    		resource = Main.HOMEPAGE_FXML;
-    	}
-    	else {
-    	resource = Main.HOMEPAGEFORSMALLSIZE_FXML;
-    	}
 		theStage.setTitle( "Home" );
 		theStage.getIcons().add(new Image("RJB.png"));
-        Parent root = FXMLLoader.load(getClass().getResource(resource));
+        Parent root = FXMLLoader.load(getClass().getResource(Main.HOMEPAGE_FXML));
         Scene Scene = new Scene( root,screenWidth, screenHeight);
+
 		theStage.setScene(Scene);
 		if(fullscreen) {
 			fullscreen(theStage);
