@@ -31,6 +31,6 @@
          </font>
       </Label>
       <Button fx:id="addJob" layoutX="496.0" layoutY="98.0" mnemonicParsing="false" onAction="#addNewJob" text="Add Job" />
-      <Label fx:id="errorMessage" layoutX="347.0" layoutY="141.0" prefHeight="17.0" prefWidth="250.0" />
+      <Label fx:id="errorMessage" layoutX="347.0" layoutY="141.0" prefHeight="17.0" prefWidth="250.0" textFill="#dd0808" />
    </children>
 </AnchorPane>

@@ -47,14 +47,18 @@ public class HomePageController {
     	
     }
     
+    /**
+     * Change to Job Menu
+     * @throws IOException
+     */
     @FXML
     void jobManagementButtonClicked(MouseEvent e) throws IOException {
     	FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(Main.JOBMENUPATH_FXML));
 		Parent root = loader.load();
-        Scene jobMenu = new Scene(root, 1280, 720);
+        Scene jobMenu = new Scene(root);
   
         Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
-
+        theStage.setTitle("Job Menu");
         theStage.setScene( jobMenu );
         theStage.show();
     }
@@ -81,6 +85,7 @@ public class HomePageController {
 		theStage.setTitle( "RJB" );
 		Scene theScene = new Scene( root, screenWidth, screenHeight );
 		theStage.setScene( theScene );
+		
 		theStage.show();
 		
     }

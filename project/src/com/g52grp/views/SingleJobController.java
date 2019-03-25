@@ -18,6 +18,7 @@ import com.g52grp.stockout.ConcreteJobManager;
 import com.g52grp.stockout.ConcreteProductManager;
 import com.g52grp.stockout.JobManager;
 import com.g52grp.stockout.ProductManager;
+import com.g52grp.warehouse.model.HomePage;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -62,6 +63,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	private int jobId;
 	private ProductManager pm;
 	private JobManager jm;
+	private boolean found;
 	@FXML Label jobTitle;
 	@FXML Label totalPrice;
 	@FXML TableView<DisplayableJobProduct> jobProductTable;
@@ -99,16 +101,20 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		String barcode = barcodeHiddenInput.getText();
 		
 		if(!barcode.matches("[0-9]+")) {
+			barcodeHiddenInput.setText("");
 			return;
 		}
 		
 		if(barcode.length() < minLength) {
+			barcodeHiddenInput.setText("");
 			return;
 		}
 		
 		Product p = pm.getProductFromBarcode(barcode);
+		
 		barcodeHiddenInput.setText("");
 		if(p == null) {
+			// this only checks if the product exists at all in the database (could exist, but not for this job)
 			errorMessage.setText("Product with barcode '" + barcode + "' was not found");
 			return;
 		}
@@ -116,18 +122,23 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		if(scanInRadioButton.isSelected()) {
 			// first check the product scanned belongs to this job (could call isProductRegisteredWithJob)
 			// but will use tableview for efficiency, then reduce stock by -1
-			jobProductTable.getItems().stream().filter(product -> true).findFirst().ifPresent(product -> {
+			found = false;
+			jobProductTable.getItems().stream().filter(product -> p.getProductId() == product.getProductId()).findFirst().ifPresent(product -> {
 				// reduce stock by -1
+				found = true;
 				if(!pm.decreaseStocks(new JobProduct(jobId, p, -1))) {
 					errorMessage.setText("Failed to modify quantity: error accessing database");
 				}
+				
 				int quantityUsed;
+				
 				try {
 					quantityUsed = Integer.valueOf(product.getQuantity());
 				} catch(NumberFormatException ex) {
 					errorMessage.setText(product.getQuantity() + " could not be parsed");
 					return;
 				}
+				
 				if(quantityUsed <= 1) { 
 					// remove the product
 					if(!pm.removeProductFromJob(jobId, p.getProductId())) {
@@ -135,6 +146,10 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 					}
 				}
 			});
+			if(!found) {
+				errorMessage.setText("The product '" + p.toString() + "' is not registered with this job");
+				return;
+			}
 		} else {
 			// register scanned product to this job with quantity used 1
 			// if the product is already registered then just reduce quantity used by 1 if possible
@@ -163,7 +178,10 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	        
 	        Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
 	        
+	        theStage.setTitle("Job Menu");
+	        
 	        theStage.setScene( jobMenuView );
+	        
 	        theStage.show();
 		} catch(Exception ex) {
 			errorMessage.setText("Failed to load " + Main.JOBMENUPATH_FXML);
@@ -454,4 +472,5 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		}
 		return false;
 	}
+	
 }

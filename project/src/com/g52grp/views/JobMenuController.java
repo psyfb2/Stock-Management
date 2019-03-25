@@ -71,7 +71,7 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	}
 	
 	@FXML public void goToHomePage(ActionEvent e) throws IOException {
-		Stage theStage = (Stage)homePageButton.getScene().getWindow();
+		Stage theStage = (Stage) homePageButton.getScene().getWindow();
 		new HomePage(theStage);
 	}
 	
@@ -130,7 +130,7 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 					        Scene singleJobView = new Scene( root );
 					
 					        Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
-
+					        theStage.setTitle("Job");
 					        theStage.setScene( singleJobView );
 					        theStage.show();
 						} catch(Exception ex) {

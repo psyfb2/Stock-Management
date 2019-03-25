@@ -3,10 +3,13 @@ package com.g52grp.warehouse.model;
 import java.awt.Toolkit;
 import java.io.IOException;
 
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import com.g52grp.main.Main;
 
@@ -17,10 +20,13 @@ import com.g52grp.main.Main;
  *
  */
 public class HomePage {
+	// initially set to be full screen
+	public static double screenWidth;
+	public static double screenHeight;
+	private static boolean fullscreen = true;
+	
 	public  HomePage(Stage theStage) throws IOException {
     	String resource;
-    	double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-    	double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
     	if(screenWidth> 1800) {
     		resource = Main.HOMEPAGE_FXML;
@@ -28,11 +34,26 @@ public class HomePage {
     	else {
     	resource = Main.HOMEPAGEFORSMALLSIZE_FXML;
     	}
-		theStage.setTitle( "home" );
+		theStage.setTitle( "Home" );
 		theStage.getIcons().add(new Image("RJB.png"));
         Parent root = FXMLLoader.load(getClass().getResource(resource));
-       Scene Scene = new Scene( root,screenWidth, screenHeight);
+        Scene Scene = new Scene( root,screenWidth, screenHeight);
 		theStage.setScene(Scene);
+		if(fullscreen) {
+			fullscreen(theStage);
+		}
+		fullscreen = false;
 		theStage.show();
+	}
+	
+	private void fullscreen(Stage theStage) {
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+		
+        //set Stage boundaries to visible bounds of the main screen
+        theStage.setX(primaryScreenBounds.getMinX());
+        theStage.setY(primaryScreenBounds.getMinY());
+        theStage.setWidth(primaryScreenBounds.getWidth());
+        theStage.setHeight(primaryScreenBounds.getHeight());
+        theStage.setMaximized(true);
 	}
 }
