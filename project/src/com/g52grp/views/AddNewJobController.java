@@ -6,9 +6,11 @@ import com.g52grp.stockout.JobManager;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * @author psyfb2
@@ -61,9 +63,11 @@ public class AddNewJobController {
 		}
 		
 		addJob.setDisable(true);
-		errorMessage.setText("Job added successfully");
 		if(tb != null) {
 			tb.updateTableView();
 		}
+		
+		Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
+		theStage.close();
 	}
 }

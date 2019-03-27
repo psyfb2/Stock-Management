@@ -283,9 +283,66 @@ public class ConcreteProductManager implements ProductManager {
 		}	
 		return jobIDs;
 	}
+		
+	//new added function
+	//add a totally new product into the database
+	public boolean addNewProduct(String code, String description, String barCode) {
+		PreparedStatement ps;
+		try { 
+			if(barCode != null) {
+				ps = con.getPreparedStatement("insert into Stocks (productCode, description, barcode, stock) values (?, ?, ?, 0)");
+				ps.setString(3, barCode);
+			}else {
+				ps = con.getPreparedStatement("insert into Stocks (productCode, description, barcode, stock) values (?, ?, null, 0)");				
+			}
+			ps.setString(1, code);
+			ps.setString(2, description);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(e);
+			return false;
+		}		
+		return true;		
+	}
+	
+	//new added function
+	//update the new minimum quantity into the database
+	public boolean updateMinQuantity(int id, int newMinQuantity) {
+		PreparedStatement ps;
+		try { 
+			ps = con.getPreparedStatement("update Stocks SET minQuantity = ? where productID = ?");
+			ps.setInt(1, newMinQuantity);
+			ps.setInt(2, id);
+			ps.executeUpdate();			
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(e);
+			return false;
+		}	
+		
+		return true;		
+	}
+	
+	//new added function
+	//update the new barcode into the database
+	public boolean updateBarcode(int id, String newBarcode) {
+		PreparedStatement ps;
+		try { 
+			ps = con.getPreparedStatement("update Stocks SET barcode = ? where productID = ?");
+			ps.setString(1, newBarcode);
+			ps.setInt(2, id);
+			ps.executeUpdate();			
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println(e);
+			return false;
+		}			
+		return true;		
+	}
 	
 	private Product getProduct(ResultSet rs) throws SQLException {
 		return new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), 
-				rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getString("barCode"));
+				rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getString("barCode"), rs.getInt("minQuantity"));
 	}
 }

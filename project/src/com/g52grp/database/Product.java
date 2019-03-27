@@ -11,15 +11,17 @@ public class Product {
 	private float pricePerUnit;
 	private int stock;
 	private String barCode; // unique
+	private int minQuantity;
 	
 	public Product(int productId, String productCode, String description,
-			float pricePerUnit, int stock, String barCode) {
+			float pricePerUnit, int stock, String barCode, int minQuantity) {
 		this.productId = productId;
 		this.productCode = productCode;
 		this.description = description;
 		this.pricePerUnit = pricePerUnit;
 		this.stock = stock;
 		this.barCode = barCode;
+		this.minQuantity = minQuantity;
 	}
 
 	public int getProductId() {
@@ -46,6 +48,9 @@ public class Product {
 		return barCode;
 	}
 	
+	public int getMinQuantity() {
+		return minQuantity;
+	}
 	@Override
 	public String toString() {
 		// toString required for auto complete search for a product

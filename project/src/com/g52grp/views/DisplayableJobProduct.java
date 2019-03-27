@@ -18,10 +18,12 @@ public class DisplayableJobProduct {
 	private SimpleStringProperty quantity;
 	private SimpleIntegerProperty stocksRemaining;
 	private SimpleStringProperty barcode;
+	private SimpleIntegerProperty minQuantity;
+	private SimpleFloatProperty priceOfRow;
 	
 	public DisplayableJobProduct(int productId, String productCode,
 			String description, float price, String quantity,
-			int stocksRemaining, String barcode) {
+			int stocksRemaining, String barcode, int minQuantity) {
 		this.productId = new SimpleIntegerProperty(productId);
 		this.productCode = new SimpleStringProperty(productCode);
 		this.description = new SimpleStringProperty(description);
@@ -29,6 +31,8 @@ public class DisplayableJobProduct {
 		this.quantity = new SimpleStringProperty(quantity);
 		this.stocksRemaining = new SimpleIntegerProperty(stocksRemaining);
 		this.barcode = new SimpleStringProperty(barcode);
+		this.minQuantity = new SimpleIntegerProperty(minQuantity);
+		this.priceOfRow = new SimpleFloatProperty(Integer.parseInt(quantity) * price);
 	}
 
 	public int getProductId() {
@@ -61,6 +65,7 @@ public class DisplayableJobProduct {
 
 	public void setPrice(float price) {
 		this.price = new SimpleFloatProperty(price);
+		setPriceOfRow(Integer.parseInt(quantity.get()) * price);
 	}
 
 	public String getQuantity() {
@@ -69,6 +74,7 @@ public class DisplayableJobProduct {
 
 	public void setQuantity(String quantity) {
 		this.quantity = new SimpleStringProperty(quantity);
+		setPriceOfRow(Integer.parseInt(quantity) * price.get());
 	}
 
 	public int getStocksRemaining() {
@@ -87,4 +93,21 @@ public class DisplayableJobProduct {
 	public void setBarcode(String barcode) {
 		this.barcode = new SimpleStringProperty(barcode);
 	}
+	
+	public int getMinQuantity() {
+		return minQuantity.get();
+	}
+	
+	public void setMinQuantity(int minQuantity) {
+		this.minQuantity = new SimpleIntegerProperty(minQuantity);
+	}
+	
+	public float getPriceOfRow() {
+		return priceOfRow.get();
+	}
+
+	public void setPriceOfRow(float priceOfRow) {
+		this.priceOfRow = new SimpleFloatProperty(priceOfRow);
+	}
+
 }

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.views.AddNewJobController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" stylesheets="@../../../../resources/stylesheet.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.views.AddNewJobController">
    <children>
       <Label layoutX="234.0" layoutY="14.0" text="Add New Job">
          <font>
@@ -31,6 +31,6 @@
          </font>
       </Label>
       <Button fx:id="addJob" layoutX="496.0" layoutY="98.0" mnemonicParsing="false" onAction="#addNewJob" text="Add Job" />
-      <Label fx:id="errorMessage" layoutX="347.0" layoutY="141.0" prefHeight="17.0" prefWidth="250.0" />
+      <Label fx:id="errorMessage" layoutX="347.0" layoutY="141.0" prefHeight="17.0" prefWidth="250.0" textFill="#dd0808" />
    </children>
 </AnchorPane>
