@@ -38,9 +38,9 @@ public class ConcreteJobManager implements JobManager {
 		}
 		return true;
 	}
-
+	
 	@Override
-	public Job[] getAllJobs() {
+	public ArrayList<Job> getAllJobsArrayList() {
 		ArrayList<Job> jobs = new ArrayList<Job>();
 		try {
 			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Jobs");
@@ -49,12 +49,18 @@ public class ConcreteJobManager implements JobManager {
 				jobs.add(new Job(rs.getInt("jobID"), rs.getString("siteName"), rs.getInt("plotNumber"), rs.getDate("startDate")));
 			}
 			ps.close();
-			Job[] jobsArr = new Job[jobs.size()];
-			jobsArr = jobs.toArray(jobsArr);
-			return jobsArr;
+			return jobs;
 		} catch(SQLException e) {
 			return null;
 		}
+	}
+
+	@Override
+	public Job[] getAllJobs() {
+		ArrayList<Job> jobs = getAllJobsArrayList();
+		Job[] jobsArr = new Job[jobs.size()];
+		jobsArr = jobs.toArray(jobsArr);
+		return jobsArr;
 	}
 
 	@Override
@@ -69,5 +75,7 @@ public class ConcreteJobManager implements JobManager {
 		}
 		return true;
 	}
+
+	
 
 }

@@ -2,7 +2,13 @@ package com.g52grp.views;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
+import org.controlsfx.control.textfield.TextFields;
 
 import com.g52grp.database.Job;
 import com.g52grp.main.Main;
@@ -20,9 +26,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -44,6 +52,8 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	@FXML TableColumn<Job, String> date;
 	@FXML TableColumn<Job, Integer> jobId; // this column is not visible to the user
 	@FXML Button homePageButton;
+	@FXML TextField searchJobs;
+	@FXML Label errorMessage;
 	
 	public JobMenuController() {
 		jm = new ConcreteJobManager(Main.con);
@@ -73,6 +83,22 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 		new HomePage(theStage);
 	}
 	
+	@FXML public void searchForJob(ActionEvent e) {
+		errorMessage.setText("");
+		String findMe = searchJobs.getText();
+		
+		int i = 0;
+		for(Job j : jobTable.getItems()) {
+			if(j.toString().equals(findMe)) {
+				jobTable.getSelectionModel().select(i);
+				return;
+			}
+			i++;
+		}
+		
+		errorMessage.setText("The job " + findMe + " could not be found");
+	}
+	
 	/**
 	 * Load jobs from the database 
 	 * @return List of Job objects to be added to the tableview, empty List if could not access database
@@ -84,6 +110,9 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 			return jobsList;
 		}
 		jobsList.addAll(jobsArr);
+		
+		loadAutoCompleteOptions(jobsArr);
+		
 		return jobsList;
 	}
 	
@@ -132,7 +161,6 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 					        theStage.setScene( singleJobView );
 					        theStage.show();
 						} catch(Exception ex) {
-							ex.printStackTrace();
 						}
 					}
 				});
@@ -142,5 +170,20 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 		
 		// populate the table
 		updateTableView();
+	}
+	
+	public void loadAutoCompleteOptions(Job[] jobs) {
+		// autocomplete text field
+		ArrayList<Job> allJobs = new ArrayList<Job>(Arrays.asList(jobs));
+				
+		TextFields.bindAutoCompletion(searchJobs, input -> {
+			if(input.getUserText().isEmpty() || allJobs == null) {
+				return Collections.emptyList();
+			}
+			// search allProducts for a match with the input and return this list
+			return allJobs.stream().filter(i -> {
+				return i.toString().toLowerCase().contains(input.getUserText().toLowerCase());
+			}).collect(Collectors.toList());
+		});
 	}
 }

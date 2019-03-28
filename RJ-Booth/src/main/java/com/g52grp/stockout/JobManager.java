@@ -1,5 +1,7 @@
 package com.g52grp.stockout;
 
+import java.util.ArrayList;
+
 import com.g52grp.database.Job;
 
 /**
@@ -31,4 +33,6 @@ public interface JobManager {
 	 * @return A list of all jobs retrieved from the Job table, returns null if database cannot be accessed 
 	 */
 	Job[] getAllJobs();
+	
+	ArrayList<Job> getAllJobsArrayList();
 }
