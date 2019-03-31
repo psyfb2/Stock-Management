@@ -183,7 +183,7 @@ public class StockManagementPageController implements TableViewUpdate{
 					int i = 0;
 					boolean findKey = false;
 					for(DisplayableProduct product : stockTable.getItems()) {
-						if((product.getProductCode() + " " + product.getDescription()).equals(text)) {
+						if((product.toString()).equals(text)) {
 							stockTable.getSelectionModel().select(i);
 							findKey = true;
 						}
