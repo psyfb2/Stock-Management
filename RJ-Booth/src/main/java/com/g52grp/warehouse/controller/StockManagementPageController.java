@@ -41,6 +41,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import com.csvreader.*;
 
 /**
  * 
@@ -105,7 +106,6 @@ public class StockManagementPageController implements TableViewUpdate{
 	
     @FXML
     private void initialize() {
-    	//stockTable.setEditable(true);
  		
  		codeCol.setCellValueFactory(new PropertyValueFactory<>("productCode"));
  		tableWidth[0] = codeCol.getPrefWidth();
@@ -143,16 +143,13 @@ public class StockManagementPageController implements TableViewUpdate{
 							setText(Integer.toString(quantity));
 							if(quantity < Integer.parseInt(this.getTableRow().getItem().getMinQuantity())) {
 								this.setStyle("-fx-font-weight: bold;" + "-fx-text-fill: FF3333;");
-								//this.getTableRow().setStyle("-fx-background-color: FF3333;");
 							}else {
 								this.setStyle("-fx-background-color: null;");
-								//this.getTableRow().setStyle("-fx-background-color: null;");
 							}
 							
 						}else {
 							setText(null);
 							this.setStyle("-fx-background-color: null;");
-							//this.getTableRow().setStyle("-fx-background-color: null;");
 						}
 					}
 				};
@@ -183,7 +180,7 @@ public class StockManagementPageController implements TableViewUpdate{
 					int i = 0;
 					boolean findKey = false;
 					for(DisplayableProduct product : stockTable.getItems()) {
-						if((product.getProductCode() + " " + product.getDescription()).equals(text)) {
+						if((product.toString()).equals(text)) {
 							stockTable.getSelectionModel().select(i);
 							findKey = true;
 						}
@@ -258,9 +255,25 @@ public class StockManagementPageController implements TableViewUpdate{
 				String newBarcode = t.getNewValue();
 				String oldBarcode = productSelected.getBarCode();
 				
+				if(newBarcode.length() != 0) {
+					if(!newBarcode.matches("[0-9]{1,}")) {
+						errorMinQuantityMessage.setText("Please only enter digits for barcode");
+	        			stockTable.refresh();
+	        			return;
+					}
+					
+					if(newBarcode.length() < 4) {
+						errorMinQuantityMessage.setText("Barcode must have at least 4 digits");
+	        			stockTable.refresh();
+	        			return;
+					}
+				}
+								
+				errorMinQuantityMessage.setText(null);
 				if(newBarcode.equals(oldBarcode)) {
 					return;
 				}
+				
 				
 				Alert confirmation = new Alert(AlertType.CONFIRMATION);
         		confirmation.setTitle("Change the barcode?");
@@ -398,20 +411,27 @@ public class StockManagementPageController implements TableViewUpdate{
                 new FileChooser.ExtensionFilter("XLS", "*.xls"), new FileChooser.ExtensionFilter("XLSX", "*.xlsx"));
         File file = fileChooser.showOpenDialog(selectFile);
         if (file != null) {
-            /*try {
-                bom.initBOM(ExcelUtil.importExcel(Util.getWorkbok(new FileInputStream(file), file)));
-                session.commit();
-                session.close();
-                
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            String filePath = file.getAbsolutePath();
+            try {
+				CsvReader csvReader = new CsvReader(filePath);
+				csvReader.readHeaders();
+				String code, description;
+				Double quantity;
+				while(csvReader.readRecord()) {
+					code = csvReader.get(0);
+					description = csvReader.get(1);
+					quantity = Double.parseDouble(csvReader.get(4));
+					//System.out.println(code + " " + description + " " + quantity);
+					pm.importNewProduct(code, description, quantity.intValue());
+				}
+				
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }*/
-        	//System.out.println("You choose file " + file);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}           
         }
+        this.showProducts();
+        this.showTotalValue();
 	}
 	
 	@Override

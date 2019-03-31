@@ -34,4 +34,8 @@ public class Job {
 	public String getDate() {
 		return date.toString();
 	}
+	
+	public String toString() {
+		return getSiteName() + " " + getPlotNumber();
+	}
 }

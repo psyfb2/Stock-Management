@@ -338,6 +338,23 @@ public class ConcreteProductManager implements ProductManager {
 		return true;		
 	}
 	
+	//new added function
+	//add a totally new product into the database
+	public boolean importNewProduct(String code, String description, int quantity) {
+		PreparedStatement ps;
+		try { 
+			ps = con.getPreparedStatement("insert into Stocks (productCode, description, stock) values (?, ?, ?)");				
+			ps.setString(1, code);
+			ps.setString(2, description);
+			ps.setInt(3, quantity);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			return false;
+		}		
+		return true;		
+	}
+	
 	private Product getProduct(ResultSet rs) throws SQLException {
 		return new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), 
 				rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getString("barCode"), rs.getInt("minQuantity"));

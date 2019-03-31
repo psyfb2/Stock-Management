@@ -1,21 +1,21 @@
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\views\JobMenuController.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\main\Main.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\views\DisplayableJobProduct.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\views\AddNewJobController.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\stockout\ProductManager.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\warehouse\controller\AddProductPageController.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\warehouse\controller\StockManagementPageController.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\views\TableViewUpdate.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\stockout\ConcreteJobManager.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\views\SingleJobController.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\database\JobProduct.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\warehouse\controller\HomePageController.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\warehouse\model\HomePage.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\database\DatabaseConnection.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\database\Product.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\stockout\ConcreteProductManager.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\warehouse\model\AddProductPage.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\database\Job.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\warehouse\model\StockManagementPage.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\stockout\JobManager.java
-Z:\eclipse-workspace-java\RJ-Booth\src\main\java\com\g52grp\warehouse\model\DisplayableProduct.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\main\Main.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\stockout\JobManager.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\stockout\ConcreteProductManager.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\warehouse\controller\HomePageController.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\database\Product.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\warehouse\model\StockManagementPage.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\warehouse\controller\StockManagementPageController.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\database\DatabaseConnection.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\warehouse\model\AddProductPage.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\stockout\ProductManager.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\views\JobMenuController.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\database\Job.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\views\DisplayableJobProduct.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\views\SingleJobController.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\views\TableViewUpdate.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\warehouse\controller\AddProductPageController.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\database\JobProduct.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\warehouse\model\DisplayableProduct.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\stockout\ConcreteJobManager.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\warehouse\model\HomePage.java
+E:\我的\学习\UNUK\Software Engingeering Group Project\stock-management\stock-management\stock-management\RJ-Booth\src\main\java\com\g52grp\views\AddNewJobController.java
