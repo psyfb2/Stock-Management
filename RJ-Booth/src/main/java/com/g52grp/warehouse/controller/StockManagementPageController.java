@@ -426,7 +426,6 @@ public class StockManagementPageController implements TableViewUpdate{
 				}
 				
             } catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}           
         }
@@ -485,5 +484,4 @@ public class StockManagementPageController implements TableViewUpdate{
 		}
 		mostUsedProduct.setText( textInfo + product);
 	}
-
 }
