@@ -52,7 +52,7 @@ public class ConcreteProductManager implements ProductManager {
 				return p;
 			} else {
 				ps.close();
-				return null; // product was not found
+				return null; //product was not found
 			}
 		} catch(SQLException e) {
 			return null;
