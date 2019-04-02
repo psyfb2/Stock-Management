@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	// only create ONE connection for the whole program (take DatabaseConnection object as a parameter for your classes)
+	//only create ONE connection for the whole program (take DatabaseConnection object as a parameter for your classes)
     public static final DatabaseConnection con = new DatabaseConnection();
     public static final String LOGOPATH = "rjb.png";
     public static final String BACKIMAGEPATH = "backButton.png";
