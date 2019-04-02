@@ -148,8 +148,8 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 				return;
 			}
 		} else {
-			// register scanned product to this job with quantity used 1
-			// if the product is already registered then just reduce quantity used by 1 if possible
+			// Register scanned product to this job with quantity used 1
+			// If the product is already registered then just reduce quantity used by 1 if possible
 			if(p.getStock() < 1) {
 				errorMessage.setText("The Product '" + p.toString() + "' does not have enough stocks");
 				return;
