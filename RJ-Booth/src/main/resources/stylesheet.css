@@ -1,0 +1,68 @@
+.table-view{
+       -fx-border-width: 0.05px; 
+	-fx-border-color: #A0A0A0;
+}
+
+.table-view:focused{
+    -fx-background-color: #E0E0E0;
+
+}
+
+.table-view .column-header{
+    -fx-border-color:white lightgray white white;  
+	-fx-background-color: #B8B8B8;
+}
+
+.table-view .column-header .label{
+    -fx-alignment: center;
+
+}
+
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(#131313 0%, #424141 100%);
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+
+.table-cell {
+    -fx-padding: 0.166667em; /* 2px, plus border adds 1px */
+    -fx-background-color: null;
+    -fx-border-color: transparent -fx-table-cell-border-color transparent transparent;
+    -fx-cell-size: 2.0em; /* 24 */
+    -fx-text-fill: -fx-text-background-color;
+	-fx-alignment: center;
+}
+
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, #F8F8F8;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, #F0F0F0;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */  
+}
+
+
+.table-cell {  
+    -fx-border-width: 0.05px; 
+	-fx-border-color: #A0A0A0;
+} 
+
+.table-row-cell:selected {
+    -fx-background-color: #A0A0A0;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+	-fx-border-insets: 0.2;
+	fx-border-color: #000000;
+}
+
+.button:hover{
+    -fx-effect: dropshadow(three-pass-box, #72b9da, 10.0,0, 0, 0);
+    -fx-cursor: hand;
+}
