@@ -9,27 +9,29 @@ import java.util.stream.Collectors;
 
 import org.controlsfx.control.textfield.TextFields;
 
+import com.csvreader.*;
 import com.g52grp.database.Product;
+import com.g52grp.main.Main;
 import com.g52grp.stockout.ConcreteProductManager;
 import com.g52grp.views.TableViewUpdate;
 import com.g52grp.warehouse.model.AddProductPage;
 import com.g52grp.warehouse.model.DisplayableProduct;
 import com.g52grp.warehouse.model.HomePage;
-import com.g52grp.main.Main;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -41,7 +43,6 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import com.csvreader.*;
 
 /**
  * 
@@ -92,6 +93,12 @@ public class StockManagementPageController implements TableViewUpdate{
 
     @FXML
     private Label errorMessage;
+
+    @FXML
+    private Label saveLabel;
+
+    @FXML
+    private Label cancelLabel;
     
 	@FXML private TableView<DisplayableProduct> stockTable;
 	@FXML private TableColumn<DisplayableProduct, String> codeCol;
@@ -346,6 +353,8 @@ public class StockManagementPageController implements TableViewUpdate{
 		deleteCol.setVisible(true);
 		saveButton.setVisible(true);
 		cancelButton.setVisible(true);
+		saveLabel.setVisible(true);
+		cancelLabel.setVisible(true);
 	}
 	
 	 /**
@@ -403,6 +412,8 @@ public class StockManagementPageController implements TableViewUpdate{
 		showProducts();
 		saveButton.setVisible(false);
 		cancelButton.setVisible(false);
+		saveLabel.setVisible(false);
+		cancelLabel.setVisible(false);
 
 	}
 	
@@ -424,6 +435,8 @@ public class StockManagementPageController implements TableViewUpdate{
 		showProducts();
 		saveButton.setVisible(false);
 		cancelButton.setVisible(false);
+		saveLabel.setVisible(false);
+		cancelLabel.setVisible(false);
 	}
 	
 	
