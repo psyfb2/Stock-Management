@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.views.JobMenuController">
+<GridPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../stylesheet.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.views.JobMenuController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="1280.0" />
    </columnConstraints>
@@ -22,7 +22,7 @@
       <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Button fx:id="homePageButton" mnemonicParsing="false" onAction="#goToHomePage" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Home Page" />
+      <Button fx:id="homePageButton" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#goToHomePage" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Return" />
       <GridPane GridPane.rowIndex="1">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="575.0" minWidth="10.0" prefWidth="568.0" />

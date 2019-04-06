@@ -9,27 +9,29 @@ import java.util.stream.Collectors;
 
 import org.controlsfx.control.textfield.TextFields;
 
+import com.csvreader.*;
 import com.g52grp.database.Product;
+import com.g52grp.main.Main;
 import com.g52grp.stockout.ConcreteProductManager;
 import com.g52grp.views.TableViewUpdate;
 import com.g52grp.warehouse.model.AddProductPage;
 import com.g52grp.warehouse.model.DisplayableProduct;
 import com.g52grp.warehouse.model.HomePage;
-import com.g52grp.main.Main;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -41,7 +43,6 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import com.csvreader.*;
 
 /**
  * 
@@ -92,6 +93,12 @@ public class StockManagementPageController implements TableViewUpdate{
 
     @FXML
     private Label errorMessage;
+
+    @FXML
+    private Label saveLabel;
+
+    @FXML
+    private Label cancelLabel;
     
 	@FXML private TableView<DisplayableProduct> stockTable;
 	@FXML private TableColumn<DisplayableProduct, String> codeCol;
@@ -105,6 +112,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	private double[] tableWidth = new double[7];
 	private static ObservableList<DisplayableProduct> stocks =  FXCollections.observableArrayList();
 	private ConcreteProductManager pm = new ConcreteProductManager(Main.con);
+	private ArrayList<Product> allProducts;
 	
     @FXML
     private void initialize() {
@@ -162,7 +170,7 @@ public class StockManagementPageController implements TableViewUpdate{
 		showMostUsedProduct();
 		
 		// auto complete text field
-		ArrayList<Product> allProducts = pm.getAllProductsArrayList();		
+		allProducts = pm.getAllProductsArrayList();	
 		TextFields.bindAutoCompletion(searchProduct, input -> {
 			if(input.getUserText().isEmpty() || allProducts == null) {
 				return Collections.emptyList();
@@ -306,7 +314,10 @@ public class StockManagementPageController implements TableViewUpdate{
 		});
     }
     
-    
+    /**
+     * Add new item into dadtabase.
+     * @throws IOException
+     */
     @FXML
     void addButtonClicked() throws IOException {		
 		new AddProductPage(new Stage(), this);
@@ -346,6 +357,8 @@ public class StockManagementPageController implements TableViewUpdate{
 		deleteCol.setVisible(true);
 		saveButton.setVisible(true);
 		cancelButton.setVisible(true);
+		saveLabel.setVisible(true);
+		cancelLabel.setVisible(true);
 	}
 	
 	 /**
@@ -403,9 +416,17 @@ public class StockManagementPageController implements TableViewUpdate{
 		showProducts();
 		saveButton.setVisible(false);
 		cancelButton.setVisible(false);
+		saveLabel.setVisible(false);
+		cancelLabel.setVisible(false);
 
 	}
 	
+	/**
+	 * 
+	 * Cancel the operation when click
+	 * cancel button.
+	 * 
+	 */
 	@FXML
 	private void cancelButtonClicked() {
 		codeCol.setPrefWidth(tableWidth[0]);
@@ -424,17 +445,21 @@ public class StockManagementPageController implements TableViewUpdate{
 		showProducts();
 		saveButton.setVisible(false);
 		cancelButton.setVisible(false);
+		saveLabel.setVisible(false);
+		cancelLabel.setVisible(false);
 	}
 	
-	
+	/**
+	 * 
+	 * Import CSV file from system.
+	 */
 	@FXML
 	private void importButtonClicked() {
 		FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose a file");
         Stage selectFile = new Stage();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"),
-                new FileChooser.ExtensionFilter("XLS", "*.xls"), new FileChooser.ExtensionFilter("XLSX", "*.xlsx"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"));
         File file = fileChooser.showOpenDialog(selectFile);
         if (file != null) {
             String filePath = file.getAbsolutePath();
@@ -447,7 +472,6 @@ public class StockManagementPageController implements TableViewUpdate{
 					code = csvReader.get(0);
 					description = csvReader.get(1);
 					quantity = Double.parseDouble(csvReader.get(4));
-					//System.out.println(code + " " + description + " " + quantity);
 					pm.importNewProduct(code, description, quantity.intValue());
 				}
 				
@@ -459,6 +483,10 @@ public class StockManagementPageController implements TableViewUpdate{
         this.showTotalValue();
 	}
 	
+	
+	/**
+	 * Refresh tableview.
+	 */
 	@Override
 	public void updateTableView() {
 		showProducts();	
@@ -470,7 +498,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	 */
 	private void showProducts() {
 		stocks.removeAll(stocks);
-		ArrayList<Product> allProducts = pm.getAllProductsArrayList();
+		allProducts = pm.getAllProductsArrayList();
 		if(allProducts == null) {
 			errorMessage.setText("Failed to load products: error accessing database");
 			errorMessage.setVisible(true);
