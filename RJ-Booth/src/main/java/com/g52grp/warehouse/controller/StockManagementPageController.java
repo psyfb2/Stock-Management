@@ -112,6 +112,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	private double[] tableWidth = new double[7];
 	private static ObservableList<DisplayableProduct> stocks =  FXCollections.observableArrayList();
 	private ConcreteProductManager pm = new ConcreteProductManager(Main.con);
+	private ArrayList<Product> allProducts;
 	
     @FXML
     private void initialize() {
@@ -169,7 +170,7 @@ public class StockManagementPageController implements TableViewUpdate{
 		showMostUsedProduct();
 		
 		// auto complete text field
-		ArrayList<Product> allProducts = pm.getAllProductsArrayList();		
+		allProducts = pm.getAllProductsArrayList();	
 		TextFields.bindAutoCompletion(searchProduct, input -> {
 			if(input.getUserText().isEmpty() || allProducts == null) {
 				return Collections.emptyList();
@@ -313,7 +314,10 @@ public class StockManagementPageController implements TableViewUpdate{
 		});
     }
     
-    
+    /**
+     * Add new item into dadtabase.
+     * @throws IOException
+     */
     @FXML
     void addButtonClicked() throws IOException {		
 		new AddProductPage(new Stage(), this);
@@ -417,6 +421,12 @@ public class StockManagementPageController implements TableViewUpdate{
 
 	}
 	
+	/**
+	 * 
+	 * Cancel the operation when click
+	 * cancel button.
+	 * 
+	 */
 	@FXML
 	private void cancelButtonClicked() {
 		codeCol.setPrefWidth(tableWidth[0]);
@@ -439,7 +449,10 @@ public class StockManagementPageController implements TableViewUpdate{
 		cancelLabel.setVisible(false);
 	}
 	
-	
+	/**
+	 * 
+	 * Import CSV file from system.
+	 */
 	@FXML
 	private void importButtonClicked() {
 		FileChooser fileChooser = new FileChooser();
@@ -472,6 +485,10 @@ public class StockManagementPageController implements TableViewUpdate{
         this.showTotalValue();
 	}
 	
+	
+	/**
+	 * Refresh tableview.
+	 */
 	@Override
 	public void updateTableView() {
 		showProducts();	
@@ -483,7 +500,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	 */
 	private void showProducts() {
 		stocks.removeAll(stocks);
-		ArrayList<Product> allProducts = pm.getAllProductsArrayList();
+		allProducts = pm.getAllProductsArrayList();
 		if(allProducts == null) {
 			errorMessage.setText("Failed to load products: error accessing database");
 			errorMessage.setVisible(true);
