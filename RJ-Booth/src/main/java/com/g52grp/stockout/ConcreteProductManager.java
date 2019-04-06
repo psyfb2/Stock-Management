@@ -52,7 +52,7 @@ public class ConcreteProductManager implements ProductManager {
 				return p;
 			} else {
 				ps.close();
-				return null; //product was not found
+				return null; // product was not found
 			}
 		} catch(SQLException e) {
 			return null;
@@ -335,6 +335,23 @@ public class ConcreteProductManager implements ProductManager {
 		} catch (SQLException e) {
 			return false;
 		}			
+		return true;		
+	}
+	
+	//new added function
+	//add a totally new product into the database
+	public boolean importNewProduct(String code, String description, int quantity) {
+		PreparedStatement ps;
+		try { 
+			ps = con.getPreparedStatement("insert into Stocks (productCode, description, stock) values (?, ?, ?)");				
+			ps.setString(1, code);
+			ps.setString(2, description);
+			ps.setInt(3, quantity);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			return false;
+		}		
 		return true;		
 	}
 	
