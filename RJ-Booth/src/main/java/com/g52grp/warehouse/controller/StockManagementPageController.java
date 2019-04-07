@@ -370,18 +370,18 @@ public class StockManagementPageController implements TableViewUpdate{
 		for(DisplayableProduct product : stockTable.getItems()) {
 			if(product.getDelete()) {
 				int id = product.getProductId();
-				ArrayList<Integer> jobIDs = pm.checkProductInUsed(id);
-				if(!jobIDs.isEmpty()) {
-					String warningText = product.getDescription() + " is used in job ";
-					for(int i = 0; i < jobIDs.size(); i++) {
-						if(i == jobIDs.size() - 1) {
-							warningText += jobIDs.get(i) + ". ";
+				ArrayList<String> jobDetails = pm.checkProductInUsed(id);
+				if(!jobDetails.isEmpty()) {
+					String warningText = product.getDescription() + " is used in ";
+					for(int i = 0; i < jobDetails.size(); i++) {
+						if(i == jobDetails.size() - 1) {
+							warningText += jobDetails.get(i) + ". ";
 						}else {
-							warningText += jobIDs.get(i) + ", ";
+							warningText += jobDetails.get(i) + ", ";
 						}						
 					}
 					
-					warningText += "\nPlease delete the job(s) first.";
+					warningText += "\nPlease delete these job(s) first.";
 					Alert alert = new Alert(Alert.AlertType.INFORMATION);
 					alert.setTitle("DeleteWarning");
 					Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();

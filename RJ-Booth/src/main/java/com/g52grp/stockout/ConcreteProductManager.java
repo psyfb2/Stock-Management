@@ -267,21 +267,21 @@ public class ConcreteProductManager implements ProductManager {
 	 */
 	//new added function
 	//check whether the product is in used
-	public ArrayList<Integer> checkProductInUsed(int productID) {
-		ArrayList<Integer> jobIDs = new ArrayList<>();
+	public ArrayList<String> checkProductInUsed(int productID) {
+		ArrayList<String> jobDetails = new ArrayList<>();
 		PreparedStatement ps;
 		try { 
-			ps = con.getPreparedStatement("select jobID from JobStockLink where productID = ?");
+			ps = con.getPreparedStatement("select siteName from JobStockLink, Jobs where productID = ? and JobStockLink.jobID = Jobs.jobID");
 			ps.setInt(1, productID);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				jobIDs.add(rs.getInt("jobID"));
+				jobDetails.add(rs.getString("siteName"));
 			}			
 			ps.close();
 		} catch (SQLException e) {
 			return null;
 		}	
-		return jobIDs;
+		return jobDetails;
 	}
 		
 	//new added function
