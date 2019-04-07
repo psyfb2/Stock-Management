@@ -340,13 +340,51 @@ public class ConcreteProductManager implements ProductManager {
 	
 	//new added function
 	//add a totally new product into the database
-	public boolean importNewProduct(String code, String description, int quantity) {
+	public boolean importNewProduct(String code, String description,double salesPrice, int quantity) {
 		PreparedStatement ps;
 		try { 
-			ps = con.getPreparedStatement("insert into Stocks (productCode, description, stock) values (?, ?, ?)");				
+			ps = con.getPreparedStatement("insert ignore into Stocks (productCode, description, pricePerUnit, stock) values (?, ?, ?, ?)");				
 			ps.setString(1, code);
 			ps.setString(2, description);
-			ps.setInt(3, quantity);
+			ps.setDouble(3, salesPrice); //added salesPrice by psyajwo
+			ps.setInt(4, quantity);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			return false;
+		}		
+		return true;		
+	}
+	
+	//new function added
+	//return stocks of one product
+	public int getStockForOne(String code) {
+		PreparedStatement ps;
+		int stock = 0;
+		try {
+			ps = con.getPreparedStatement("select stock from Stocks where productCode = ? ");				
+			ps.setString(1, code);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				stock = rs.getInt("stock");
+			}
+			ps.close();
+		} catch (SQLException e) {
+			return 0;
+		}	
+		return stock;
+	}
+	
+	/**
+	 * @author psyajwo
+	 * Re-stock using the import button
+	 */
+	public boolean importRestock(String code, int quantity, int stockRemaining) {
+		PreparedStatement ps;
+		try { 
+			ps = con.getPreparedStatement("update Stocks SET stock = ? where productCode = ?");				
+			ps.setInt(1, quantity + stockRemaining);
+			ps.setString(2, code);
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {

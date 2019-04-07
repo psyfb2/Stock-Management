@@ -315,7 +315,7 @@ public class StockManagementPageController implements TableViewUpdate{
     }
     
     /**
-     * Add new item into dadtabase.
+     * Add new item into database.
      * @throws IOException
      */
     @FXML
@@ -455,6 +455,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	 */
 	@FXML
 	private void importButtonClicked() {
+		int stockRemaining;
 		FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose a file");
         Stage selectFile = new Stage();
@@ -467,12 +468,16 @@ public class StockManagementPageController implements TableViewUpdate{
 				CsvReader csvReader = new CsvReader(filePath);
 				csvReader.readHeaders();
 				String code, description;
-				Double quantity;
+				Double salesPrice, quantity;
+				
 				while(csvReader.readRecord()) {
 					code = csvReader.get(0);
 					description = csvReader.get(1);
+					salesPrice = Double.parseDouble(csvReader.get(3));
 					quantity = Double.parseDouble(csvReader.get(4));
-					pm.importNewProduct(code, description, quantity.intValue());
+					stockRemaining = pm.getStockForOne(code);
+					pm.importNewProduct(code, description,salesPrice, quantity.intValue());
+					pm.importRestock(code, quantity.intValue(), stockRemaining);
 				}
 				
             } catch (IOException e) {
