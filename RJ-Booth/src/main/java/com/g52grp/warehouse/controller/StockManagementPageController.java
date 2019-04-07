@@ -370,18 +370,18 @@ public class StockManagementPageController implements TableViewUpdate{
 		for(DisplayableProduct product : stockTable.getItems()) {
 			if(product.getDelete()) {
 				int id = product.getProductId();
-				ArrayList<Integer> jobIDs = pm.checkProductInUsed(id);
-				if(!jobIDs.isEmpty()) {
-					String warningText = product.getDescription() + " is used in job ";
-					for(int i = 0; i < jobIDs.size(); i++) {
-						if(i == jobIDs.size() - 1) {
-							warningText += jobIDs.get(i) + ". ";
+				ArrayList<String> jobDetails = pm.checkProductInUsed(id);
+				if(!jobDetails.isEmpty()) {
+					String warningText = product.getDescription() + " is used in ";
+					for(int i = 0; i < jobDetails.size(); i++) {
+						if(i == jobDetails.size() - 1) {
+							warningText += jobDetails.get(i) + ". ";
 						}else {
-							warningText += jobIDs.get(i) + ", ";
+							warningText += jobDetails.get(i) + ", ";
 						}						
 					}
 					
-					warningText += "\nPlease delete the job(s) first.";
+					warningText += "\nPlease delete these job(s) first.";
 					Alert alert = new Alert(Alert.AlertType.INFORMATION);
 					alert.setTitle("DeleteWarning");
 					Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
@@ -459,8 +459,7 @@ public class StockManagementPageController implements TableViewUpdate{
         fileChooser.setTitle("Choose a file");
         Stage selectFile = new Stage();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"),
-                new FileChooser.ExtensionFilter("XLS", "*.xls"), new FileChooser.ExtensionFilter("XLSX", "*.xlsx"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV", "*.csv"));
         File file = fileChooser.showOpenDialog(selectFile);
         if (file != null) {
             String filePath = file.getAbsolutePath();
@@ -473,7 +472,6 @@ public class StockManagementPageController implements TableViewUpdate{
 					code = csvReader.get(0);
 					description = csvReader.get(1);
 					quantity = Double.parseDouble(csvReader.get(4));
-					//System.out.println(code + " " + description + " " + quantity);
 					pm.importNewProduct(code, description, quantity.intValue());
 				}
 				
