@@ -22,7 +22,7 @@ public class HomePage {
 	private static boolean fullscreen = true;
 	
 	public  HomePage(Stage theStage) throws IOException {
-		theStage.setTitle( "Home" );
+		theStage.setTitle( "RJ Booth Services" );
 		theStage.getIcons().add(new Image("RJB.png"));
         Parent root = Main.getFXMLFile(getClass(), Main.HOMEPAGE_FXML).load();
         Scene scene = new Scene( root,screenWidth, screenHeight);

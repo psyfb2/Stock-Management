@@ -17,7 +17,7 @@ public class StockManagementPage {
 	public StockManagementPage(Stage theStage) {
 		try {			
 			Parent root = FXMLLoader.load(getClass().getResource("/com/g52grp/warehouse/view/StockManagementPage.fxml"));
-			theStage.setTitle( "RJB" );
+			theStage.setTitle( "Warehouse" );
 			Scene theScene = new Scene( root );
 			theStage.setScene( theScene );
 			theStage.show();
