@@ -399,7 +399,7 @@ public class StockManagementPageController implements TableViewUpdate{
 				
 			}
 		}
-
+		
  		codeCol.setPrefWidth(tableWidth[0]);
 
  		descriptionCol.setPrefWidth(tableWidth[1]);
@@ -413,6 +413,7 @@ public class StockManagementPageController implements TableViewUpdate{
  		minQuantityCol.setPrefWidth(tableWidth[5]);
  		
  		deleteCol.setVisible(false);
+ 		showTotalValue();
 		showProducts();
 		saveButton.setVisible(false);
 		cancelButton.setVisible(false);
