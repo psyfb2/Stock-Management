@@ -54,7 +54,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <ImageView fitHeight="89.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+            <ImageView fitHeight="101.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                <image>
                   <Image url="@../RJB.png" />
                </image>
@@ -62,12 +62,12 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </ImageView>
-            <Label text="RJ BOOTH" GridPane.columnIndex="2">
+            <Label prefHeight="144.0" prefWidth="192.0" text="RJ BOOTH" GridPane.columnIndex="2">
                <font>
-                  <Font name="Century Gothic" size="40.0" />
+                  <Font name="Century Gothic" size="38.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="170.0" />
+                  <Insets left="175.0" top="-40.0" />
                </GridPane.margin>
             </Label>
             <Label text="WAREHOUSE" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -102,6 +102,14 @@
                   <Insets left="191.5" top="30.0" />
                </GridPane.margin>
             </Line>
+            <Label prefHeight="87.0" prefWidth="192.0" text="SERVICES" GridPane.columnIndex="2">
+               <font>
+                  <Font name="Century Gothic" size="38.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="175.0" top="40.0" />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
       <GridPane maxHeight="30.0" minHeight="30.0" prefHeight="30.0" style="-fx-background-color: #aeffff;" GridPane.columnIndex="1" GridPane.rowIndex="1">
