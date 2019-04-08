@@ -412,9 +412,9 @@ public class StockManagementPageController implements TableViewUpdate{
 
  		minQuantityCol.setPrefWidth(tableWidth[5]);
  		
- 		deleteCol.setVisible(false);
- 		showTotalValue();
+ 		deleteCol.setVisible(false);		
 		showProducts();
+		showTotalValue();
 		saveButton.setVisible(false);
 		cancelButton.setVisible(false);
 		saveLabel.setVisible(false);
