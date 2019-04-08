@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import org.controlsfx.control.textfield.TextFields;
 
-import com.csvreader.*;
+import com.csvreader.CsvReader;
 import com.g52grp.database.Product;
 import com.g52grp.main.Main;
 import com.g52grp.stockout.ConcreteProductManager;
