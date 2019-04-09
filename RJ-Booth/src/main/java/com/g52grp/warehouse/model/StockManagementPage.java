@@ -2,9 +2,9 @@ package com.g52grp.warehouse.model;
 
 import java.io.IOException;
 
-import javafx.fxml.FXMLLoader;
+import com.g52grp.main.Main;
+
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -16,13 +16,11 @@ import javafx.stage.Stage;
 public class StockManagementPage {
 	public StockManagementPage(Stage theStage) {
 		try {			
-			Parent root = FXMLLoader.load(getClass().getResource("/com/g52grp/warehouse/view/StockManagementPage.fxml"));
+			Parent root = Main.getFXMLFile(getClass(), Main.STOCKMANAGMENTPAGE_FXML).load();
 			theStage.setTitle( "Warehouse" );
-			Scene theScene = new Scene( root );
-			theStage.setScene( theScene );
+			theStage.getScene().setRoot(root);
 			theStage.show();
         } catch (IOException e) {
-			e.printStackTrace();
 		}
     }
 }

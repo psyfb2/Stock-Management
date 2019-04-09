@@ -5,9 +5,16 @@ import com.g52grp.warehouse.model.HomePage;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+/**
+ * Launches Application and has some static methods for loading different files
+ * @author psyfb2
+ */
 public class Main extends Application {
 	//only create ONE connection for the whole program (take DatabaseConnection object as a parameter for your classes)
     public static final DatabaseConnection con = new DatabaseConnection();
@@ -55,4 +62,16 @@ public class Main extends Application {
 	public static String getCSSFile(String resourcePath) {
 		return Main.class.getClassLoader().getResource(resourcePath).toExternalForm();
 	}
+	
+	public static void fullscreen(Stage theStage) {
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+		
+        // set Stage boundaries to visible bounds of the main screen
+        theStage.setX(primaryScreenBounds.getMinX());
+        theStage.setY(primaryScreenBounds.getMinY());
+        theStage.setWidth(primaryScreenBounds.getWidth());
+        theStage.setHeight(primaryScreenBounds.getHeight());
+        theStage.setMaximized(true);
+	}
+
 }

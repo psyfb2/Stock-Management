@@ -1,16 +1,14 @@
 package com.g52grp.warehouse.controller;
 
-
-import java.awt.Toolkit;
 import java.io.IOException;
 
 import com.g52grp.main.Main;
+import com.g52grp.warehouse.model.StockManagementPage;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -53,11 +51,10 @@ public class HomePageController {
     void jobManagementButtonClicked(MouseEvent e) throws IOException {
 		FXMLLoader loader = Main.getFXMLFile(getClass(), Main.JOBMENUPATH_FXML);
 		Parent root = loader.load();
-        Scene jobMenu = new Scene(root);
-  
+        
         Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
+        theStage.getScene().setRoot(root);
         theStage.setTitle("Job Menu");
-        theStage.setScene( jobMenu );
         theStage.show();
     }
 
@@ -67,16 +64,8 @@ public class HomePageController {
      */
     @FXML
     void stockManagementButtonClicked(MouseEvent e) throws IOException {
-    	double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-    	double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-    	Parent root = Main.getFXMLFile(getClass(), Main.STOCKMANAGMENTPAGE_FXML).load();
         Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
-		theStage.setTitle( "RJB" );
-		Scene theScene = new Scene( root, screenWidth, screenHeight );
-		theStage.setScene( theScene );
-		
-		theStage.show();
-		
+		new StockManagementPage(theStage);
     }
 
 

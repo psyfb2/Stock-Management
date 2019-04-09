@@ -1,6 +1,5 @@
 package com.g52grp.views;
 
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +26,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -169,15 +167,9 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		try {
 			FXMLLoader loader = Main.getFXMLFile(getClass(), Main.JOBMENUPATH_FXML);
 			Parent root = loader.load();
-			
-	        Scene jobMenuView = new Scene( root );
-	        
 	        Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
-	        
 	        theStage.setTitle("Job Menu");
-	        
-	        theStage.setScene( jobMenuView );
-	        
+	        theStage.getScene().setRoot(root);
 	        theStage.show();
 		} catch(Exception ex) {
 			errorMessage.setText("Failed to load " + Main.JOBMENUPATH_FXML);

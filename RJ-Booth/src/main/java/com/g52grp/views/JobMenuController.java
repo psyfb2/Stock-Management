@@ -26,7 +26,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -148,12 +147,10 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 							SingleJobController c = loader.<SingleJobController>getController();
 							Job selectedJob = row.getItem();
 							c.initData(selectedJob.getJobId(), "" + selectedJob.getSiteName() + " " + selectedJob.getPlotNumber());
-
-					        Scene singleJobView = new Scene( root );
 					
 					        Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
 					        theStage.setTitle("Job");
-					        theStage.setScene( singleJobView );
+					        theStage.getScene().setRoot(root);;
 					        theStage.show();
 						} catch(Exception ex) {
 						}
