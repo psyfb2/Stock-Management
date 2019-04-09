@@ -53,7 +53,6 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	@FXML TableColumn<Job, Integer> jobId; // this column is not visible to the user
 	@FXML Button homePageButton;
 	@FXML TextField searchJobs;
-	@FXML Label errorMessage;
 	
 	public JobMenuController() {
 		jm = new ConcreteJobManager(Main.con);
@@ -84,9 +83,7 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	}
 	
 	@FXML public void searchForJob(ActionEvent e) {
-		errorMessage.setText("");
 		String findMe = searchJobs.getText();
-		
 		int i = 0;
 		for(Job j : jobTable.getItems()) {
 			if(j.toString().equals(findMe)) {
@@ -95,8 +92,6 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 			}
 			i++;
 		}
-		
-		errorMessage.setText("The job " + findMe + " could not be found");
 	}
 	
 	/**
