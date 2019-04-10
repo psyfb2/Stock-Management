@@ -43,15 +43,15 @@
       </GridPane>
       <GridPane minWidth="400.0" prefHeight="400.0" prefWidth="1370.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <columnConstraints>
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="365.0" minWidth="10.0" prefWidth="123.0" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="365.0" minWidth="60.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="365.0" minWidth="60.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="746.0" minWidth="60.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="1167.0" minWidth="60.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="1167.0" minWidth="60.0" prefWidth="100.0" />
-            <ColumnConstraints maxWidth="1459.0" minWidth="10.0" prefWidth="498.0" />
-            <ColumnConstraints maxWidth="1459.0" minWidth="10.0" prefWidth="458.0" />
-            <ColumnConstraints maxWidth="1459.0" minWidth="10.0" prefWidth="454.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="123.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="365.0" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="365.0" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="746.0" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1167.0" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1167.0" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints minWidth="10.0" prefWidth="498.0" />
+            <ColumnConstraints maxWidth="-Infinity" minWidth="10.0" prefWidth="458.0" />
+            <ColumnConstraints minWidth="10.0" prefWidth="454.0" />
             <ColumnConstraints />
          </columnConstraints>
          <rowConstraints>
@@ -163,9 +163,9 @@
       </GridPane>
       <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
          <columnConstraints>
-            <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-            <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />

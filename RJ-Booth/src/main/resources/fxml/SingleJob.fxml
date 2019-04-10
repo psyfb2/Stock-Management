@@ -80,13 +80,14 @@
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="112.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="154.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="211.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="804.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="716.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="99.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <TextField fx:id="searchProductToAdd" maxWidth="-Infinity" onAction="#addProductToJobManual" prefHeight="25.0" prefWidth="685.0" promptText="Enter product code or description for product to add" GridPane.columnIndex="3">
+            <TextField fx:id="searchProductToAdd" onAction="#addProductToJobManual" prefHeight="25.0" prefWidth="685.0" promptText="Enter product code or description for product to add" GridPane.columnIndex="3">
                <GridPane.margin>
                   <Insets left="30.0" />
                </GridPane.margin>
