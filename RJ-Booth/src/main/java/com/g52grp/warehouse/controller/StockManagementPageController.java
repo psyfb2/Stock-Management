@@ -214,6 +214,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	            new EventHandler<CellEditEvent<DisplayableProduct, String>>() {
 	                @Override
 	                public void handle(CellEditEvent<DisplayableProduct, String> t) {
+	                	errorMessage.setText("");
 	                	int newMinQuantity;
 	            		int oldMinQuantity;
 	            		DisplayableProduct productSelected = (DisplayableProduct) t.getTableView().getItems().get(t.getTablePosition().getRow());
@@ -265,6 +266,8 @@ public class StockManagementPageController implements TableViewUpdate{
 		barcodeCol.setOnEditCommit( new EventHandler<CellEditEvent<DisplayableProduct, String>>(){
 			@Override
 			public void handle(CellEditEvent<DisplayableProduct, String> t) {
+				errorMessage.setText("");
+				errorMinQuantityMessage.setText("");
 				DisplayableProduct productSelected = (DisplayableProduct) t.getTableView().getItems().get(t.getTablePosition().getRow());
 				String newBarcode = t.getNewValue();
 				String oldBarcode = productSelected.getBarCode();
@@ -373,6 +376,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	  */
 	@FXML
 	private void saveButtonClicked() {
+		errorMessage.setText("");
 		for(DisplayableProduct product : stockTable.getItems()) {
 			if(product.getDelete()) {
 				int id = product.getProductId();
@@ -465,6 +469,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	 */
 	@FXML
 	private void importButtonClicked() {
+		errorMessage.setText("");
 		int stockRemaining;
 		FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose a file");
@@ -491,7 +496,7 @@ public class StockManagementPageController implements TableViewUpdate{
 				}
 				
             } catch (IOException e) {
-				e.printStackTrace();
+				errorMessage.setText("Failed To load CSV File");
 			}           
         }
         this.showProducts();
@@ -512,6 +517,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	 * Refresh stockTable 
 	 */
 	private void showProducts() {
+		errorMessage.setText("");
 		stocks.removeAll(stocks);
 		allProducts = pm.getAllProductsArrayList();
 		if(allProducts == null) {
@@ -544,6 +550,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	 * Change mustUsedProduct Text with most used product.
 	 */
 	private void showMostUsedProduct() {
+		errorMessage.setText("");
 		String product = pm.getMostUsedProduct();
 		String textInfo = "most used product: ";
 		if(product == null) {
