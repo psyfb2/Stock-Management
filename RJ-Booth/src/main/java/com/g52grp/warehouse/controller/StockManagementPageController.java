@@ -100,6 +100,9 @@ public class StockManagementPageController implements TableViewUpdate{
     @FXML
     private Label cancelLabel;
     
+    @FXML
+    private Label deleteLabel;
+    
 	@FXML private TableView<DisplayableProduct> stockTable;
 	@FXML private TableColumn<DisplayableProduct, String> codeCol;
 	@FXML private TableColumn<DisplayableProduct, String> descriptionCol;
@@ -359,6 +362,9 @@ public class StockManagementPageController implements TableViewUpdate{
 		cancelButton.setVisible(true);
 		saveLabel.setVisible(true);
 		cancelLabel.setVisible(true);
+		deleteButton.setVisible(false);
+		deleteLabel.setVisible(false);
+		
 	}
 	
 	 /**
@@ -419,7 +425,8 @@ public class StockManagementPageController implements TableViewUpdate{
 		cancelButton.setVisible(false);
 		saveLabel.setVisible(false);
 		cancelLabel.setVisible(false);
-
+		deleteButton.setVisible(true);
+		deleteLabel.setVisible(true);
 	}
 	
 	/**
@@ -448,6 +455,8 @@ public class StockManagementPageController implements TableViewUpdate{
 		cancelButton.setVisible(false);
 		saveLabel.setVisible(false);
 		cancelLabel.setVisible(false);
+		deleteButton.setVisible(true);
+		deleteLabel.setVisible(true);
 	}
 	
 	/**

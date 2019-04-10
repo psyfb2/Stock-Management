@@ -108,14 +108,14 @@
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="errorSearchMessage" prefHeight="15.0" prefWidth="431.0" style="-fx-background-color: #ffffff;" textFill="RED" GridPane.rowIndex="2">
+                  <Label fx:id="errorSearchMessage" minWidth="15.0" prefHeight="15.0" prefWidth="431.0" style="-fx-background-color: #ffffff;" textFill="RED" GridPane.rowIndex="2">
                      <font>
                         <Font size="16.0" />
                      </font></Label>
-                  <TextField fx:id="searchProduct" promptText="Search here" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                  <TextField fx:id="searchProduct" minHeight="10.0" promptText="Search here" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                      <font>
                         <Font size="14.0" />
                      </font></TextField>
@@ -136,7 +136,7 @@
                </graphic></Button>
             <Label minHeight="15.0" prefHeight="15.0" prefWidth="53.0" text=" import" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold Italic" size="12.0" />
                </font>
             </Label>
             <Label minHeight="15.0" prefHeight="15.0" prefWidth="49.0" text="   add" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -144,7 +144,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label minHeight="15.0" prefHeight="15.0" prefWidth="53.0" text="  delete" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label fx:id="deleteLabel" minHeight="15.0" prefHeight="15.0" prefWidth="53.0" text="  delete" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
                   <Font name="System Bold Italic" size="12.0" />
                </font>
