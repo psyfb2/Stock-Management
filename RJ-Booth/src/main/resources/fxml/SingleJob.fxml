@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane onMouseClicked="#focusBarcodeHiddenInput" stylesheets="@../stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.views.SingleJobController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="1280.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="60.0" minHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="551.0" minHeight="10.0" prefHeight="540.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="67.0" minHeight="0.0" prefHeight="47.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="66.0" minHeight="0.0" prefHeight="53.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <GridPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="141.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="1136.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#back" prefHeight="43.0" prefWidth="107.0">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Button>
+         </children>
+      </GridPane>
+      <GridPane GridPane.rowIndex="1">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1100.0" minWidth="500.0" prefWidth="1100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="86.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="896.0" minHeight="17.0" prefHeight="51.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="896.0" minHeight="17.0" prefHeight="22.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="896.0" minHeight="121.0" prefHeight="459.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="879.0" minHeight="1.0" prefHeight="18.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <TableView fx:id="jobProductTable" prefHeight="508.0" prefWidth="1098.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <columns>
+                  <TableColumn fx:id="productCode" editable="false" prefWidth="222.0" text="Product Code" />
+                  <TableColumn fx:id="description" editable="false" minWidth="0.0" prefWidth="436.0" text="Description" />
+                  <TableColumn fx:id="price" editable="false" prefWidth="108.0" text="Price Per Unit" />
+                  <TableColumn fx:id="quantityUsed" onEditCommit="#changeQuantityUsedCellEvent" prefWidth="100.0" text="Quantity Used" />
+                  <TableColumn fx:id="stocksRemaining" prefWidth="134.66680908203125" text="Stocks Remaining" />
+                  <TableColumn fx:id="productId" editable="false" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
+                  <TableColumn fx:id="barcode" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
+                  <TableColumn fx:id="priceOfRow" prefWidth="99.333251953125" text="Price" />
+               </columns>
+            </TableView>
+            <Label fx:id="jobTitle" alignment="CENTER" prefHeight="35.0" prefWidth="960.0" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Century Gothic" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <GridPane GridPane.rowIndex="2">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="410.0" minWidth="10.0" prefWidth="112.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="186.0" minWidth="105.0" prefWidth="172.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="217.0" minWidth="114.0" prefWidth="192.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="923.0" minWidth="10.0" prefWidth="804.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <TextField fx:id="searchProductToAdd" maxWidth="-Infinity" onAction="#addProductToJobManual" prefHeight="25.0" prefWidth="685.0" promptText="Enter product code or description for product to add" GridPane.columnIndex="3">
+               <GridPane.margin>
+                  <Insets left="30.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label prefHeight="20.0" prefWidth="163.0" text="Total Price of Job: £" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Century Gothic" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalPrice" prefHeight="20.0" prefWidth="156.0" GridPane.columnIndex="2">
+               <font>
+                  <Font name="Century Gothic" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <GridPane GridPane.rowIndex="3">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1174.0" minWidth="10.0" prefWidth="195.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1174.0" minWidth="10.0" prefWidth="364.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1141.0" minWidth="10.0" prefWidth="391.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1141.0" minWidth="10.0" prefWidth="371.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Button fx:id="deleteJobButton" mnemonicParsing="false" onAction="#deleteJob" prefHeight="35.0" prefWidth="260.0" text="Delete Job" GridPane.columnIndex="3" />
+            <RadioButton fx:id="scanInRadioButton" mnemonicParsing="false" onAction="#radioClicked" prefHeight="30.0" prefWidth="198.0" text="SCAN IN" GridPane.columnIndex="1">
+               <toggleGroup>
+                  <ToggleGroup fx:id="scan" />
+               </toggleGroup>
+               <font>
+                  <Font name="Century Gothic" size="25.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="scanOutRadioButton" mnemonicParsing="false" onAction="#radioClicked" selected="true" text="SCAN OUT" toggleGroup="$scan" GridPane.columnIndex="2">
+               <font>
+                  <Font name="Century Gothic" size="25.0" />
+               </font></RadioButton>
+         </children>
+      </GridPane>
+      <GridPane GridPane.rowIndex="4">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="125.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="81.0" minWidth="81.0" prefWidth="81.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="143.0" minWidth="143.0" prefWidth="143.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="931.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="53.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <TextField fx:id="barcodeHiddenInput" maxHeight="25.0" maxWidth="100.0" minWidth="13.0" onAction="#barcodeScanned" prefHeight="15.0" prefWidth="13.0" style="-fx-opacity: 0;" />
+            <Label fx:id="errorMessage" prefHeight="45.0" prefWidth="956.0" textFill="#dd0808" GridPane.columnIndex="3">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+   </children>
+</GridPane>
