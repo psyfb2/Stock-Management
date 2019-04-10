@@ -1,8 +1,0 @@
-INDEX VERSION 1.131+G:\stock-management\.metadata\.plugins\org.eclipse.jdt.core
-3365722869.index
-1739450759.index
-1112075380.index
-2738732571.index
-887249745.index
-2147535134.index
-508647935.index
