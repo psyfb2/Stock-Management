@@ -8,6 +8,7 @@ import com.g52grp.warehouse.controller.StockManagementPageController;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class AddProductPage {
@@ -15,7 +16,8 @@ public class AddProductPage {
 		theStage.setTitle( "Add New Product" );
 		FXMLLoader loader = Main.getFXMLFile(getClass(), Main.ADDPRODUCTPAGE_FXML);
 		Parent root = loader.load();
-		theStage.getScene().setRoot(root);
+		//theStage.getScene().setRoot(root);
+		theStage.setScene(new Scene(root));
 		theStage.setAlwaysOnTop(true);
 		
 		AddProductPageController controller = loader.<AddProductPageController>getController();
