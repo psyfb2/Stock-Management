@@ -1,0 +1,44 @@
+2019-04-10 00:57:39,533 [Worker-5: Loading available Gradle versions] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2019-04-10 00:58:56,189 [Worker-12: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.g52grp:RJ-Booth:1.0.0-SNAPSHOT @ G:\stock-management\RJ-Booth\pom.xml.
+2019-04-10 00:58:56,189 [Worker-10: Building workspace] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.g52grp:RJ-Booth:1.0.0-SNAPSHOT @ G:\stock-management\RJ-Booth\pom.xml.
+2019-04-10 00:58:59,491 [Worker-10: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 00:58:59,508 [Worker-10: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2019-04-10 00:58:59,651 [Worker-10: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 00:58:59,656 [Worker-10: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-10 00:59:02,499 [Worker-11: Launching Executing install in G__stock-management_RJ-Booth] INFO  o.e.m.i.launch.MavenLaunchDelegate - G:\stock-management\RJ-Booth
+2019-04-10 00:59:02,501 [Worker-11: Launching Executing install in G__stock-management_RJ-Booth] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B install
+2019-04-10 00:59:05,265 [Worker-6: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.g52grp:RJ-Booth:1.0.0-SNAPSHOT @ G:\stock-management\RJ-Booth\pom.xml.
+2019-04-10 00:59:06,827 [Worker-12: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 00:59:06,840 [Worker-12: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2019-04-10 00:59:07,001 [Worker-12: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 00:59:07,010 [Worker-12: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-10 00:59:15,577 [Worker-13: Launching Executing install in G__stock-management_RJ-Booth] INFO  o.e.m.i.launch.MavenLaunchDelegate - G:\stock-management\RJ-Booth
+2019-04-10 00:59:15,577 [Worker-13: Launching Executing install in G__stock-management_RJ-Booth] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B install
+2019-04-10 00:59:33,245 [Worker-11: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 00:59:33,256 [Worker-11: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2019-04-10 00:59:33,269 [Worker-11: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 00:59:33,277 [Worker-11: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-10 01:00:36,147 [Worker-1: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 01:00:36,179 [Worker-1: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-10 01:00:36,181 [Worker-1: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 01:00:36,204 [Worker-1: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-10 01:10:04,190 [Worker-3: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 01:10:04,206 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2019-04-10 01:10:04,223 [Worker-3: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 01:10:04,236 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-10 01:10:29,301 [Worker-12: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 01:10:29,310 [Worker-12: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2019-04-10 01:10:29,322 [Worker-12: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 01:10:29,328 [Worker-12: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-10 01:11:37,628 [Worker-6: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 01:11:37,635 [Worker-6: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2019-04-10 01:11:37,644 [Worker-6: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 01:11:37,653 [Worker-6: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-10 01:12:09,265 [Worker-3: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 01:12:09,278 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2019-04-10 01:12:09,291 [Worker-3: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 01:12:09,297 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-10 01:13:54,757 [Worker-13: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 01:13:54,763 [Worker-13: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 21 resources
+2019-04-10 01:13:54,773 [Worker-13: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+2019-04-10 01:13:54,778 [Worker-13: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
