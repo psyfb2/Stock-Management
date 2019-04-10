@@ -38,7 +38,7 @@
           <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="homePageButton" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onMouseClicked="#homePageButtonClicked" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #e1ffff; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Return" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+            <Button fx:id="homePageButton" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onMouseClicked="#homePageButtonClicked" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #e1ffff; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Home" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
          </children>
       </GridPane>
       <GridPane minWidth="400.0" prefHeight="400.0" prefWidth="1370.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">

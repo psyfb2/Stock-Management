@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <GridPane stylesheets="@../stylesheet.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.views.JobMenuController">
@@ -21,12 +22,22 @@
       <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Button fx:id="homePageButton" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#goToHomePage" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Return" />
+      <GridPane style="-fx-background-color: #afeeee;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="homePageButton" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#goToHomePage" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #e1ffff; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Home" />
+         </children>
+      </GridPane>
       <GridPane GridPane.rowIndex="1">
          <columnConstraints>
             <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="490.66670735677087" minWidth="250.0" percentWidth="46.5" prefWidth="490.66670735677087" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.33333333333337" minWidth="250.0" prefWidth="303.99995930989587" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" percentWidth="30.0" prefWidth="489.999959309896" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="200.0" prefWidth="250.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" percentWidth="30.0" prefWidth="500.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="75.0" vgrow="SOMETIMES" />
@@ -43,7 +54,7 @@
       <GridPane GridPane.rowIndex="3">
          <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="0.0" prefWidth="200.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="370.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="220.0" prefWidth="370.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="710.0" />
          </columnConstraints>
          <rowConstraints>
@@ -55,7 +66,7 @@
                   <Font name="Century Gothic" size="14.0" />
                </font>
             </Button>
-            <Label text="Double Click a Job For More Information" GridPane.columnIndex="1" />
+            <Label prefHeight="17.0" prefWidth="221.0" text="Double Click a Job For More Information" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <GridPane GridPane.rowIndex="2">
@@ -81,5 +92,6 @@
             </TableView>
          </children>
       </GridPane>
+      <Line endX="4000.0" endY="3.2928779125213623" startX="1393.585693359375" startY="2.2908854484558105" GridPane.valignment="BOTTOM" />
    </children>
 </GridPane>
