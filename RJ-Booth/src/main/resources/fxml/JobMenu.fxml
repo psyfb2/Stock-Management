@@ -24,10 +24,9 @@
       <Button fx:id="homePageButton" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#goToHomePage" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Return" />
       <GridPane GridPane.rowIndex="1">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="582.0" prefWidth="582.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="250.0" prefWidth="250.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="206.0" prefWidth="206.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="173.0" />
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="490.66670735677087" minWidth="250.0" percentWidth="46.5" prefWidth="490.66670735677087" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.33333333333337" minWidth="250.0" prefWidth="303.99995930989587" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" percentWidth="30.0" prefWidth="489.999959309896" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="75.0" vgrow="SOMETIMES" />
