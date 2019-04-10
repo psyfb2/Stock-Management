@@ -42,18 +42,20 @@
       </GridPane>
       <GridPane GridPane.rowIndex="3">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="570.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="0.0" prefWidth="200.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="370.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="710.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button fx:id="addNewJob" mnemonicParsing="false" onAction="#newJobModal" prefHeight="30.0" prefWidth="124.0" text="Add New Job" GridPane.columnIndex="1">
+            <Button fx:id="addNewJob" mnemonicParsing="false" onAction="#newJobModal" prefHeight="30.0" prefWidth="124.0" text="Add New Job" GridPane.columnIndex="2">
                <font>
                   <Font name="Century Gothic" size="14.0" />
                </font>
             </Button>
+            <Label text="Double Click a Job For More Information" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <GridPane GridPane.rowIndex="2">
