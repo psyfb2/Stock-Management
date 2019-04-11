@@ -530,7 +530,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	private void showMostUsedProduct() {
 		errorMessage.setText("");
 		String product = pm.getMostUsedProduct();
-		String textInfo = "most used product: ";
+		String textInfo = "Most used product: ";
 		if(product == null) {
 			errorMessage.setText("Failed to load most used product: error accessing database");
 			errorMessage.setVisible(true);

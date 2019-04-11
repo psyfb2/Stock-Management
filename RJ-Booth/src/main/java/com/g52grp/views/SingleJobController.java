@@ -92,6 +92,8 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	
 	@FXML public void barcodeScanned(ActionEvent e) {
 		errorMessage.setText("");
+		// make sure table has most up to date data
+		
 		int minLength = 4;
 		String barcode = barcodeHiddenInput.getText();
 		
@@ -250,17 +252,15 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		
 		// for concurrency reasons reload the selected job product 
 		// (as quantity used, stocks remaining may have been changed since the table was loaded)
-		updateTableView();
 		String desc = jobProductSelected.getDescription();
 		String prodCode = jobProductSelected.getProductCode();
-		int id = jobProductSelected.getProductId();
-		jobProductSelected = jobProductTable.getItems().stream().filter
-				(product -> id == product.getProductId() ).findFirst().orElse(null);
+		jobProductSelected = getJobProductUpdated(jobProductSelected);
 		if(jobProductSelected == null) {
 			errorMessage.setText("Could not find " + prodCode + " " + desc + ". Perhaps it was deleted by another user");
 			return;
 		}
 				
+		
 		try {
 			newQuantityUsed = Integer.parseInt(edittedCell.getNewValue().toString());
 			oldQuantityUsed = Integer.parseInt(jobProductSelected.getQuantity());
@@ -462,6 +462,18 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Accesses the database to return most up to date version of a JobProduct
+	 * Useful for concurrency reasons (multiple users using the software at the same time)
+	 * @param jobProductSelected product to perform action on
+	 * @return Updated version of the the product registered with this job, null if product does not exist for this job
+	 */
+	private DisplayableJobProduct getJobProductUpdated(DisplayableJobProduct jobProductSelected) {
+		updateTableView();
+		return jobProductTable.getItems().stream().filter
+		(product -> jobProductSelected.getProductId() == product.getProductId() ).findFirst().orElse(null);
 	}
 	
 }

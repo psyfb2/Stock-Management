@@ -255,6 +255,7 @@ public class ConcreteProductManager implements ProductManager {
 			ps.close();
 			return mostUsedProduct;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return null;
 		}
 		
