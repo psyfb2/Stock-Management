@@ -248,6 +248,19 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		int newQuantityUsed;
 		int oldQuantityUsed;
 		
+		// for concurrency reasons reload the selected job product 
+		// (as quantity used, stocks remaining may have been changed since the table was loaded)
+		updateTableView();
+		String desc = jobProductSelected.getDescription();
+		String prodCode = jobProductSelected.getProductCode();
+		int id = jobProductSelected.getProductId();
+		jobProductSelected = jobProductTable.getItems().stream().filter
+				(product -> id == product.getProductId() ).findFirst().orElse(null);
+		if(jobProductSelected == null) {
+			errorMessage.setText("Could not find " + prodCode + " " + desc + ". Perhaps it was deleted by another user");
+			return;
+		}
+				
 		try {
 			newQuantityUsed = Integer.parseInt(edittedCell.getNewValue().toString());
 			oldQuantityUsed = Integer.parseInt(jobProductSelected.getQuantity());
@@ -302,11 +315,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 				return;
 			}
 			
-			// update table so it matches the database, could call updateTableView() but this is costly
-			jobProductSelected.setQuantity(Integer.toString(newQuantityUsed));
-			jobProductSelected.setStocksRemaining(jobProductSelected.getStocksRemaining() - stockReduction);
-			totalPrice.setText(Float.toString(Float.parseFloat(totalPrice.getText()) + stockReduction * jobProductSelected.getPrice()));
-			jobProductTable.refresh();
+			updateTableView();
 		} else {
 			errorMessage.setText("You cannot change the quantity used from " + jobProductSelected.getQuantity() + " to " + newQuantityUsed + " because you do not have enough stocks");
 			jobProductTable.refresh();
