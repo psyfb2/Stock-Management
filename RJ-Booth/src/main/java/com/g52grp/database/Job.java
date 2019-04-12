@@ -11,12 +11,14 @@ public class Job {
 	private String siteName;
 	private int plotNumber;
 	private Date date;
+	private boolean archived;
 	
-	public Job(int jobId, String siteName, int plotNumber, Date date) {
+	public Job(int jobId, String siteName, int plotNumber, Date date, boolean archived) {
 		this.jobId = jobId;
 		this.siteName = siteName;
 		this.plotNumber = plotNumber;
 		this.date = date;
+		this.archived = archived;
 	}
 
 	public int getJobId() {
@@ -33,6 +35,10 @@ public class Job {
 
 	public String getDate() {
 		return date.toString();
+	}
+	
+	public boolean getArchived() {
+		return archived;
 	}
 	
 	public String toString() {

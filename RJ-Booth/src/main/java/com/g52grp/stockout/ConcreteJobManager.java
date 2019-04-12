@@ -46,7 +46,7 @@ public class ConcreteJobManager implements JobManager {
 			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Jobs");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				jobs.add(new Job(rs.getInt("jobID"), rs.getString("siteName"), rs.getInt("plotNumber"), rs.getDate("startDate")));
+				jobs.add(new Job(rs.getInt("jobID"), rs.getString("siteName"), rs.getInt("plotNumber"), rs.getDate("startDate"), rs.getBoolean("archived")));
 			}
 			ps.close();
 			return jobs;
@@ -69,6 +69,7 @@ public class ConcreteJobManager implements JobManager {
 			PreparedStatement ps = con.getPreparedStatement("DELETE FROM Jobs WHERE jobID = ?");
 			ps.setInt(1, jobID);
 			ps.executeUpdate();
+			System.out.println(ps.toString());
 			ps.close();
 		} catch (SQLException e) {
 			return false;

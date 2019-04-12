@@ -28,11 +28,8 @@ public class Main extends Application {
     public static final String STOCKMANAGMENTPAGE_FXML = "fxml/StockManagementPage.fxml";
     
 	public static void main(String[] args) {
-		if (con.openConnection()) {
-			launch(args);
-		} else {
-			System.out.println("Connection Failed");
-		}
+		con.openConnection(false);
+		launch(args);
 	}
 	
 	@Override

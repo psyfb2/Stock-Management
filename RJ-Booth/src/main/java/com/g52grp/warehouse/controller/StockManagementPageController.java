@@ -481,7 +481,6 @@ public class StockManagementPageController implements TableViewUpdate{
         this.showTotalValue();
 	}
 	
-	
 	/**
 	 * Refresh tableview.
 	 */

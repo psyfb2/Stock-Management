@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -38,9 +39,18 @@ public class HomePageController {
 
     @FXML
     private ImageView jobPicture;
+    
+    @FXML 
+    private Label errorMessage;
+    
     @FXML
     private void initialize() {
-    	
+    	if (!Main.con.isConnected()) {
+    		// there was an error connecting to the database
+    		errorMessage.setText("Failed to connect to the database: Check your internet connection");
+    		stockManagementButton.setDisable(true);
+    		jobManagementButton.setDisable(true);
+    	}
     }
     
     /**
