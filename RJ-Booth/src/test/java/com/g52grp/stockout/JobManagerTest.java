@@ -9,7 +9,6 @@ import com.g52grp.database.Job;
 /**
  * Tests JobManager backend class which utilises SQL statements.
  * Runs with dbunit to set up and tear down database tables and HyperSQL as a mysql database running on the local machine.
- * Before running the tests make sure to have HyperSQL running on your local machine.
  * Note: Between Tests database is reset to a known state (delete all then insert data set again between tests) so that tests don't interfere with one another
  * @author psyfb2
  */
@@ -27,6 +26,7 @@ public class JobManagerTest extends TestDB {
 	@Test
 	public void testGetAllJobs1() {
 		Job[] allJobs = jm.getAllJobs();
+		
 		assertEquals(3, allJobs.length);
 		
 		// test first job
@@ -43,6 +43,7 @@ public class JobManagerTest extends TestDB {
 	@Test
 	public void testGetAllJobs2() {
 		Job[] allJobs = jm.getAllJobs();
+		
 		assertEquals(3, allJobs.length);
 
 		// test second job
@@ -51,9 +52,6 @@ public class JobManagerTest extends TestDB {
 		assertEquals(2, allJobs[1].getPlotNumber());
 		assertEquals("2019-05-12", allJobs[1].getDate());
 		assertEquals(true, allJobs[1].getArchived());
-		System.out.println(allJobs[1].toString());
-		
-		
 	}
 	
 	/**
@@ -62,6 +60,7 @@ public class JobManagerTest extends TestDB {
 	@Test
 	public void testGetAllJobs3() {
 		Job[] allJobs = jm.getAllJobs();
+		
 		assertEquals(3, allJobs.length);
 		
 		// test third job
@@ -79,6 +78,7 @@ public class JobManagerTest extends TestDB {
 	@Test
 	public void testGetAllJobsArrayList() {
 		ArrayList<Job> allJobs = jm.getAllJobsArrayList();
+		
 		assertEquals(3, allJobs.size());
 		// uses same method as getAllJobs so don't need to test all jobs seperately again
 	}
@@ -88,8 +88,9 @@ public class JobManagerTest extends TestDB {
 	 */
 	@Test 
 	public void testDeleteJob() {
-		jm.deleteJob(3);
+		assertEquals(true, jm.deleteJob(3));
 		Job[] allJobs = jm.getAllJobs();
+		
 		assertEquals(2, allJobs.length);
 		
 		// confirm the correct job was deleted
@@ -102,22 +103,9 @@ public class JobManagerTest extends TestDB {
 	 */
 	@Test 
 	public void testDeleteJobUnvalidId() {
-		assertEquals(false, jm.deleteJob(40));
-	}
-	
-	/**
-	 * Test adding a new job
-	 */
-	@Test
-	public void testAddNewJobToDb() {
-		String siteName = "Added from a unit test_101";
-		int plotNumber = 21;
-		assertEquals(true, jm.addNewJobToDb(siteName, plotNumber));
+		assertEquals(true, jm.deleteJob(400));
 		Job[] allJobs = jm.getAllJobs();
-		assertEquals(4, allJobs.length);
 		
-		assertEquals(4, allJobs[3].getJobId());
-		assertEquals(siteName, allJobs[3].getSiteName());
-		assertEquals(plotNumber, allJobs[3].getPlotNumber());
+		assertEquals(3, allJobs.length);
 	}
 }

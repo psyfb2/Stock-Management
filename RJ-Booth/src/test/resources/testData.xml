@@ -11,7 +11,7 @@
 	
 	<JobStockLink jobID="2" productID="2" quantityUsed="2"/>
 	
-	<Stocks productID="1" productCode="DetaTestProduct101" productDescription="For testing purposes£$%" pricePerUnit="1.69" stock="25" barcode="NULL" minQuantity="5"/>
-	<Stocks productID="2" productCode="!£$%^*()_+{}~@:?" productDescription="Test Product" pricePerUnit="400.92" stock="0" barcode="5010459007289" minQuantity="0"/>
-	<Stocks productID="3" productCode="DetaDB170" productDescription="6/8 Gang Box" pricePerUnit="1.5" stock="1" barcode="NULL" minQuantity="500"/>
+	<Stocks productID="1" productCode="DetaTestProduct101" description="For testing purposes£$%" pricePerUnit="1.69" stock="25" barcode="NULL" minQuantity="5"/>
+	<Stocks productID="2" productCode="!£$%^*()_+{}~@:?" description="Test Product" pricePerUnit="400.92" stock="0" barcode="5010459007289" minQuantity="0"/>
+	<Stocks productID="3" productCode="DetaDB170" description="6/8 Gang Box" pricePerUnit="1.5" stock="1" barcode="NULL" minQuantity="500"/>
 </dataset>

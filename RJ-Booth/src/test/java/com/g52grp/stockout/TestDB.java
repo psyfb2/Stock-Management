@@ -7,12 +7,11 @@ import java.sql.SQLException;
 import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 
 /**
  * All classes which perform backend tests should inherit this class.
- * Sets up dbunit connection to hyperSQL. Make sure to have the hyperSQL server open on your local machine.
+ * Sets up dbunit connection to hyperSQL. hyperSQL database should be created in main memory automatically for you.
  * @author psyfb2
  */
 public class TestDB extends DBTestCase {
@@ -47,7 +46,7 @@ public class TestDB extends DBTestCase {
 			ps.close();
 			
 			ps = con.getPreparedStatement("CREATE TABLE IF NOT EXISTS Stocks ("
-					+ "productID INT, productCode varchar(256) NOT NULL, productDescription varchar(256) NOT NULL, pricePerUnit FLOAT NOT NULL," + 
+					+ "productID INT, productCode varchar(256) NOT NULL, description varchar(256) NOT NULL, pricePerUnit FLOAT NOT NULL," + 
 					"stock INT NOT NULL, barcode varchar(256), minQuantity INT, PRIMARY KEY(productID));");
 			ps.executeUpdate();
 			ps.close();
