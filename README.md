@@ -28,7 +28,7 @@ The supervisor for this project is: Dr Stuart Reeves
 
 Software Requirements
   - Java VM to run build
-  - Can open maven project with eclipse, intelliji or most other Java IDE's. (Note: classes compiled with Java JDK 10)
+  - Can open maven project with eclipse, intelliji or most other Java IDE's. (Note: compiled with Java JDK 10)
     e.g. with eclipse: download ZIP, unzip, File->Import->Maven->Exisiting maven project then select RJ-Booth within the unzipped folder. 
     Once project is imported don't forget to do a maven install (Right click project->Run as->Maven install).
 
