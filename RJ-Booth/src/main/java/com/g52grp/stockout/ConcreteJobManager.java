@@ -43,7 +43,7 @@ public class ConcreteJobManager implements JobManager {
 	public ArrayList<Job> getAllJobsArrayList() {
 		ArrayList<Job> jobs = new ArrayList<Job>();
 		try {
-			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Jobs");
+			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Jobs ORDER BY jobID");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				jobs.add(new Job(rs.getInt("jobID"), rs.getString("siteName"), rs.getInt("plotNumber"), rs.getDate("startDate"), rs.getBoolean("archived")));

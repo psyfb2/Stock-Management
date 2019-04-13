@@ -23,7 +23,7 @@ public class ConcreteProductManager implements ProductManager {
 	public JobProduct[] getProductsFromJobId(int jobId) {
 		ArrayList<JobProduct> jobProducts = new ArrayList<JobProduct>();
 		try {
-			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM JobStockLink, Stocks WHERE JobStockLink.productID = Stocks.productID AND JobStockLink.jobID = ?");
+			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM JobStockLink, Stocks WHERE JobStockLink.productID = Stocks.productID AND JobStockLink.jobID = ? ORDER BY productID");
 			ps.setInt(1, jobId);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
@@ -65,7 +65,7 @@ public class ConcreteProductManager implements ProductManager {
 	public ArrayList<Product> getAllProductsArrayList() {
 		ArrayList<Product> products = new ArrayList<Product>();
 		try {
-			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Stocks");
+			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Stocks ORDER BY productID");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				products.add(getProduct(rs));
