@@ -278,14 +278,14 @@ public class ConcreteProductManager implements ProductManager {
 	}
 		
 	@Override
-	public boolean addNewProduct(String code, String description, String barCode, int pricePerUnit) {
+	public boolean addNewProduct(String code, String description, String barCode, float pricePerUnit) {
 		PreparedStatement ps;
 		try { 
 			ps = con.getPreparedStatement("insert into Stocks (productCode, description, barcode, stock, minQuantity, pricePerUnit) values (?, ?, ?, 0, 1, ?)");
 			ps.setString(1, code);
 			ps.setString(2, description);
 			ps.setString(3, barCode);
-			ps.setInt(4, pricePerUnit);
+			ps.setFloat(4, pricePerUnit);
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
@@ -325,14 +325,13 @@ public class ConcreteProductManager implements ProductManager {
 		return true;		
 	}
 	
-	//add a totally new product into the database
 	public boolean importNewProduct(String code, String description,double salesPrice, int quantity) {
 		PreparedStatement ps;
 		try { 
 			ps = con.getPreparedStatement("insert ignore into Stocks (productCode, description, pricePerUnit, stock) values (?, ?, ?, ?)");				
 			ps.setString(1, code);
 			ps.setString(2, description);
-			ps.setDouble(3, salesPrice); //added salesPrice by psyajwo
+			ps.setDouble(3, salesPrice);
 			ps.setInt(4, quantity);
 			ps.executeUpdate();
 			ps.close();
@@ -342,14 +341,13 @@ public class ConcreteProductManager implements ProductManager {
 		return true;		
 	}
 	
-	//new function added
-	//return stocks of one product
-	public int getStockForOne(String code) {
+	public int getStockForOne(String code, String description) {
 		PreparedStatement ps;
 		int stock = 0;
 		try {
-			ps = con.getPreparedStatement("select stock from Stocks where productCode = ? ");				
+			ps = con.getPreparedStatement("select stock from Stocks where productCode = ? AND description = ?");				
 			ps.setString(1, code);
+			ps.setString(2, description);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				stock = rs.getInt("stock");
@@ -362,12 +360,13 @@ public class ConcreteProductManager implements ProductManager {
 	}
 	
 
-	public boolean importRestock(String code, int quantity, int stockRemaining) {
+	public boolean importRestock(String code, String description, int quantity, int stockRemaining) {
 		PreparedStatement ps;
 		try { 
-			ps = con.getPreparedStatement("update Stocks SET stock = ? where productCode = ?");				
+			ps = con.getPreparedStatement("update Stocks SET stock = ? where productCode = ? AND description = ?");				
 			ps.setInt(1, quantity + stockRemaining);
 			ps.setString(2, code);
+			ps.setString(3, description);
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {

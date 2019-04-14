@@ -468,9 +468,9 @@ public class StockManagementPageController implements TableViewUpdate{
 					description = csvReader.get(1);
 					salesPrice = Double.parseDouble(csvReader.get(3));
 					quantity = Double.parseDouble(csvReader.get(4));
-					stockRemaining = pm.getStockForOne(code);
+					stockRemaining = pm.getStockForOne(code, description);
 					pm.importNewProduct(code, description,salesPrice, quantity.intValue());
-					pm.importRestock(code, quantity.intValue(), stockRemaining);
+					pm.importRestock(code, description, quantity.intValue(), stockRemaining);
 				}
 				
             } catch (IOException e) {

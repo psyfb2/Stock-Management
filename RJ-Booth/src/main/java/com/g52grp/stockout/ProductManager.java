@@ -123,9 +123,10 @@ public interface ProductManager {
 	 * @param code productCode of the product to add
 	 * @param description description of the product to add
 	 * @param barCode unique barcode of the product to add
+	 * @param pricePerUnit price of the new product
 	 * @return success of operation
 	 */
-	public boolean addNewProduct(String code, String description, String barCode, int pricePerUnit);
+	public boolean addNewProduct(String code, String description, String barCode, float pricePerUnit);
 	
 	/**
 	 * Update minimum quantity of a product
@@ -142,4 +143,12 @@ public interface ProductManager {
 	 * @return success of operation
 	 */
 	public boolean updateBarcode(int id, String newBarcode);
+	
+	/**
+	 * Get the stock remaining for a product
+	 * @param code
+	 * @param description
+	 * @return
+	 */
+	public int getStockForOne(String code, String description);
 }

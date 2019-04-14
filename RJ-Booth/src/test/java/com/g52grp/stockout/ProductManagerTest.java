@@ -395,5 +395,28 @@ public class ProductManagerTest extends TestDB {
 		assertEquals(barcode, p.getBarCode());
 	}
 	
+	/**
+	 * Test getting stock remaining for a given product
+	 */
+	@Test
+	public void testGetStockForProduct() {
+		assertEquals(25, pm.getStockForOne("DetaTestProduct101", "For testing purposes£$%"));
+	}
+	
+	/**
+	 * Test getting stock remaining for a product which doesnt exist
+	 */
+	@Test
+	public void testGetStockForProductInvalid() {
+		assertEquals(0, pm.getStockForOne("DetaTestProduct1010", "For testing purposes£$%"));
+	}
+	
+	/**
+	 * Test importing new stock (increases stocks remaining)
+	 */
+	@Test
+	public void testImportStock() {
+		assertEquals(true, pm.importRestock("DetaDB170", "6/8 Gang Box", 10, 25));
+	}
 	
 }

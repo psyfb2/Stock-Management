@@ -62,7 +62,7 @@ public class AddProductPageController {
 			}else {
 				//Check if barcode is illegal.
 				if(!bar.matches("[0-9]{1,}") && bar.length() != 0) {
-					
+			
 					errorMessage.setText("Please only enter digits for barcode");
 				}else if(bar.length() < 4 && bar.length() != 0){
 					errorMessage.setText("Barcode must have at least 4 digits");
@@ -70,9 +70,9 @@ public class AddProductPageController {
 					if(bar.length() == 0) {
 						bar = null;
 					}
-					int pri;
+					float pri;
 					try {
-						pri = Integer.parseInt(price.getText());
+						pri = Float.parseFloat(price.getText());
 					} catch(NumberFormatException ex) {
 						errorMessage.setText("Please enter a number for Price");
 						return;
