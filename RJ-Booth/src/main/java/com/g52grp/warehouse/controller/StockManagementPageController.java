@@ -461,13 +461,17 @@ public class StockManagementPageController implements TableViewUpdate{
 				CsvReader csvReader = new CsvReader(filePath);
 				csvReader.readHeaders();
 				String code, description;
-				Double salesPrice, quantity;
+				Double salesPrice = 0.0, quantity = 0.0;
 				
 				while(csvReader.readRecord()) {
 					code = csvReader.get(0);
 					description = csvReader.get(1);
-					salesPrice = Double.parseDouble(csvReader.get(3));
-					quantity = Double.parseDouble(csvReader.get(4));
+					try {
+						salesPrice = Double.parseDouble(csvReader.get(3));
+						quantity = Double.parseDouble(csvReader.get(4));
+					} catch(NumberFormatException ex) {
+						continue;
+					}
 					stockRemaining = pm.getStockForOne(code, description);
 					pm.importNewProduct(code, description,salesPrice, quantity.intValue());
 					pm.importRestock(code, description, quantity.intValue(), stockRemaining);
