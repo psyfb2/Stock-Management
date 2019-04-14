@@ -221,16 +221,16 @@ public class ConcreteProductManager implements ProductManager {
 			}
 			return false;
 		} catch(SQLException e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
 	
-	//new added function
-	//delete the product in the database given the productId
+	@Override
 	public boolean deleteProduct(int productID){
 		PreparedStatement ps;
 		try { 
-			ps = con.getPreparedStatement("delete from Stocks where productID = ?");
+			ps = con.getPreparedStatement("DELETE from Stocks where productID = ?");
 			ps.setInt(1, productID);
 			ps.executeUpdate();
 			ps.close();
@@ -259,12 +259,7 @@ public class ConcreteProductManager implements ProductManager {
 		}
 		
 	}
-		
-	/**
-	 * @author psyys4
-	 * @param productID
-	 * @return ArrayList contains all product with productID used in current job.
-	 */
+
 	//new added function
 	//check whether the product is in used
 	public ArrayList<String> checkProductInUsed(int productID) {
@@ -375,10 +370,7 @@ public class ConcreteProductManager implements ProductManager {
 		return stock;
 	}
 	
-	/**
-	 * @author psyajwo
-	 * Re-stock using the import button
-	 */
+
 	public boolean importRestock(String code, int quantity, int stockRemaining) {
 		PreparedStatement ps;
 		try { 
@@ -396,5 +388,24 @@ public class ConcreteProductManager implements ProductManager {
 	private Product getProduct(ResultSet rs) throws SQLException {
 		return new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), 
 				rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getString("barCode"), rs.getInt("minQuantity"));
+	}
+
+	@Override
+	public Product getProductFromProductId(int productID) {
+		try {
+			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Stocks WHERE productID = ?");
+			ps.setInt(1, productID);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				Product p = getProduct(rs);
+				ps.close();
+				return p;
+			} else {
+				ps.close();
+				return null;
+			}
+		} catch(SQLException e) {
+			return null;
+		}
 	}
 }

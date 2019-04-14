@@ -245,4 +245,98 @@ public class ProductManagerTest extends TestDB {
 	}
 	
 	
+	/**
+	 * Test getting a product from its product ID
+	 */
+	@Test
+	public void testGetProductFromProductID() {
+		Product p = pm.getProductFromProductId(1);
+		
+		assertEquals(1, p.getProductId());
+		assertEquals(null, p.getBarCode());
+		assertEquals("DetaTestProduct101", p.getProductCode());
+		assertEquals("For testing purposes£$%", p.getDescription());
+		assertEquals(5, p.getMinQuantity());
+		assertEquals(25, p.getStock());
+		assertEquals(1.69f, p.getPricePerUnit());
+	}
+	
+	/**
+	 * Test getting a product for a product ID which does not exist
+	 */
+	@Test
+	public void testGetProductFromProductIDInvalid() {
+		Product p = pm.getProductFromProductId(0);
+		
+		assertEquals(p, null);
+	}
+	/**
+	 * Test removing a product from a particular job (stock of that product should not change)
+	 */
+	@Test
+	public void testRemoveProductFromJob() {
+		assertEquals(true, pm.removeProductFromJob(2, 2));
+		
+		JobProduct[] products = pm.getProductsFromJobId(2);
+		assertEquals(0, products.length);
+		
+		Product p = pm.getProductFromProductId(2);
+		assertEquals(0, p.getStock());
+	}
+	
+	/**
+	 * Test removing a product from a particular job with an empty Job
+	 */
+	@Test
+	public void testRemoveProductFromJobInvalid() {
+		assertEquals(true, pm.removeProductFromJob(3, 2));
+		
+		JobProduct[] products = pm.getProductsFromJobId(3);
+		assertEquals(0, products.length);
+	}
+	
+	/**
+	 * Test removing a product from a particular job with a non-existent Job
+	 */
+	@Test
+	public void testRemoveProductFromJobInvalid2() {
+		assertEquals(true, pm.removeProductFromJob(300, 2));
+		
+		JobProduct[] products = pm.getProductsFromJobId(3);
+		assertEquals(0, products.length);
+		
+		products = pm.getProductsFromJobId(2);
+		assertEquals(1, products.length);
+		
+		products = pm.getProductsFromJobId(1);
+		assertEquals(3, products.length);
+	}
+	
+	/**
+	 * Test removing a product entirely works correctly
+	 */
+	@Test
+	public void testDeleteProduct() {
+		assertEquals(true, pm.deleteProduct(1));
+		
+		Product[] products = pm.getAllProducts();
+		assertEquals(2, products.length);
+		assertEquals(2, products[0].getProductId());
+		assertEquals(3, products[1].getProductId());
+	}
+	
+	/**
+	 * Test removing a non-existent product works correctly
+	 */
+	@Test
+	public void testDeleteProductInvalid() {
+		assertEquals(true, pm.deleteProduct(-1));
+		
+		Product[] products = pm.getAllProducts();
+		assertEquals(3, products.length);
+		assertEquals(1, products[0].getProductId());
+		assertEquals(2, products[1].getProductId());
+		assertEquals(3, products[2].getProductId());
+	}
+	
 }

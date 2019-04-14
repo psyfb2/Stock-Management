@@ -71,6 +71,13 @@ public interface ProductManager {
 	Product getProductFromBarcode(String barcode);
 	
 	/**
+	 * Get a product from a productID
+	 * @param productId - unique ID of the product to search for
+	 * @return corresponding Product, null if none were found or if database access failed
+	 */
+	Product getProductFromProductId(int productId);
+	
+	/**
 	 * Similar to decreaseStocks(), however only register the product with the job with a quantity used of 1.
 	 * If the job is already registered with the product then nothing is changed (decreaseStocks() would decrease the stock by 1 even if the job existed). 
 	 * Also does check that there is enough stock unlike decreaseStocks() (i.e. if a product has 0 stock nothing will happen) 
@@ -98,4 +105,11 @@ public interface ProductManager {
 	 * @return true if this product is registered to the job else false
 	 */
 	boolean isProductRegisteredWithJob(int jobID, int productID);
+	
+	/**
+	 * Delete the product in the database given a productID
+	 * @param productID ID of product to delete in the MYSQL database
+	 * @return true if the delete was executed, false if there was an error accessing the database.
+	 */
+	public boolean deleteProduct(int productID);
 }
