@@ -35,7 +35,6 @@ public class ConcreteProductManager implements ProductManager {
 			jobProductsArr = jobProducts.toArray(jobProductsArr);
 			return jobProductsArr;
 		} catch(SQLException e) {
-			e.printStackTrace();
 			return null;
 		}
 	}

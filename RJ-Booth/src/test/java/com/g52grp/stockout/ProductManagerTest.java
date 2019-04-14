@@ -208,5 +208,41 @@ public class ProductManagerTest extends TestDB {
 		assertEquals(3, products.size());
 	}
 	
+	/**
+	 * Test getting a product from a barcode is correct (note: barcode is unique)
+	 */
+	@Test
+	public void testGetProductFromBarcode() {
+		Product p = pm.getProductFromBarcode("5010459007289");
+		
+		assertEquals(2, p.getProductId());
+		assertEquals("!£$%^*()_+{}~@:?", p.getProductCode());
+		assertEquals("Test Product", p.getDescription());
+		assertEquals(400.92f, p.getPricePerUnit());
+		assertEquals(0, p.getStock());
+		assertEquals("5010459007289", p.getBarCode());
+		assertEquals(0, p.getMinQuantity());
+	}
+	
+	/**
+	 * Test getting a product from a barcode is correct given a barcode which does not exist for any product
+	 */
+	@Test
+	public void testGetProductFromBarcodeInvalid() {
+		Product p = pm.getProductFromBarcode("abcd");
+		
+		assertEquals(p, null);
+	}
+	
+	/**
+	 * Test getting a product from a barcode is correct given an empty string
+	 */
+	@Test
+	public void testGetProductFromBarcodeInvalid2() {
+		Product p = pm.getProductFromBarcode("");
+		
+		assertEquals(p, null);
+	}
+	
 	
 }

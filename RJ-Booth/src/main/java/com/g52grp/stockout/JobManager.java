@@ -6,7 +6,7 @@ import com.g52grp.database.Job;
 
 /**
  * @author psyfb2 
- * For adding new jobs to the database
+ * Acts as interface for front end code to access jobs stored on MYSQL DB
  */
 public interface JobManager {
 	
