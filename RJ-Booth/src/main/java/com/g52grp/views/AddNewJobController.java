@@ -23,6 +23,7 @@ public class AddNewJobController {
 	@FXML TextField plotNumber;
 	@FXML Label errorMessage; // initially empty, lets user know if they have done something wrong (e.g. empty siteName or plotNumber)
 	@FXML Button addJob;
+	    
 	TableViewUpdate tb; // used to update the table after job is added
 	
 	/**

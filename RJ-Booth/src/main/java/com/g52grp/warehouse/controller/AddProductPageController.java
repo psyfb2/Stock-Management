@@ -32,6 +32,9 @@ public class AddProductPageController {
 	@FXML
 	private Label errorMessage;
 	
+	@FXML
+	private TextField price;
+	
 	private ConcreteProductManager pm = new ConcreteProductManager(Main.con);
 	TableViewUpdate tb; // used to update the table after a product is added
 	
@@ -44,6 +47,8 @@ public class AddProductPageController {
 		String des = description.getText();
 		String bar = barcode.getText();
 
+		// wtf is this spaghetti code....seriously guys
+		
 		if( code.length() != 0 && des.length() != 0) {
 			//check the product already exits in the database
 			if(pm.getProductFromProductcodeAndDescription(code, des) != null) {			
@@ -65,8 +70,14 @@ public class AddProductPageController {
 					if(bar.length() == 0) {
 						bar = null;
 					}
-							
-					if(pm.addNewProduct(code, des, bar)) {					
+					int pri;
+					try {
+						pri = Integer.parseInt(price.getText());
+					} catch(NumberFormatException ex) {
+						errorMessage.setText("Please enter a number for Price");
+						return;
+					}
+					if(pm.addNewProduct(code, des, bar, pri)) {					
 						Stage stage = (Stage)cancelButton.getScene().getWindow();
 						stage.close();
 					}else {

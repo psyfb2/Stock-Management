@@ -299,6 +299,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 					jobProductSelected.getProductCode(), jobProductSelected.getDescription(),
 					jobProductSelected.getPrice(), jobProductSelected.getStocksRemaining(), 
 					jobProductSelected.getBarcode(), jobProductSelected.getMinQuantity()), stockReduction);
+			
 			if(!pm.decreaseStocks(jobProduct)) {
 				errorMessage.setText("Failed to modify quantity: error accessing database");
 				jobProductTable.refresh();

@@ -125,7 +125,7 @@ public interface ProductManager {
 	 * @param barCode unique barcode of the product to add
 	 * @return success of operation
 	 */
-	public boolean addNewProduct(String code, String description, String barCode);
+	public boolean addNewProduct(String code, String description, String barCode, int pricePerUnit);
 	
 	/**
 	 * Update minimum quantity of a product

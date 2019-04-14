@@ -228,8 +228,8 @@ public class StockManagementPageController implements TableViewUpdate{
 	            			return;
 	            		}
 	            		
-	            		if(newMinQuantity <= 0) {
-	            			errorMinQuantityMessage.setText("Products must have a minimum quantity of 1");
+	            		if(newMinQuantity < 0) {
+	            			errorMinQuantityMessage.setText("Products must have a minimum quantity of 0 or more");
 	            			stockTable.refresh();
 	            			return;
 	            		}

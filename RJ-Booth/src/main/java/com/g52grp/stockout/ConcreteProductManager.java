@@ -278,17 +278,14 @@ public class ConcreteProductManager implements ProductManager {
 	}
 		
 	@Override
-	public boolean addNewProduct(String code, String description, String barCode) {
+	public boolean addNewProduct(String code, String description, String barCode, int pricePerUnit) {
 		PreparedStatement ps;
 		try { 
-			if(barCode != null) {
-				ps = con.getPreparedStatement("insert into Stocks (productCode, description, barcode, stock) values (?, ?, ?, 0)");
-				ps.setString(3, barCode);
-			}else {
-				ps = con.getPreparedStatement("insert into Stocks (productCode, description, barcode, stock) values (?, ?, null, 0)");				
-			}
+			ps = con.getPreparedStatement("insert into Stocks (productCode, description, barcode, stock, minQuantity, pricePerUnit) values (?, ?, ?, 0, 1, ?)");
 			ps.setString(1, code);
 			ps.setString(2, description);
+			ps.setString(3, barCode);
+			ps.setInt(4, pricePerUnit);
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
