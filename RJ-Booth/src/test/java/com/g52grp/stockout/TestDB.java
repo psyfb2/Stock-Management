@@ -8,12 +8,14 @@ import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.junit.Ignore;
 
 /**
  * All classes which perform backend tests should inherit this class.
- * Sets up dbunit connection to hyperSQL. hyperSQL database should be created in main memory automatically for you.
+ * Sets up dbunit connection to hyperSQL. hyperSQL database created in main memory automatically for you.
  * @author psyfb2
  */
+@Ignore
 public class TestDB extends DBTestCase {
 	protected com.g52grp.database.DatabaseConnection con;
 	
