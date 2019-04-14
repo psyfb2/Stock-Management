@@ -112,4 +112,34 @@ public interface ProductManager {
 	 * @return true if the delete was executed, false if there was an error accessing the database.
 	 */
 	public boolean deleteProduct(int productID);
+	
+	/**
+	 * @return Description of most used product
+	 */
+	public String getMostUsedProduct();
+	
+	/**
+	 * Add a new product to the database
+	 * @param code productCode of the product to add
+	 * @param description description of the product to add
+	 * @param barCode unique barcode of the product to add
+	 * @return success of operation
+	 */
+	public boolean addNewProduct(String code, String description, String barCode);
+	
+	/**
+	 * Update minimum quantity of a product
+	 * @param id 
+	 * @param newMinQuantity
+	 * @return success of operation
+	 */
+	public boolean updateMinQuantity(int id, int newMinQuantity);
+	
+	/**
+	 * Update barcode of a product
+	 * @param id
+	 * @param newBarcode
+	 * @return success of operation
+	 */
+	public boolean updateBarcode(int id, String newBarcode);
 }

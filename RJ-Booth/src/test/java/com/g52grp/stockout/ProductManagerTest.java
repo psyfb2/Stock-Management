@@ -339,4 +339,61 @@ public class ProductManagerTest extends TestDB {
 		assertEquals(3, products[2].getProductId());
 	}
 	
+	/**
+	 * Test updating the minQuantity column of a product
+	 */
+	@Test
+	public void updateMinQuantity() {
+		assertEquals(true, pm.updateMinQuantity(2, 20));
+		
+		Product p = pm.getProductFromProductId(2);
+		assertEquals(2, p.getProductId());
+		assertEquals(20, p.getMinQuantity());
+	}
+	
+	/**
+	 * Test updating the minQuantity column of a product which does not exist
+	 */
+	@Test
+	public void updateMinQuantityInvalid() {
+		assertEquals(true, pm.updateMinQuantity(4, 20));
+		
+		Product p = pm.getProductFromProductId(2);
+		assertEquals(2, p.getProductId());
+		assertEquals(0, p.getMinQuantity());
+		
+		p = pm.getProductFromProductId(3);
+		assertEquals(3, p.getProductId());
+		assertEquals(500, p.getMinQuantity());
+		
+		p = pm.getProductFromProductId(1);
+		assertEquals(1, p.getProductId());
+		assertEquals(25, p.getMinQuantity());
+	}
+	
+	/**
+	 * Test updating the barcode a product
+	 */
+	@Test
+	public void testUpdateBarcode() {
+		String barcode = "548925732895238075239075238458123647902367895236856234252352";
+		assertEquals(true, pm.updateBarcode(1, barcode));
+		
+		Product p = pm.getProductFromProductId(1);
+		assertEquals(barcode, p.getBarCode());
+	}
+	
+	/**
+	 * Test updating the barcode a product given an empty barcode
+	 */
+	@Test
+	public void testUpdateBarcode1() {
+		String barcode = "";
+		assertEquals(true, pm.updateBarcode(1, barcode));
+		
+		Product p = pm.getProductFromProductId(1);
+		assertEquals(barcode, p.getBarCode());
+	}
+	
+	
 }

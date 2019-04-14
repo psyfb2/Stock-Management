@@ -240,8 +240,7 @@ public class ConcreteProductManager implements ProductManager {
 		return true;
 	}
 	
-	//new added function
-	//show the most used product
+	@Override
 	public String getMostUsedProduct() {
 		String mostUsedProduct = "";
 		PreparedStatement ps;
@@ -260,7 +259,6 @@ public class ConcreteProductManager implements ProductManager {
 		
 	}
 
-	//new added function
 	//check whether the product is in used
 	public ArrayList<String> checkProductInUsed(int productID) {
 		ArrayList<String> jobDetails = new ArrayList<>();
@@ -279,8 +277,7 @@ public class ConcreteProductManager implements ProductManager {
 		return jobDetails;
 	}
 		
-	//new added function
-	//add a totally new product into the database
+	@Override
 	public boolean addNewProduct(String code, String description, String barCode) {
 		PreparedStatement ps;
 		try { 
@@ -295,13 +292,13 @@ public class ConcreteProductManager implements ProductManager {
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 		}		
 		return true;		
 	}
 	
-	//new added function
-	//update the new minimum quantity into the database
+	@Override
 	public boolean updateMinQuantity(int id, int newMinQuantity) {
 		PreparedStatement ps;
 		try { 
@@ -313,12 +310,10 @@ public class ConcreteProductManager implements ProductManager {
 		} catch (SQLException e) {
 			return false;
 		}	
-		
 		return true;		
 	}
 	
-	//new added function
-	//update the new barcode into the database
+	@Override
 	public boolean updateBarcode(int id, String newBarcode) {
 		PreparedStatement ps;
 		try { 
@@ -333,7 +328,6 @@ public class ConcreteProductManager implements ProductManager {
 		return true;		
 	}
 	
-	//new added function
 	//add a totally new product into the database
 	public boolean importNewProduct(String code, String description,double salesPrice, int quantity) {
 		PreparedStatement ps;
