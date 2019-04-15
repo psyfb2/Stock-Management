@@ -49,9 +49,9 @@
             <RowConstraints maxHeight="649.0" minHeight="210.0" prefHeight="649.0" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <Button fx:id="reportButton" minHeight="250.0" minWidth="210.0" mnemonicParsing="false" onAction="#reportsButtonClicked" onMouseClicked="#jobManagementButtonClicked" prefHeight="285.0" prefWidth="300.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="5" GridPane.rowIndex="1">
+            <Button fx:id="reportsButton" minHeight="250.0" minWidth="210.0" mnemonicParsing="false" onAction="#reportsButtonClicked" prefHeight="285.0" prefWidth="300.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="5" GridPane.rowIndex="1">
                <graphic>
-                  <ImageView fx:id="jobPicture1" fitHeight="260.0" fitWidth="260.0" preserveRatio="true">
+                  <ImageView fitHeight="260.0" fitWidth="260.0" preserveRatio="true">
                      <image>
                         <Image url="@../reportsPicture.png" />
                      </image>

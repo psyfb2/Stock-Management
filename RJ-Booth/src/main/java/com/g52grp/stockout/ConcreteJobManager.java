@@ -99,7 +99,7 @@ public class ConcreteJobManager implements JobManager {
 	private ArrayList<Job> getAllJobs(boolean archived) {
 		ArrayList<Job> jobs = new ArrayList<Job>();
 		try {
-			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Jobs WHERE archived = ?");
+			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Jobs WHERE archived = ? ORDER BY startDate");
 			ps.setBoolean(1, archived);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {

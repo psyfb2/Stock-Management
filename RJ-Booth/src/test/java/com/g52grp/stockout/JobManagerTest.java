@@ -34,7 +34,7 @@ public class JobManagerTest extends TestDB {
 		assertEquals(1, allJobs[0].getJobId());
 		assertEquals("testing ground", allJobs[0].getSiteName());
 		assertEquals(1, allJobs[0].getPlotNumber());
-		assertEquals("2019-04-12", allJobs[0].getDate());
+		assertEquals("12-04-2019", allJobs[0].getDate());
 		assertEquals(false, allJobs[0].getArchived());
 	}
 	
@@ -51,7 +51,7 @@ public class JobManagerTest extends TestDB {
 		assertEquals(3, allJobs[1].getJobId());
 		assertEquals("Empty Job1", allJobs[1].getSiteName());
 		assertEquals(10124701, allJobs[1].getPlotNumber());
-		assertEquals("2019-04-12", allJobs[1].getDate());
+		assertEquals("12-04-2019", allJobs[1].getDate());
 		assertEquals(false, allJobs[1].getArchived());
 	}
 	
@@ -105,7 +105,7 @@ public class JobManagerTest extends TestDB {
 		assertEquals(2, j.getJobId());
 		assertEquals("testing ground", j.getSiteName());
 		assertEquals(2, j.getPlotNumber());
-		assertEquals("2019-05-12", j.getDate());
+		assertEquals("12-05-2019", j.getDate());
 		assertEquals(true, j.getArchived());
 	}
 	

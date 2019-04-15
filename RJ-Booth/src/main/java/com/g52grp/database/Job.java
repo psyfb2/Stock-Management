@@ -34,7 +34,8 @@ public class Job {
 	}
 
 	public String getDate() {
-		return date.toString();
+		String d = date.toString();
+		return d.substring(8, 10) + "-" + d.substring(5, 7) + "-" + d.substring(0, 4);
 	}
 	
 	public boolean getArchived() {

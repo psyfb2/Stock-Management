@@ -29,7 +29,7 @@ public class Main extends Application {
     public static final String HOMEPAGE_FXML 			= "fxml/HomePage.fxml";
     public static final String ADDPRODUCTPAGE_FXML 		= "fxml/AddProductPage.fxml";
     public static final String STOCKMANAGMENTPAGE_FXML 	= "fxml/StockManagementPage.fxml";
-    public static final String REPORTS_FXML 			= "fxml/reports.fxml";
+    public static final String REPORTS_FXML 			= "fxml/Reports.fxml";
     
 	public static void main(String[] args) {
 		con.openConnection(false);
