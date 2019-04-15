@@ -40,7 +40,8 @@ import javafx.util.Callback;
  * Allows user to:
  * 		Viewing a list of jobs and select one of the jobs
  * 		Add a new job
- * 		
+ * 		View archived jobs
+ * 		View active jobs
  */
 public class JobMenuController implements Initializable, TableViewUpdate {
 	private JobManager jm;
@@ -52,9 +53,12 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	@FXML TableColumn<Job, Integer> jobId; // this column is not visible to the user
 	@FXML Button homePageButton;
 	@FXML TextField searchJobs;
+	@FXML Button archivedToggleButton;
+	boolean archivedView;
 	
 	public JobMenuController() {
 		jm = new ConcreteJobManager(Main.con);
+		archivedView = false;
 	}
 	
 	/**
@@ -74,6 +78,16 @@ public class JobMenuController implements Initializable, TableViewUpdate {
         controller.initData(this);
 		stage.getIcons().add(Main.getImageResource(Main.LOGOPATH));
         stage.show();
+	}
+	
+	@FXML public void toggleArchive(ActionEvent e) {
+		archivedView = !archivedView;
+		if(archivedView) {
+			archivedToggleButton.setText("View Active Jobs");
+		} else {
+			archivedToggleButton.setText("View Archived Jobs");
+		}
+		updateTableView();
 	}
 	
 	@FXML public void goToHomePage(ActionEvent e) throws IOException {
@@ -98,7 +112,12 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	 * @return List of Job objects to be added to the tableview, empty List if could not access database
 	 */
 	public ObservableList<Job> getJobs() {
-		Job[] jobsArr = jm.getAllJobs();
+		Job[] jobsArr;
+		if(archivedView) {
+			jobsArr = jm.getAllArchivedJobs();
+		} else {
+			jobsArr = jm.getAllJobs();
+		}
 		ObservableList<Job> jobsList = FXCollections.observableArrayList();
 		if(jobsArr == null) {
 			return jobsList;

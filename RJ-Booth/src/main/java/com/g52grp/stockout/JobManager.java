@@ -23,16 +23,43 @@ public interface JobManager {
 	
 	
 	/**
-	 * Deletes a job from the database (all products linked to the job in JobStockLink table are also deleted by cascade)
+	 * Deletes a job from the database permanently (all products linked to the job in JobStockLink table are also deleted by cascade)
 	 * @param jobID jobID of the job to delete
 	 * @return whether this operation was successful
 	 */
 	boolean deleteJob(int jobID);
 	
 	/**
-	 * @return A list of all jobs retrieved from the Job table, returns null if database cannot be accessed 
+	 * Label a job as archived
+	 * @param jobID ID of job to archive
+	 * @return success of operation
+	 */
+	boolean archiveJob(int jobID);
+	
+	/**
+	 * Label a job as active
+	 * @param jobID
+	 * @return success of operation
+	 */
+	boolean unarchiveJob(int jobID);
+	
+	/**
+	 * @return An ArrayList of all archived jobs which are not archived retrieved from the Job table, returns null if database cannot be accessed
+	 */
+	ArrayList<Job> getAllArchivedJobsArrayList();
+	
+	/**
+	 * @return A list of all archived jobs in a array
+	 */
+	Job[] getAllArchivedJobs();
+	
+	/**
+	 * @return A list of all jobs which are not archived retrieved from the Job table, returns null if database cannot be accessed 
 	 */
 	Job[] getAllJobs();
 	
+	/**
+	 * @return A list of all jobs which are not archived as an ArrayList
+	 */
 	ArrayList<Job> getAllJobsArrayList();
 }

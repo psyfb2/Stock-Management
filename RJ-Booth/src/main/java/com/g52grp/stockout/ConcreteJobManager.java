@@ -41,18 +41,7 @@ public class ConcreteJobManager implements JobManager {
 	
 	@Override
 	public ArrayList<Job> getAllJobsArrayList() {
-		ArrayList<Job> jobs = new ArrayList<Job>();
-		try {
-			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Jobs ORDER BY jobID");
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				jobs.add(new Job(rs.getInt("jobID"), rs.getString("siteName"), rs.getInt("plotNumber"), rs.getDate("startDate"), rs.getBoolean("archived")));
-			}
-			ps.close();
-			return jobs;
-		} catch(SQLException e) {
-			return null;
-		}
+		return getAllJobs(false);
 	}
 
 	@Override
@@ -76,6 +65,57 @@ public class ConcreteJobManager implements JobManager {
 		return true;
 	}
 
+	@Override
+	public boolean archiveJob(int jobID) {
+		return setArchived(jobID, true);
+	}
+
+	@Override
+	public boolean unarchiveJob(int jobID) {
+		return setArchived(jobID, false);
+	}
+
+	@Override
+	public Job[] getAllArchivedJobs() {
+		ArrayList<Job> jobs = getAllArchivedJobsArrayList();
+		Job[] jobsArr = new Job[jobs.size()];
+		jobsArr = jobs.toArray(jobsArr);
+		return jobsArr;
+	}
+
+	private boolean setArchived(int jobID, boolean archived) {
+		try {
+			PreparedStatement ps = con.getPreparedStatement("UPDATE Jobs SET archived = ? WHERE jobID = ?");
+			ps.setBoolean(1, archived);
+			ps.setInt(2, jobID);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			return false;
+		}
+		return true;
+	}
 	
+	private ArrayList<Job> getAllJobs(boolean archived) {
+		ArrayList<Job> jobs = new ArrayList<Job>();
+		try {
+			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Jobs WHERE archived = ?");
+			ps.setBoolean(1, archived);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				jobs.add(new Job(rs.getInt("jobID"), rs.getString("siteName"), rs.getInt("plotNumber"), rs.getDate("startDate"), rs.getBoolean("archived")));
+			}
+			ps.close();
+			return jobs;
+		} catch(SQLException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public ArrayList<Job> getAllArchivedJobsArrayList() {
+		return getAllJobs(true);
+	}
+
 
 }

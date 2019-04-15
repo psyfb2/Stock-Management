@@ -202,13 +202,17 @@ public class StockManagementPageController implements TableViewUpdate{
 					}
 					if(findKey == false) {
 						errorSearchMessage.setVisible(true);
-						errorSearchMessage.setText("The '" + text + "' item cannot be found.");
+						if(text.length() < 36) {
+							errorSearchMessage.setText("The Product '" + text + "' cannot be found.");
+						} else {
+							errorSearchMessage.setText("Product not found.");
+						}
+						
 					}
 				}
 			}
 			
 		});
-		
 		
 		minQuantityCol.setOnEditCommit(
 	            new EventHandler<CellEditEvent<DisplayableProduct, String>>() {
@@ -234,7 +238,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	            			return;
 	            		}
 	            		
-	            		errorMinQuantityMessage.setText(null);
+	            		errorMinQuantityMessage.setText("");
 	            		if(newMinQuantity == oldMinQuantity) {
 	            			return;
 	            		}
@@ -281,6 +285,12 @@ public class StockManagementPageController implements TableViewUpdate{
 					
 					if(newBarcode.length() < 4) {
 						errorMinQuantityMessage.setText("Barcode must have at least 4 digits");
+	        			stockTable.refresh();
+	        			return;
+					}
+					
+					if(newBarcode.length() > 128) {
+						errorMinQuantityMessage.setText("Barcode has a maximum of 128 digits");
 	        			stockTable.refresh();
 	        			return;
 					}
@@ -520,7 +530,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	 */
 	private void showTotalValue() {
 		double value = 0;
-		String textInfo = "total value: ";
+		String textInfo = "Total Value: £";
 		for(DisplayableProduct product : stockTable.getItems()) {
 			value += product.getPricePerUnit() * product.getQuantity();
 		}
@@ -533,7 +543,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	private void showMostUsedProduct() {
 		errorMessage.setText("");
 		String product = pm.getMostUsedProduct();
-		String textInfo = "Most used product: ";
+		String textInfo = "Most Used Product: ";
 		if(product == null) {
 			errorMessage.setText("Failed to load most used product: error accessing database");
 			errorMessage.setVisible(true);

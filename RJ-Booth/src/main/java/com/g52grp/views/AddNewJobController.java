@@ -49,6 +49,15 @@ public class AddNewJobController {
 			return;
 		}
 		
+		if(sn.length() > 255) {
+			errorMessage.setText("Site Name cannot be longer then 255 characters");
+			return;
+		}
+		if(pn.length() > 10) {
+			errorMessage.setText("Plot Number cannot be more then 10 digits");
+			return;
+		}
+		
 		int pnInt;
 		try {
 			pnInt = Integer.parseInt(pn);

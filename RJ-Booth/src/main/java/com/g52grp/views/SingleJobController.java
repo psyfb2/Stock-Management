@@ -220,12 +220,20 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			productcode = input.substring(0, splitter);
 			description = input.substring(splitter + 1, input.length());
 		} catch(IndexOutOfBoundsException ex) {
-			errorMessage.setText("'" + input + "' was not found. Please enter the exact product code and description");
+			if(input.length() < 64) {
+				errorMessage.setText("'" + input + "' was not found. Please enter the exact product code and description");
+			} else {
+				errorMessage.setText("Product was not found. Please enter the exact product code and description");
+			}
 			return;
 		}
 		Product matchedProduct = pm.getProductFromProductcodeAndDescription(productcode, description);
 		if(matchedProduct == null) {
-			errorMessage.setText("'" + input + "' was not found. Please enter the exact product code and description");
+			if(input.length() < 64) {
+				errorMessage.setText("'" + input + "' was not found. Please enter the exact product code and description");
+			} else {
+				errorMessage.setText("Product was not found. Please enter the exact product code and description");
+			}
 			return;
 		}
 		
@@ -362,7 +370,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 					p.getProductCode(), p.getDescription(), p.getPricePerUnit(), Integer.toString(jp.getQuantityUsed()), p.getStock(), p.getBarCode(), p.getMinQuantity()) );
 			totalPrice += p.getPricePerUnit() * jp.getQuantityUsed();
 		}
-		this.totalPrice.setText(Float.toString(totalPrice));
+		this.totalPrice.setText("Price Of Job: £" + Float.toString(totalPrice));
 		return productsForThisJobList;
 	}
 	

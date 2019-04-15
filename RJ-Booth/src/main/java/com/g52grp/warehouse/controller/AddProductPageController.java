@@ -43,10 +43,26 @@ public class AddProductPageController {
 	}
 	
 	@FXML void confirmButtonClicked() {
+		errorMessage.setText("");
 		String code = productCode.getText();
 		String des = description.getText();
 		String bar = barcode.getText();
+		
+		if(code.length() > 255) {
+			errorMessage.setText("Error: Product Code too long");
+			return;
+		}
+		
+		if(des.length() > 255) {
+			errorMessage.setText("Error: Description too long");
+			return;
+		}
 
+		if(bar.length() > 128) {
+			errorMessage.setText("Error: Barcode too long");
+			return;
+		}
+		
 		// wtf is this spaghetti code....seriously guys
 		
 		if( code.length() != 0 && des.length() != 0) {

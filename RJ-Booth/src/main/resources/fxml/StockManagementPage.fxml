@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -20,12 +19,10 @@
     <ColumnConstraints hgrow="ALWAYS" minWidth="720.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="352.0" minHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="352.0" minHeight="3.0" prefHeight="12.0" vgrow="ALWAYS" />
-    <RowConstraints maxHeight="1060.0" minHeight="80.0" prefHeight="80.0" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="1060.0" minHeight="1.0" prefHeight="37.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="1060.0" minHeight="10.0" prefHeight="660.0" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="1060.0" minHeight="40.0" prefHeight="367.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
+    <RowConstraints maxHeight="-Infinity" minHeight="80.0" prefHeight="80.0" vgrow="ALWAYS" />
+      <RowConstraints minHeight="10.0" prefHeight="660.0" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <GridPane style="-fx-background-color: #afeeee;" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
@@ -41,7 +38,7 @@
             <Button fx:id="homePageButton" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onMouseClicked="#homePageButtonClicked" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #e1ffff; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Home" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
          </children>
       </GridPane>
-      <GridPane minWidth="400.0" prefHeight="400.0" prefWidth="1370.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <GridPane minWidth="400.0" prefHeight="400.0" prefWidth="1370.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="123.0" />
             <ColumnConstraints hgrow="ALWAYS" maxWidth="365.0" minWidth="-Infinity" prefWidth="100.0" />
@@ -121,7 +118,7 @@
                      </font></TextField>
                </children>
             </GridPane>
-            <Label fx:id="errorMinQuantityMessage" prefHeight="22.0" prefWidth="447.0" style="-fx-background-color: transparent;" textFill="#ed3b09" wrapText="true" GridPane.columnIndex="8" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+            <Label fx:id="errorMinQuantityMessage" prefHeight="22.0" prefWidth="447.0" style="-fx-background-color: transparent;" textFill="#ff3700" wrapText="true" GridPane.columnIndex="8" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="13.0" />
                </font>
@@ -161,7 +158,7 @@
             </Label>
          </children>
       </GridPane>
-      <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
+      <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -187,7 +184,7 @@
             </TableView>
          </children>
       </GridPane>
-      <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+      <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="671.0" minWidth="10.0" prefWidth="264.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="671.0" minWidth="349.0" prefWidth="476.0" />
@@ -196,9 +193,7 @@
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="403.0" minWidth="279.0" prefWidth="279.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints maxHeight="144.0" minHeight="30.0" prefHeight="96.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="144.0" minHeight="30.0" prefHeight="96.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Text fx:id="totalValue" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="473.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
@@ -218,6 +213,5 @@
             </Label>
          </children>
       </GridPane>
-      <Line endX="1820.029296875" endY="0.8787274956703186" startX="-107.77818298339844" startY="0.878711462020874" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
    </children>
 </GridPane>
