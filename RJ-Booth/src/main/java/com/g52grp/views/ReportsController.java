@@ -18,6 +18,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -32,6 +34,7 @@ public class ReportsController implements Initializable {
 	@FXML ComboBox<String> selectMonth;
 	@FXML Label spendLabel;
 	@FXML Label errorMessage;
+	@FXML LineChart<String, Number> cumulativeYearlySpend;
 	
 	public ReportsController() {
 		jm = new ConcreteJobManager(Main.con);
@@ -62,6 +65,16 @@ public class ReportsController implements Initializable {
 		
 		selectMonth.getSelectionModel().selectFirst();
 		comboChanged(new ActionEvent());
+		
+		// initialise line chart
+		XYChart.Series<String, Number> points = new XYChart.Series<String, Number>();
+		float cumulativeSpend = 0.0f;
+		for(String month : months) {
+			cumulativeSpend += calcSpending(month);
+			points.getData().add(new XYChart.Data<String, Number>(month, cumulativeSpend));
+		}
+		points.setName("Month");
+		cumulativeYearlySpend.getData().add(points);
 	}
 	
 	private float calcSpending(String month) {
