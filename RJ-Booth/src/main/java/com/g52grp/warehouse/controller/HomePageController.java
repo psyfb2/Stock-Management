@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.g52grp.main.Main;
 import com.g52grp.warehouse.model.StockManagementPage;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -43,6 +44,8 @@ public class HomePageController {
     @FXML 
     private Label errorMessage;
     
+    @FXML Button reportsButton;
+    
     @FXML
     private void initialize() {
     	if (!Main.con.isConnected()) {
@@ -78,5 +81,19 @@ public class HomePageController {
 		new StockManagementPage(theStage);
     }
 
+    /**
+     * Change to reports page
+     * @param e
+     */
+    @FXML
+    void reportsButtonClicked(ActionEvent e) throws IOException {
+    	FXMLLoader loader = Main.getFXMLFile(getClass(), Main.REPORTS_FXML);
+		Parent root = loader.load();
+        
+        Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
+        theStage.getScene().setRoot(root);
+        theStage.setTitle("Reports");
+        theStage.show();
+    }
 
 }
