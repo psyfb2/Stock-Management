@@ -108,7 +108,7 @@
             <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button fx:id="deleteJobButton" mnemonicParsing="false" onAction="#deleteJob" prefHeight="35.0" prefWidth="260.0" text="Delete Job" GridPane.columnIndex="3" />
+            <Button fx:id="deleteJobButton" mnemonicParsing="false" onAction="#deleteJob" prefHeight="35.0" prefWidth="260.0" text="Archive Job" GridPane.columnIndex="3" />
             <RadioButton fx:id="scanInRadioButton" mnemonicParsing="false" onAction="#radioClicked" prefHeight="30.0" prefWidth="198.0" text="SCAN IN">
                <toggleGroup>
                   <ToggleGroup fx:id="scan" />

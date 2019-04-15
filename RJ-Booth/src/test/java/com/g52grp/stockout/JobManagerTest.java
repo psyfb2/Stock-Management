@@ -158,6 +158,13 @@ public class JobManagerTest extends TestDB {
 		assertEquals(2, jm.getAllJobs().length);
 	}
 	
+	@Test
+	public void testIsArchived() {
+		assertEquals(false, jm.isArchived(1));
+		assertEquals(true, jm.isArchived(2));
+		assertEquals(false, jm.isArchived(3));
+	}
+	
 	private void sortJobsByID(ArrayList<Job> jobs) {
 		jobs.sort(new Comparator<Job>() {
 			public int compare(Job l, Job r) {

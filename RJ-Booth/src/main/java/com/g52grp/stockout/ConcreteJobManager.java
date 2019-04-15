@@ -117,5 +117,23 @@ public class ConcreteJobManager implements JobManager {
 		return getAllJobs(true);
 	}
 
+	@Override
+	public boolean isArchived(int jobID) {
+		try {
+			PreparedStatement ps = con.getPreparedStatement("SELECT archived FROM Jobs WHERE jobID = ?");
+			ps.setInt(1, jobID);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next() && rs.getBoolean("archived")) {
+				ps.close();
+				return true;
+			} else {
+				ps.close();
+				return false;
+			}
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+
 
 }

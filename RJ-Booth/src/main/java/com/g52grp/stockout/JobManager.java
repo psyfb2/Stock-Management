@@ -43,6 +43,13 @@ public interface JobManager {
 	 */
 	boolean unarchiveJob(int jobID);
 	
+	
+	/**
+	 * @param jobID jobID of the job to check for
+	 * @return true if job is archived, else false
+	 */
+	boolean isArchived(int jobID);
+	
 	/**
 	 * @return An ArrayList of all archived jobs which are not archived retrieved from the Job table, returns null if database cannot be accessed
 	 */
