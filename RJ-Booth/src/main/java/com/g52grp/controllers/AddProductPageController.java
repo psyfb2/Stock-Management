@@ -1,10 +1,9 @@
-package com.g52grp.warehouse.controller;
+package com.g52grp.controllers;
 
 import java.awt.Toolkit;
 
+import com.g52grp.backend.ConcreteProductManager;
 import com.g52grp.main.Main;
-import com.g52grp.stockout.ConcreteProductManager;
-import com.g52grp.views.TableViewUpdate;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

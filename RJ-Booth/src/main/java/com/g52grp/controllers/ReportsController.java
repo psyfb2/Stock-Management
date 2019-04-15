@@ -1,4 +1,4 @@
-package com.g52grp.views;
+package com.g52grp.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -7,11 +7,11 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-import com.g52grp.stockout.*;
-import com.g52grp.warehouse.model.HomePage;
+import com.g52grp.backend.*;
 import com.g52grp.database.Job;
 import com.g52grp.database.JobProduct;
 import com.g52grp.main.*;
+import com.g52grp.pageloaders.HomePage;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

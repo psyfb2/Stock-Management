@@ -1,4 +1,4 @@
-package com.g52grp.views;
+package com.g52grp.controllers;
 
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;

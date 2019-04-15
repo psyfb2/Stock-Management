@@ -1,4 +1,4 @@
-package com.g52grp.stockout;
+package com.g52grp.backend;
 
 import com.g52grp.database.Product;
 

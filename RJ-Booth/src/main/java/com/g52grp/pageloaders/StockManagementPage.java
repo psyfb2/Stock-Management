@@ -1,4 +1,4 @@
-package com.g52grp.warehouse.model;
+package com.g52grp.pageloaders;
 
 import java.io.IOException;
 

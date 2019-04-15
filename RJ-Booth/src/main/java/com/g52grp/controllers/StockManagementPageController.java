@@ -1,4 +1,4 @@
-package com.g52grp.warehouse.controller;
+package com.g52grp.controllers;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,13 +10,12 @@ import java.util.stream.Collectors;
 import org.controlsfx.control.textfield.TextFields;
 
 import com.csvreader.CsvReader;
+import com.g52grp.backend.ConcreteProductManager;
 import com.g52grp.database.Product;
 import com.g52grp.main.Main;
-import com.g52grp.stockout.ConcreteProductManager;
-import com.g52grp.views.TableViewUpdate;
-import com.g52grp.warehouse.model.AddProductPage;
-import com.g52grp.warehouse.model.DisplayableProduct;
-import com.g52grp.warehouse.model.HomePage;
+import com.g52grp.pageloaders.AddProductPage;
+import com.g52grp.pageloaders.DisplayableProduct;
+import com.g52grp.pageloaders.HomePage;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

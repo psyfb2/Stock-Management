@@ -1,8 +1,8 @@
-package com.g52grp.views;
+package com.g52grp.controllers;
 
+import com.g52grp.backend.ConcreteJobManager;
+import com.g52grp.backend.JobManager;
 import com.g52grp.main.Main;
-import com.g52grp.stockout.ConcreteJobManager;
-import com.g52grp.stockout.JobManager;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

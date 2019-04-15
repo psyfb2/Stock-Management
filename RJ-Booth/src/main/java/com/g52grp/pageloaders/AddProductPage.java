@@ -1,10 +1,10 @@
-package com.g52grp.warehouse.model;
+package com.g52grp.pageloaders;
 
 import java.io.IOException;
 
+import com.g52grp.controllers.AddProductPageController;
+import com.g52grp.controllers.StockManagementPageController;
 import com.g52grp.main.Main;
-import com.g52grp.warehouse.controller.AddProductPageController;
-import com.g52grp.warehouse.controller.StockManagementPageController;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -5,6 +5,7 @@ import java.util.Comparator;
 
 import org.junit.Test;
 
+import com.g52grp.backend.ConcreteJobManager;
 import com.g52grp.database.Job;
 
 /**

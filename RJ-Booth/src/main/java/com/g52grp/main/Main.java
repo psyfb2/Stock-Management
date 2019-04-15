@@ -1,7 +1,7 @@
 package com.g52grp.main;
 
 import com.g52grp.database.DatabaseConnection;
-import com.g52grp.warehouse.model.HomePage;
+import com.g52grp.pageloaders.HomePage;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

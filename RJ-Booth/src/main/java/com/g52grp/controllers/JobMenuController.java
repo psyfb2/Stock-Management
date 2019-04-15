@@ -1,4 +1,4 @@
-package com.g52grp.views;
+package com.g52grp.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
+import com.g52grp.backend.ConcreteJobManager;
+import com.g52grp.backend.JobManager;
 import com.g52grp.database.Job;
 import com.g52grp.main.Main;
-import com.g52grp.stockout.ConcreteJobManager;
-import com.g52grp.stockout.JobManager;
-import com.g52grp.warehouse.model.HomePage;
+import com.g52grp.pageloaders.HomePage;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import com.g52grp.backend.ConcreteProductManager;
 import com.g52grp.database.JobProduct;
 import com.g52grp.database.Product;
 

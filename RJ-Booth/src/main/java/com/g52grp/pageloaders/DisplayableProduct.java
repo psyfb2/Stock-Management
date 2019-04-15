@@ -1,4 +1,4 @@
-package com.g52grp.warehouse.model;
+package com.g52grp.pageloaders;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
