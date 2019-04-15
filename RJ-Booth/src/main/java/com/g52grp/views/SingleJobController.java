@@ -42,7 +42,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -59,8 +58,11 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	private ProductManager pm;
 	private JobManager jm;
 	private boolean found;
+	private boolean isArchived;
+	
 	@FXML Label jobTitle;
 	@FXML Label totalPrice;
+	
 	@FXML TableView<DisplayableJobProduct> jobProductTable;
 	@FXML TableColumn<DisplayableJobProduct, String> productCode;
 	@FXML TableColumn<DisplayableJobProduct, String> description;
@@ -70,7 +72,10 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	@FXML TableColumn<DisplayableJobProduct, Float> priceOfRow;
 	@FXML TableColumn<DisplayableJobProduct, Integer> productId; // hidden from the user
 	@FXML TableColumn<DisplayableJobProduct, String> barcode; // hidden from the user
+	
 	@FXML Button deleteJobButton;
+	@FXML Button archiveJobButton;
+	@FXML Label archiveJobText;
 	@FXML Button backButton;
 	@FXML Label errorMessage;
 	@FXML TextField searchProductToAdd;
@@ -80,7 +85,12 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	// barcode scanner is recognised as a keyboard
 	// send its input to this text hidden text field
 	@FXML TextField barcodeHiddenInput;
-	@FXML AnchorPane root;
+	
+	public SingleJobController() {
+		jobId = -1;
+		pm = new ConcreteProductManager(Main.con);
+		jm = new ConcreteJobManager(Main.con);
+	}
 	
 	@FXML public void radioClicked() {
 		barcodeHiddenInput.requestFocus();
@@ -88,6 +98,24 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	
 	@FXML public void focusBarcodeHiddenInput(MouseEvent e) {
 		barcodeHiddenInput.requestFocus();
+	}
+	
+	@FXML public void archiveJob(ActionEvent e) {
+		errorMessage.setText("");
+		
+		if(isArchived) {
+			if(!jm.unarchiveJob(jobId)) {
+				errorMessage.setText("Failed to archive job: error accessing database");
+				return;
+			}
+		} else {
+			if (!jm.archiveJob(jobId)){
+				errorMessage.setText("Failed to archive job: error accessing database");
+				return;
+			}
+		}
+		
+		back(e);
 	}
 	
 	@FXML public void barcodeScanned(ActionEvent e) {
@@ -331,12 +359,6 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		}
 	}
 	
-	public SingleJobController() {
-		jobId = -1;
-		pm = new ConcreteProductManager(Main.con);
-		jm = new ConcreteJobManager(Main.con);
-	}
-	
 	/**
 	 * Call this from other controllers to pass information to this controller when switching scenes
 	 * @param jobId jobID within the mysql database of the job to view
@@ -344,6 +366,22 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	public void initData(int jobId, String jobTitle) {
 		this.jobId = jobId;
 		this.jobTitle.setText(jobTitle);
+		isArchived = jm.isArchived(jobId);
+		
+		// change archive button text and image if the job is already archived
+		if(isArchived) {
+			archiveJobText.setText("Unarchive Job");
+			try {
+				ImageView buttonIcon = new ImageView(Main.getImageResource(Main.UNARCHIVEIMAGEPATH));
+				buttonIcon.setFitWidth(42);
+				buttonIcon.setFitHeight(42);
+				buttonIcon.setPreserveRatio(true);
+				archiveJobButton.setGraphic(buttonIcon);
+			} catch(Exception e) {
+				errorMessage.setText("Failed to load: " + Main.UNARCHIVEIMAGEPATH);
+			}
+		}
+		
 		updateTableView();
 	}
 	
@@ -392,17 +430,6 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			backButton.setGraphic(buttonIcon);
 		} catch(Exception e) {
 			errorMessage.setText("Failed to load: " + Main.BACKIMAGEPATH);
-		}
-		
-		// add delete icon to delete button
-		try {
-			ImageView buttonIcon = new ImageView(Main.getImageResource(Main.DELETEIMAGEPATH));
-			buttonIcon.setFitWidth(35);
-			buttonIcon.setFitHeight(35);
-			buttonIcon.setPreserveRatio(true);
-			deleteJobButton.setGraphic(buttonIcon);
-		} catch (Exception e) {
-			errorMessage.setText("Failed to load: " + Main.DELETEIMAGEPATH);
 		}
 		
 		// add event handlers for barcode scanner

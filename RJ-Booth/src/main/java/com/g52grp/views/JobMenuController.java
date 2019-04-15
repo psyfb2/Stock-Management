@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
 import com.g52grp.database.Job;
@@ -45,6 +46,10 @@ import javafx.util.Callback;
  */
 public class JobMenuController implements Initializable, TableViewUpdate {
 	private JobManager jm;
+	// static so that archivedView retains its value when switching back to this page
+	private static boolean archivedView = false;
+	private AutoCompletionBinding<Object> autoCompleteBind;
+	
 	@FXML Button addNewJob;
 	@FXML TableView<Job> jobTable;
 	@FXML TableColumn<Job, String> siteName;
@@ -54,13 +59,11 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	@FXML Button homePageButton;
 	@FXML TextField searchJobs;
 	@FXML Button archivedToggleButton;
-	boolean archivedView;
 	
 	public JobMenuController() {
 		jm = new ConcreteJobManager(Main.con);
-		archivedView = false;
 	}
-	
+
 	/**
 	 * Called when the addNewJob button is clicked, brings a pop up for the user to add a new job
 	 * @throws IOException Failed to load AddNewJob.fxml
@@ -186,8 +189,12 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	public void loadAutoCompleteOptions(Job[] jobs) {
 		// autocomplete text field
 		ArrayList<Job> allJobs = new ArrayList<Job>(Arrays.asList(jobs));
-				
-		TextFields.bindAutoCompletion(searchJobs, input -> {
+		
+		if(autoCompleteBind != null) {
+			autoCompleteBind.dispose();
+		}
+		
+		autoCompleteBind = TextFields.bindAutoCompletion(searchJobs, input -> {
 			if(input.getUserText().isEmpty() || allJobs == null) {
 				return Collections.emptyList();
 			}

@@ -20,6 +20,7 @@ public class Main extends Application {
     public static final String LOGOPATH = "rjb.png";
     public static final String BACKIMAGEPATH = "backButton.png";
     public static final String DELETEIMAGEPATH = "deleteJobButton.png";
+    public static final String UNARCHIVEIMAGEPATH = "unarchiveJobButton.png";
     public static final String JOBMENUPATH_FXML = "fxml/JobMenu.fxml";
     public static final String SINGLEJOBPATH_FXML = "fxml/SingleJob.fxml";
     public static final String ADDNEWJOBPATH_FXML = "fxml/AddNewJob.fxml";

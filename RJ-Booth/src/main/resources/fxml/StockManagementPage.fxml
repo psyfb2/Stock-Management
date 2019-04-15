@@ -131,17 +131,17 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Label minHeight="15.0" prefHeight="15.0" prefWidth="53.0" text=" import" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label minHeight="15.0" prefHeight="15.0" prefWidth="53.0" text=" Import" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
                   <Font name="System Bold Italic" size="12.0" />
                </font>
             </Label>
-            <Label minHeight="15.0" prefHeight="15.0" prefWidth="49.0" text="   add" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label minHeight="15.0" prefHeight="15.0" prefWidth="49.0" text="   Add" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="deleteLabel" minHeight="15.0" prefHeight="15.0" prefWidth="53.0" text="  delete" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label fx:id="deleteLabel" minHeight="15.0" prefHeight="15.0" prefWidth="53.0" text="  Delete" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
                   <Font name="System Bold Italic" size="12.0" />
                </font>
