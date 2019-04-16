@@ -42,7 +42,7 @@ public class DatabaseConnection {
 	/**
 	 * Only use for static SQL queries (e.g. CREATE, ALTER etc)
 	 * @return Statement object which can used to produce a result set
-	 * @throws SQLException
+	 * @throws SQLException connection lost
 	 */
 	public Statement getStatement() throws SQLException {
 		return con.createStatement();
@@ -52,6 +52,7 @@ public class DatabaseConnection {
 	 * prepared statements are much faster then normal statements and safer (cannot do SQL Injection)
 	 * @param preparedStatement MYSQL statement e.g. insert into Emp values(?,?)
 	 * @return PreparedStatement object, you can call set methods on the preparedStatement to dynamically replace the question marks with values
+	 * @throws SQLException connection lost
 	 */
 	public PreparedStatement getPreparedStatement(String preparedStatement) throws SQLException {
 		return con.prepareStatement(preparedStatement);

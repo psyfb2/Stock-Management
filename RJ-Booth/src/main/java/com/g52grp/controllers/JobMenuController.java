@@ -86,7 +86,7 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	
 	/**
 	 * Called when user clicks archive/unarchive button. Cause only archived or unarchived jobs to be displayed
-	 * @param e
+	 * @param e ActionEvent
 	 */
 	@FXML public void toggleArchive(ActionEvent e) {
 		archivedView = !archivedView;
