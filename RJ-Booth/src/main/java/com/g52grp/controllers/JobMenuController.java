@@ -36,13 +36,13 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
- * @author psyfb2
  * Controller for the Job Menu FXML file
  * Allows user to:
  * 		Viewing a list of jobs and select one of the jobs
  * 		Add a new job
  * 		View archived jobs
  * 		View active jobs
+ * @author psyfb2
  */
 public class JobMenuController implements Initializable, TableViewUpdate {
 	private JobManager jm;

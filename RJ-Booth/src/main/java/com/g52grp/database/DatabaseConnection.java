@@ -3,9 +3,9 @@ package com.g52grp.database;
 import java.sql.*;
 
 /**
- * @author psyfb2
  * Connect to the mysql database
  * Tables: Jobs, Stocks, JobStockLink
+ * @author psyfb2
  */
 public class DatabaseConnection {
 	private static final String endPoint = "stocks.cv2g2wcvs9bq.us-east-1.rds.amazonaws.com";

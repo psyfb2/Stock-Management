@@ -5,10 +5,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * @author psyfb2
  * JobProduct contains a product object (which cannot be displayed within the TableView)
  * so displayableJobProduct is a flat version which only contains Strings, Integer etc
  * also here we use SimpleStringProperty, SimpleIntegerProperty etc to allow columns to be editable
+ * @author psyfb2
  */
 public class DisplayableJobProduct {
 	private SimpleIntegerProperty productId;

@@ -8,10 +8,8 @@ import javafx.stage.Stage;
 import com.g52grp.main.Main;
 
 /**
- * 
- * @author psyzh1
  * Open HomePage fxml
- *
+ * @author psyzh1
  */
 public class HomePage {
 	private static boolean firstLoad = false;

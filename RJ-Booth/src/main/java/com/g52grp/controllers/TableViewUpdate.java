@@ -1,9 +1,9 @@
 package com.g52grp.controllers;
 
 /**
- * @author psyfb2
  * Controllers containing a TableView which may need to be updated by other controller 
  * should implement this interface
+ * @author psyfb2
  */
 public interface TableViewUpdate {
 	/**

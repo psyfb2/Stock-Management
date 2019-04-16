@@ -9,8 +9,8 @@ import com.g52grp.database.DatabaseConnection;
 import com.g52grp.database.Job;
 
 /**
- * @author psyfb2
  * Implementation of JobManager
+ * @author psyfb2
  */
 public class ConcreteJobManager implements JobManager {
 

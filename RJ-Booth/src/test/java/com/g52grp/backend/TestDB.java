@@ -1,4 +1,4 @@
-package com.g52grp.stockout;
+package com.g52grp.backend;
 
 import java.io.FileInputStream;
 import java.sql.PreparedStatement;

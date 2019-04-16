@@ -26,8 +26,8 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 /**
- * @author psyfb2
  * Controller for reports page
+ * @author psyfb2
  */
 public class ReportsController implements Initializable {
 	private JobManager jm;

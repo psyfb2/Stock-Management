@@ -12,8 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * @author psyys4
  * Controller for add product modal
+ * @author psyys4
  */
 public class AddProductPageController {
 	

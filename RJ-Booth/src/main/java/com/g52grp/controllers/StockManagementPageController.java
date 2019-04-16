@@ -44,10 +44,8 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
- * 
- * @author psyzh1 psyys4
  * Operation of StockManagementPage
- *
+ * @author psyzh1 psyys4
  */
 public class StockManagementPageController implements TableViewUpdate{
 	

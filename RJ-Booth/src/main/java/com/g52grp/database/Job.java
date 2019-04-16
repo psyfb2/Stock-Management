@@ -3,8 +3,8 @@ package com.g52grp.database;
 import java.sql.Date;
 
 /**
- * @author psyfb2
  * Represents Job row within the database
+ * @author psyfb2
  */
 public class Job {
 	private int jobId;

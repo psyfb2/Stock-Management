@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import com.g52grp.database.JobProduct;
 
 /**
- * @author psyfb2
  * Acts as interface for front end code for accessing products stored on MYSQL DB
+ * @author psyfb2
  */
 public interface ProductManager {
 	/**

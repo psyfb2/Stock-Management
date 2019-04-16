@@ -13,10 +13,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * @author psyfb2
  * Controller for AddNewJob FXML file
  * Allows user to:
  * 		Add new job to the database
+ * @author psyfb2
  */
 public class AddNewJobController {
 	@FXML TextField siteName;

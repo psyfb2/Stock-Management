@@ -8,10 +8,8 @@ import javafx.scene.Parent;
 import javafx.stage.Stage;
 
 /**
- * 
- * @author psyzh1
  * Open StockManegementPage fxml
- *
+ * @author psyzh1
  */
 public class StockManagementPage {
 	public StockManagementPage(Stage theStage) {

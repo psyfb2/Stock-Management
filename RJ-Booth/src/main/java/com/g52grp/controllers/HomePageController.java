@@ -18,9 +18,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
- * 
- * @author psyzh1
  * Controller for home page
+ * @author psyzh1
  */
 public class HomePageController {
     @FXML

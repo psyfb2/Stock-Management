@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import com.g52grp.database.Job;
 
 /**
- * @author psyfb2 
  * Acts as interface for front end code to access jobs stored on MYSQL DB
+ * @author psyfb2 
  */
 public interface JobManager {
 	
