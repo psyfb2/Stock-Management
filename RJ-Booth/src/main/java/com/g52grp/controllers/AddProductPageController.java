@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 /**
  * @author psyys4
+ * Controller for add product modal
  */
 public class AddProductPageController {
 	

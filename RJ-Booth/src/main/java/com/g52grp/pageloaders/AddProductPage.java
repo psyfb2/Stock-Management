@@ -13,8 +13,9 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
- * Load add product page
+ * 
  * @author psyys4
+ * Load add product page
  */
 public class AddProductPage {
 	public  AddProductPage(Stage theStage, StockManagementPageController smController) throws IOException {

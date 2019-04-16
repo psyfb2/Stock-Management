@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 /**
  * 
  * @author psyzh1
- *
+ * Controller for home page
  */
 public class HomePageController {
     @FXML

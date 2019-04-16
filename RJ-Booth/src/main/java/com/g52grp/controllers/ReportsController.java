@@ -25,6 +25,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+/**
+ * @author psyfb2
+ * Controller for reports page
+ */
 public class ReportsController implements Initializable {
 	private JobManager jm;
 	private ProductManager pm;

@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import com.g52grp.database.DatabaseConnection;
 import com.g52grp.database.Job;
 
+/**
+ * @author psyfb2
+ * Implementation of JobManager
+ */
 public class ConcreteJobManager implements JobManager {
 
 	private DatabaseConnection con;

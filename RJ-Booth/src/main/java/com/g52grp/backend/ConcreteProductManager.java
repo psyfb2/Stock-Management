@@ -11,6 +11,7 @@ import com.g52grp.database.Product;
 
 /**
  * @author psyfb2
+ * Implementation of ProductManager
  */
 public class ConcreteProductManager implements ProductManager {
 	private DatabaseConnection con;

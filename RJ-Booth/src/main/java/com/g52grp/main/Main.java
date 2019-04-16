@@ -11,8 +11,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
- * Launches Application and has some static methods for loading different files
  * @author psyfb2
+ * Launches Application and has some static methods for loading different files
  */
 public class Main extends Application {
 	//only create ONE connection for the whole program (take DatabaseConnection object as a parameter for your classes)
