@@ -1,4 +1,4 @@
-package com.g52grp.views;
+package com.g52grp.controllers;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,13 +9,13 @@ import java.util.stream.Collectors;
 
 import org.controlsfx.control.textfield.TextFields;
 
+import com.g52grp.backend.ConcreteJobManager;
+import com.g52grp.backend.ConcreteProductManager;
+import com.g52grp.backend.JobManager;
+import com.g52grp.backend.ProductManager;
 import com.g52grp.database.JobProduct;
 import com.g52grp.database.Product;
 import com.g52grp.main.Main;
-import com.g52grp.stockout.ConcreteJobManager;
-import com.g52grp.stockout.ConcreteProductManager;
-import com.g52grp.stockout.JobManager;
-import com.g52grp.stockout.ProductManager;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -42,7 +42,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -59,8 +58,11 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	private ProductManager pm;
 	private JobManager jm;
 	private boolean found;
+	private boolean isArchived;
+	
 	@FXML Label jobTitle;
 	@FXML Label totalPrice;
+	
 	@FXML TableView<DisplayableJobProduct> jobProductTable;
 	@FXML TableColumn<DisplayableJobProduct, String> productCode;
 	@FXML TableColumn<DisplayableJobProduct, String> description;
@@ -70,7 +72,10 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	@FXML TableColumn<DisplayableJobProduct, Float> priceOfRow;
 	@FXML TableColumn<DisplayableJobProduct, Integer> productId; // hidden from the user
 	@FXML TableColumn<DisplayableJobProduct, String> barcode; // hidden from the user
+	
 	@FXML Button deleteJobButton;
+	@FXML Button archiveJobButton;
+	@FXML Label archiveJobText;
 	@FXML Button backButton;
 	@FXML Label errorMessage;
 	@FXML TextField searchProductToAdd;
@@ -80,7 +85,12 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	// barcode scanner is recognised as a keyboard
 	// send its input to this text hidden text field
 	@FXML TextField barcodeHiddenInput;
-	@FXML AnchorPane root;
+	
+	public SingleJobController() {
+		jobId = -1;
+		pm = new ConcreteProductManager(Main.con);
+		jm = new ConcreteJobManager(Main.con);
+	}
 	
 	@FXML public void radioClicked() {
 		barcodeHiddenInput.requestFocus();
@@ -90,8 +100,40 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		barcodeHiddenInput.requestFocus();
 	}
 	
+	/**
+	 * Label this job as archived and move to the job menu.
+	 * @param e
+	 */
+	@FXML public void archiveJob(ActionEvent e) {
+		errorMessage.setText("");
+		
+		if(isArchived) {
+			if(!jm.unarchiveJob(jobId)) {
+				errorMessage.setText("Failed to archive job: error accessing database");
+				return;
+			}
+		} else {
+			if (!jm.archiveJob(jobId)){
+				errorMessage.setText("Failed to archive job: error accessing database");
+				return;
+			}
+		}
+		
+		back(e);
+	}
+	
+	/**
+	 * Called when the barcode is scanned.
+	 * Gets barcode input and decreases stock corrosponding to that product by 1.
+	 * Then increases quantity used by 1 for that product for this job.
+	 * 
+	 * If scan in radio button is selected the opposite occurs. Stock is increased by 1 and quantity used for this job decreased by 1.
+	 * @param e
+	 */
 	@FXML public void barcodeScanned(ActionEvent e) {
 		errorMessage.setText("");
+		// make sure table has most up to date data
+		
 		int minLength = 4;
 		String barcode = barcodeHiddenInput.getText();
 		
@@ -218,12 +260,20 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			productcode = input.substring(0, splitter);
 			description = input.substring(splitter + 1, input.length());
 		} catch(IndexOutOfBoundsException ex) {
-			errorMessage.setText("'" + input + "' was not found. Please enter the exact product code and description");
+			if(input.length() < 64) {
+				errorMessage.setText("'" + input + "' was not found. Please enter the exact product code and description");
+			} else {
+				errorMessage.setText("Product was not found. Please enter the exact product code and description");
+			}
 			return;
 		}
 		Product matchedProduct = pm.getProductFromProductcodeAndDescription(productcode, description);
 		if(matchedProduct == null) {
-			errorMessage.setText("'" + input + "' was not found. Please enter the exact product code and description");
+			if(input.length() < 64) {
+				errorMessage.setText("'" + input + "' was not found. Please enter the exact product code and description");
+			} else {
+				errorMessage.setText("Product was not found. Please enter the exact product code and description");
+			}
 			return;
 		}
 		
@@ -247,6 +297,17 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		barcodeHiddenInput.requestFocus();
 		int newQuantityUsed;
 		int oldQuantityUsed;
+		
+		// for concurrency reasons reload the selected job product 
+		// (as quantity used, stocks remaining may have been changed since the table was loaded)
+		String desc = jobProductSelected.getDescription();
+		String prodCode = jobProductSelected.getProductCode();
+		jobProductSelected = getJobProductUpdated(jobProductSelected);
+		if(jobProductSelected == null) {
+			errorMessage.setText("Could not find " + prodCode + " " + desc + ". Perhaps it was deleted by another user");
+			return;
+		}
+				
 		
 		try {
 			newQuantityUsed = Integer.parseInt(edittedCell.getNewValue().toString());
@@ -286,6 +347,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 					jobProductSelected.getProductCode(), jobProductSelected.getDescription(),
 					jobProductSelected.getPrice(), jobProductSelected.getStocksRemaining(), 
 					jobProductSelected.getBarcode(), jobProductSelected.getMinQuantity()), stockReduction);
+			
 			if(!pm.decreaseStocks(jobProduct)) {
 				errorMessage.setText("Failed to modify quantity: error accessing database");
 				jobProductTable.refresh();
@@ -302,21 +364,11 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 				return;
 			}
 			
-			// update table so it matches the database, could call updateTableView() but this is costly
-			jobProductSelected.setQuantity(Integer.toString(newQuantityUsed));
-			jobProductSelected.setStocksRemaining(jobProductSelected.getStocksRemaining() - stockReduction);
-			totalPrice.setText(Float.toString(Float.parseFloat(totalPrice.getText()) + stockReduction * jobProductSelected.getPrice()));
-			jobProductTable.refresh();
+			updateTableView();
 		} else {
 			errorMessage.setText("You cannot change the quantity used from " + jobProductSelected.getQuantity() + " to " + newQuantityUsed + " because you do not have enough stocks");
 			jobProductTable.refresh();
 		}
-	}
-	
-	public SingleJobController() {
-		jobId = -1;
-		pm = new ConcreteProductManager(Main.con);
-		jm = new ConcreteJobManager(Main.con);
 	}
 	
 	/**
@@ -326,6 +378,22 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	public void initData(int jobId, String jobTitle) {
 		this.jobId = jobId;
 		this.jobTitle.setText(jobTitle);
+		isArchived = jm.isArchived(jobId);
+		
+		// change archive button text and image if the job is already archived
+		if(isArchived) {
+			archiveJobText.setText("Unarchive Job");
+			try {
+				ImageView buttonIcon = new ImageView(Main.getImageResource(Main.UNARCHIVEIMAGEPATH));
+				buttonIcon.setFitWidth(42);
+				buttonIcon.setFitHeight(42);
+				buttonIcon.setPreserveRatio(true);
+				archiveJobButton.setGraphic(buttonIcon);
+			} catch(Exception e) {
+				errorMessage.setText("Failed to load: " + Main.UNARCHIVEIMAGEPATH);
+			}
+		}
+		
 		updateTableView();
 	}
 	
@@ -352,7 +420,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 					p.getProductCode(), p.getDescription(), p.getPricePerUnit(), Integer.toString(jp.getQuantityUsed()), p.getStock(), p.getBarCode(), p.getMinQuantity()) );
 			totalPrice += p.getPricePerUnit() * jp.getQuantityUsed();
 		}
-		this.totalPrice.setText(Float.toString(totalPrice));
+		this.totalPrice.setText("Price Of Job: £" + Float.toString(totalPrice));
 		return productsForThisJobList;
 	}
 	
@@ -374,17 +442,6 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			backButton.setGraphic(buttonIcon);
 		} catch(Exception e) {
 			errorMessage.setText("Failed to load: " + Main.BACKIMAGEPATH);
-		}
-		
-		// add delete icon to delete button
-		try {
-			ImageView buttonIcon = new ImageView(Main.getImageResource(Main.DELETEIMAGEPATH));
-			buttonIcon.setFitWidth(35);
-			buttonIcon.setFitHeight(35);
-			buttonIcon.setPreserveRatio(true);
-			deleteJobButton.setGraphic(buttonIcon);
-		} catch (Exception e) {
-			errorMessage.setText("Failed to load: " + Main.DELETEIMAGEPATH);
 		}
 		
 		// add event handlers for barcode scanner
@@ -453,6 +510,18 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Accesses the database to return most up to date version of a JobProduct
+	 * Useful for concurrency reasons (multiple users using the software at the same time)
+	 * @param jobProductSelected product to perform action on
+	 * @return Updated version of the the product registered with this job, null if product does not exist for this job
+	 */
+	private DisplayableJobProduct getJobProductUpdated(DisplayableJobProduct jobProductSelected) {
+		updateTableView();
+		return jobProductTable.getItems().stream().filter
+		(product -> jobProductSelected.getProductId() == product.getProductId() ).findFirst().orElse(null);
 	}
 	
 }

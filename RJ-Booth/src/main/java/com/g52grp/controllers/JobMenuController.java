@@ -1,4 +1,4 @@
-package com.g52grp.views;
+package com.g52grp.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -8,13 +8,14 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
+import com.g52grp.backend.ConcreteJobManager;
+import com.g52grp.backend.JobManager;
 import com.g52grp.database.Job;
 import com.g52grp.main.Main;
-import com.g52grp.stockout.ConcreteJobManager;
-import com.g52grp.stockout.JobManager;
-import com.g52grp.warehouse.model.HomePage;
+import com.g52grp.pageloaders.HomePage;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,10 +41,15 @@ import javafx.util.Callback;
  * Allows user to:
  * 		Viewing a list of jobs and select one of the jobs
  * 		Add a new job
- * 		
+ * 		View archived jobs
+ * 		View active jobs
  */
 public class JobMenuController implements Initializable, TableViewUpdate {
 	private JobManager jm;
+	// static so that archivedView retains its value when switching back to this page
+	private static boolean archivedView = false;
+	private AutoCompletionBinding<Object> autoCompleteBind;
+	
 	@FXML Button addNewJob;
 	@FXML TableView<Job> jobTable;
 	@FXML TableColumn<Job, String> siteName;
@@ -52,11 +58,12 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	@FXML TableColumn<Job, Integer> jobId; // this column is not visible to the user
 	@FXML Button homePageButton;
 	@FXML TextField searchJobs;
+	@FXML Button archivedToggleButton;
 	
 	public JobMenuController() {
 		jm = new ConcreteJobManager(Main.con);
 	}
-	
+
 	/**
 	 * Called when the addNewJob button is clicked, brings a pop up for the user to add a new job
 	 * @throws IOException Failed to load AddNewJob.fxml
@@ -76,11 +83,29 @@ public class JobMenuController implements Initializable, TableViewUpdate {
         stage.show();
 	}
 	
+	/**
+	 * Called when user clicks archive/unarchive button. Cause only archived or unarchived jobs to be displayed
+	 * @param e
+	 */
+	@FXML public void toggleArchive(ActionEvent e) {
+		archivedView = !archivedView;
+		if(archivedView) {
+			archivedToggleButton.setText("View Active Jobs");
+		} else {
+			archivedToggleButton.setText("View Archived Jobs");
+		}
+		updateTableView();
+	}
+	
 	@FXML public void goToHomePage(ActionEvent e) throws IOException {
 		Stage theStage = (Stage) homePageButton.getScene().getWindow();
 		new HomePage(theStage);
 	}
 	
+	/**
+	 * Called when user hits enter on auto search bar. Searches for the job and highlights it
+	 * @param e
+	 */
 	@FXML public void searchForJob(ActionEvent e) {
 		String findMe = searchJobs.getText();
 		int i = 0;
@@ -98,7 +123,12 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	 * @return List of Job objects to be added to the tableview, empty List if could not access database
 	 */
 	public ObservableList<Job> getJobs() {
-		Job[] jobsArr = jm.getAllJobs();
+		Job[] jobsArr;
+		if(archivedView) {
+			jobsArr = jm.getAllArchivedJobs();
+		} else {
+			jobsArr = jm.getAllJobs();
+		}
 		ObservableList<Job> jobsList = FXCollections.observableArrayList();
 		if(jobsArr == null) {
 			return jobsList;
@@ -167,8 +197,12 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	public void loadAutoCompleteOptions(Job[] jobs) {
 		// autocomplete text field
 		ArrayList<Job> allJobs = new ArrayList<Job>(Arrays.asList(jobs));
-				
-		TextFields.bindAutoCompletion(searchJobs, input -> {
+		
+		if(autoCompleteBind != null) {
+			autoCompleteBind.dispose();
+		}
+		
+		autoCompleteBind = TextFields.bindAutoCompletion(searchJobs, input -> {
 			if(input.getUserText().isEmpty() || allJobs == null) {
 				return Collections.emptyList();
 			}

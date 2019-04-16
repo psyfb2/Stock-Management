@@ -1,4 +1,4 @@
-package com.g52grp.warehouse.model;
+package com.g52grp.pageloaders;
 
 import java.io.IOException;
 import javafx.scene.Parent;
@@ -18,7 +18,7 @@ public class HomePage {
 	
 	public  HomePage(Stage theStage) throws IOException {
 		theStage.setTitle( "RJ Booth Services" );
-		theStage.getIcons().add(new Image("RJB.png"));
+		theStage.getIcons().add(new Image(Main.LOGOPATH));
         Parent root = Main.getFXMLFile(getClass(), Main.HOMEPAGE_FXML).load();
         
         // only create one new scene, then use getScene().setRoot(root)

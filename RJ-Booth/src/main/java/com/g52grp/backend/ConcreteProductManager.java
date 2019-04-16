@@ -1,4 +1,4 @@
-package com.g52grp.stockout;
+package com.g52grp.backend;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +23,7 @@ public class ConcreteProductManager implements ProductManager {
 	public JobProduct[] getProductsFromJobId(int jobId) {
 		ArrayList<JobProduct> jobProducts = new ArrayList<JobProduct>();
 		try {
-			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM JobStockLink, Stocks WHERE JobStockLink.productID = Stocks.productID AND JobStockLink.jobID = ?");
+			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM JobStockLink, Stocks WHERE JobStockLink.productID = Stocks.productID AND JobStockLink.jobID = ? ORDER BY Stocks.productID");
 			ps.setInt(1, jobId);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
@@ -64,7 +64,7 @@ public class ConcreteProductManager implements ProductManager {
 	public ArrayList<Product> getAllProductsArrayList() {
 		ArrayList<Product> products = new ArrayList<Product>();
 		try {
-			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Stocks");
+			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Stocks ORDER BY productID");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				products.add(getProduct(rs));
@@ -221,16 +221,16 @@ public class ConcreteProductManager implements ProductManager {
 			}
 			return false;
 		} catch(SQLException e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
 	
-	//new added function
-	//delete the product in the database given the productId
+	@Override
 	public boolean deleteProduct(int productID){
 		PreparedStatement ps;
 		try { 
-			ps = con.getPreparedStatement("delete from Stocks where productID = ?");
+			ps = con.getPreparedStatement("DELETE from Stocks where productID = ?");
 			ps.setInt(1, productID);
 			ps.executeUpdate();
 			ps.close();
@@ -240,8 +240,7 @@ public class ConcreteProductManager implements ProductManager {
 		return true;
 	}
 	
-	//new added function
-	//show the most used product
+	@Override
 	public String getMostUsedProduct() {
 		String mostUsedProduct = "";
 		PreparedStatement ps;
@@ -259,13 +258,7 @@ public class ConcreteProductManager implements ProductManager {
 		}
 		
 	}
-		
-	/**
-	 * @author psyys4
-	 * @param productID
-	 * @return ArrayList contains all product with productID used in current job.
-	 */
-	//new added function
+
 	//check whether the product is in used
 	public ArrayList<String> checkProductInUsed(int productID) {
 		ArrayList<String> jobDetails = new ArrayList<>();
@@ -284,29 +277,25 @@ public class ConcreteProductManager implements ProductManager {
 		return jobDetails;
 	}
 		
-	//new added function
-	//add a totally new product into the database
-	public boolean addNewProduct(String code, String description, String barCode) {
+	@Override
+	public boolean addNewProduct(String code, String description, String barCode, float pricePerUnit) {
 		PreparedStatement ps;
 		try { 
-			if(barCode != null) {
-				ps = con.getPreparedStatement("insert into Stocks (productCode, description, barcode, stock) values (?, ?, ?, 0)");
-				ps.setString(3, barCode);
-			}else {
-				ps = con.getPreparedStatement("insert into Stocks (productCode, description, barcode, stock) values (?, ?, null, 0)");				
-			}
+			ps = con.getPreparedStatement("insert into Stocks (productCode, description, barcode, stock, minQuantity, pricePerUnit) values (?, ?, ?, 0, 1, ?)");
 			ps.setString(1, code);
 			ps.setString(2, description);
+			ps.setString(3, barCode);
+			ps.setFloat(4, pricePerUnit);
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 		}		
 		return true;		
 	}
 	
-	//new added function
-	//update the new minimum quantity into the database
+	@Override
 	public boolean updateMinQuantity(int id, int newMinQuantity) {
 		PreparedStatement ps;
 		try { 
@@ -318,12 +307,10 @@ public class ConcreteProductManager implements ProductManager {
 		} catch (SQLException e) {
 			return false;
 		}	
-		
 		return true;		
 	}
 	
-	//new added function
-	//update the new barcode into the database
+	@Override
 	public boolean updateBarcode(int id, String newBarcode) {
 		PreparedStatement ps;
 		try { 
@@ -338,15 +325,13 @@ public class ConcreteProductManager implements ProductManager {
 		return true;		
 	}
 	
-	//new added function
-	//add a totally new product into the database
 	public boolean importNewProduct(String code, String description,double salesPrice, int quantity) {
 		PreparedStatement ps;
 		try { 
 			ps = con.getPreparedStatement("insert ignore into Stocks (productCode, description, pricePerUnit, stock) values (?, ?, ?, ?)");				
 			ps.setString(1, code);
 			ps.setString(2, description);
-			ps.setDouble(3, salesPrice); //added salesPrice by psyajwo
+			ps.setDouble(3, salesPrice);
 			ps.setInt(4, quantity);
 			ps.executeUpdate();
 			ps.close();
@@ -356,14 +341,13 @@ public class ConcreteProductManager implements ProductManager {
 		return true;		
 	}
 	
-	//new function added
-	//return stocks of one product
-	public int getStockForOne(String code) {
+	public int getStockForOne(String code, String description) {
 		PreparedStatement ps;
 		int stock = 0;
 		try {
-			ps = con.getPreparedStatement("select stock from Stocks where productCode = ? ");				
+			ps = con.getPreparedStatement("select stock from Stocks where productCode = ? AND description = ?");				
 			ps.setString(1, code);
+			ps.setString(2, description);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				stock = rs.getInt("stock");
@@ -375,16 +359,14 @@ public class ConcreteProductManager implements ProductManager {
 		return stock;
 	}
 	
-	/**
-	 * @author psyajwo
-	 * Re-stock using the import button
-	 */
-	public boolean importRestock(String code, int quantity, int stockRemaining) {
+
+	public boolean importRestock(String code, String description, int quantity, int stockRemaining) {
 		PreparedStatement ps;
 		try { 
-			ps = con.getPreparedStatement("update Stocks SET stock = ? where productCode = ?");				
+			ps = con.getPreparedStatement("update Stocks SET stock = ? where productCode = ? AND description = ?");				
 			ps.setInt(1, quantity + stockRemaining);
 			ps.setString(2, code);
+			ps.setString(3, description);
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
@@ -396,5 +378,24 @@ public class ConcreteProductManager implements ProductManager {
 	private Product getProduct(ResultSet rs) throws SQLException {
 		return new Product(rs.getInt("productID"), rs.getString("productCode"), rs.getString("description"), 
 				rs.getFloat("pricePerUnit"), rs.getInt("Stock"), rs.getString("barCode"), rs.getInt("minQuantity"));
+	}
+
+	@Override
+	public Product getProductFromProductId(int productID) {
+		try {
+			PreparedStatement ps = con.getPreparedStatement("SELECT * FROM Stocks WHERE productID = ?");
+			ps.setInt(1, productID);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				Product p = getProduct(rs);
+				ps.close();
+				return p;
+			} else {
+				ps.close();
+				return null;
+			}
+		} catch(SQLException e) {
+			return null;
+		}
 	}
 }

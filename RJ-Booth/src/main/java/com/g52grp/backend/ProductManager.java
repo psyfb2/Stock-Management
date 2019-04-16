@@ -1,4 +1,4 @@
-package com.g52grp.stockout;
+package com.g52grp.backend;
 
 import com.g52grp.database.Product;
 
@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.g52grp.database.JobProduct;
 
 /**
+ * Acts as interface for front end code for accessing products stored on MYSQL DB
  * @author psyfb2
  */
 public interface ProductManager {
@@ -70,6 +71,13 @@ public interface ProductManager {
 	Product getProductFromBarcode(String barcode);
 	
 	/**
+	 * Get a product from a productID
+	 * @param productId - unique ID of the product to search for
+	 * @return corresponding Product, null if none were found or if database access failed
+	 */
+	Product getProductFromProductId(int productId);
+	
+	/**
 	 * Similar to decreaseStocks(), however only register the product with the job with a quantity used of 1.
 	 * If the job is already registered with the product then nothing is changed (decreaseStocks() would decrease the stock by 1 even if the job existed). 
 	 * Also does check that there is enough stock unlike decreaseStocks() (i.e. if a product has 0 stock nothing will happen) 
@@ -97,4 +105,50 @@ public interface ProductManager {
 	 * @return true if this product is registered to the job else false
 	 */
 	boolean isProductRegisteredWithJob(int jobID, int productID);
+	
+	/**
+	 * Delete the product in the database given a productID
+	 * @param productID ID of product to delete in the MYSQL database
+	 * @return true if the delete was executed, false if there was an error accessing the database.
+	 */
+	public boolean deleteProduct(int productID);
+	
+	/**
+	 * @return Description of most used product
+	 */
+	public String getMostUsedProduct();
+	
+	/**
+	 * Add a new product to the database
+	 * @param code productCode of the product to add
+	 * @param description description of the product to add
+	 * @param barCode unique barcode of the product to add
+	 * @param pricePerUnit price of the new product
+	 * @return success of operation
+	 */
+	public boolean addNewProduct(String code, String description, String barCode, float pricePerUnit);
+	
+	/**
+	 * Update minimum quantity of a product
+	 * @param id 
+	 * @param newMinQuantity
+	 * @return success of operation
+	 */
+	public boolean updateMinQuantity(int id, int newMinQuantity);
+	
+	/**
+	 * Update barcode of a product
+	 * @param id
+	 * @param newBarcode
+	 * @return success of operation
+	 */
+	public boolean updateBarcode(int id, String newBarcode);
+	
+	/**
+	 * Get the stock remaining for a product
+	 * @param code
+	 * @param description
+	 * @return
+	 */
+	public int getStockForOne(String code, String description);
 }

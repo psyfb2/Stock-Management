@@ -1,4 +1,4 @@
-package com.g52grp.warehouse.controller;
+package com.g52grp.controllers;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,13 +10,12 @@ import java.util.stream.Collectors;
 import org.controlsfx.control.textfield.TextFields;
 
 import com.csvreader.CsvReader;
+import com.g52grp.backend.ConcreteProductManager;
 import com.g52grp.database.Product;
 import com.g52grp.main.Main;
-import com.g52grp.stockout.ConcreteProductManager;
-import com.g52grp.views.TableViewUpdate;
-import com.g52grp.warehouse.model.AddProductPage;
-import com.g52grp.warehouse.model.DisplayableProduct;
-import com.g52grp.warehouse.model.HomePage;
+import com.g52grp.pageloaders.AddProductPage;
+import com.g52grp.pageloaders.DisplayableProduct;
+import com.g52grp.pageloaders.HomePage;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -202,13 +201,17 @@ public class StockManagementPageController implements TableViewUpdate{
 					}
 					if(findKey == false) {
 						errorSearchMessage.setVisible(true);
-						errorSearchMessage.setText("The '" + text + "' item cannot be found.");
+						if(text.length() < 36) {
+							errorSearchMessage.setText("The Product '" + text + "' cannot be found.");
+						} else {
+							errorSearchMessage.setText("Product not found.");
+						}
+						
 					}
 				}
 			}
 			
 		});
-		
 		
 		minQuantityCol.setOnEditCommit(
 	            new EventHandler<CellEditEvent<DisplayableProduct, String>>() {
@@ -228,13 +231,13 @@ public class StockManagementPageController implements TableViewUpdate{
 	            			return;
 	            		}
 	            		
-	            		if(newMinQuantity <= 0) {
-	            			errorMinQuantityMessage.setText("Products must have a minimum quantity of 1");
+	            		if(newMinQuantity < 0) {
+	            			errorMinQuantityMessage.setText("Products must have a minimum quantity of 0 or more");
 	            			stockTable.refresh();
 	            			return;
 	            		}
 	            		
-	            		errorMinQuantityMessage.setText(null);
+	            		errorMinQuantityMessage.setText("");
 	            		if(newMinQuantity == oldMinQuantity) {
 	            			return;
 	            		}
@@ -281,6 +284,12 @@ public class StockManagementPageController implements TableViewUpdate{
 					
 					if(newBarcode.length() < 4) {
 						errorMinQuantityMessage.setText("Barcode must have at least 4 digits");
+	        			stockTable.refresh();
+	        			return;
+					}
+					
+					if(newBarcode.length() > 128) {
+						errorMinQuantityMessage.setText("Barcode has a maximum of 128 digits");
 	        			stockTable.refresh();
 	        			return;
 					}
@@ -380,33 +389,11 @@ public class StockManagementPageController implements TableViewUpdate{
 		for(DisplayableProduct product : stockTable.getItems()) {
 			if(product.getDelete()) {
 				int id = product.getProductId();
-				ArrayList<String> jobDetails = pm.checkProductInUsed(id);
-				if(!jobDetails.isEmpty()) {
-					String warningText = product.getDescription() + " is used in ";
-					for(int i = 0; i < jobDetails.size(); i++) {
-						if(i == jobDetails.size() - 1) {
-							warningText += jobDetails.get(i) + ". ";
-						}else {
-							warningText += jobDetails.get(i) + ", ";
-						}						
-					}
-					
-					warningText += "\nPlease delete these job(s) first.";
-					Alert alert = new Alert(Alert.AlertType.INFORMATION);
-					alert.setTitle("DeleteWarning");
-					Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-					stage.getIcons().add(Main.getImageResource(Main.LOGOPATH));
-					alert.setHeaderText("");
-					alert.setContentText(warningText);
-					alert.showAndWait();
-				}else {
-					if(!pm.deleteProduct(id)) {
-						errorMessage.setText("Failed to delete products: error accessing database");
-						errorMessage.setVisible(true);
-						return;
-					}
+				if(!pm.deleteProduct(id)) {
+					errorMessage.setText("Failed to delete products: error accessing database");
+					errorMessage.setVisible(true);
+					return;
 				}
-				
 			}
 		}
 		
@@ -483,16 +470,20 @@ public class StockManagementPageController implements TableViewUpdate{
 				CsvReader csvReader = new CsvReader(filePath);
 				csvReader.readHeaders();
 				String code, description;
-				Double salesPrice, quantity;
+				Double salesPrice = 0.0, quantity = 0.0;
 				
 				while(csvReader.readRecord()) {
 					code = csvReader.get(0);
 					description = csvReader.get(1);
-					salesPrice = Double.parseDouble(csvReader.get(3));
-					quantity = Double.parseDouble(csvReader.get(4));
-					stockRemaining = pm.getStockForOne(code);
+					try {
+						salesPrice = Double.parseDouble(csvReader.get(3));
+						quantity = Double.parseDouble(csvReader.get(4));
+					} catch(NumberFormatException ex) {
+						continue;
+					}
+					stockRemaining = pm.getStockForOne(code, description);
 					pm.importNewProduct(code, description,salesPrice, quantity.intValue());
-					pm.importRestock(code, quantity.intValue(), stockRemaining);
+					pm.importRestock(code, description, quantity.intValue(), stockRemaining);
 				}
 				
             } catch (IOException e) {
@@ -502,7 +493,6 @@ public class StockManagementPageController implements TableViewUpdate{
         this.showProducts();
         this.showTotalValue();
 	}
-	
 	
 	/**
 	 * Refresh tableview.
@@ -539,7 +529,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	 */
 	private void showTotalValue() {
 		double value = 0;
-		String textInfo = "total value: ";
+		String textInfo = "Total Value: £";
 		for(DisplayableProduct product : stockTable.getItems()) {
 			value += product.getPricePerUnit() * product.getQuantity();
 		}
@@ -552,7 +542,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	private void showMostUsedProduct() {
 		errorMessage.setText("");
 		String product = pm.getMostUsedProduct();
-		String textInfo = "most used product: ";
+		String textInfo = "Most Used Product: ";
 		if(product == null) {
 			errorMessage.setText("Failed to load most used product: error accessing database");
 			errorMessage.setVisible(true);

@@ -1,15 +1,17 @@
-package com.g52grp.warehouse.controller;
+package com.g52grp.controllers;
 
 import java.io.IOException;
 
 import com.g52grp.main.Main;
-import com.g52grp.warehouse.model.StockManagementPage;
+import com.g52grp.pageloaders.StockManagementPage;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -38,9 +40,20 @@ public class HomePageController {
 
     @FXML
     private ImageView jobPicture;
+    
+    @FXML 
+    private Label errorMessage;
+    
+    @FXML Button reportsButton;
+    
     @FXML
     private void initialize() {
-    	
+    	if (!Main.con.isConnected()) {
+    		// there was an error connecting to the database
+    		errorMessage.setText("Failed to connect to the database: Check your internet connection");
+    		stockManagementButton.setDisable(true);
+    		jobManagementButton.setDisable(true);
+    	}
     }
     
     /**
@@ -68,5 +81,19 @@ public class HomePageController {
 		new StockManagementPage(theStage);
     }
 
+    /**
+     * Change to reports page
+     * @param e
+     */
+    @FXML
+    void reportsButtonClicked(ActionEvent e) throws IOException {
+    	FXMLLoader loader = Main.getFXMLFile(getClass(), Main.REPORTS_FXML);
+		Parent root = loader.load();
+        
+        Stage theStage = (Stage) (((Node) e.getSource()).getScene().getWindow());
+        theStage.getScene().setRoot(root);
+        theStage.setTitle("Reports");
+        theStage.show();
+    }
 
 }

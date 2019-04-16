@@ -14,16 +14,24 @@ public class DatabaseConnection {
 	private static final String pw = "G52GROUPPROJECT";
 	private static final String dbName = "stocks";
 	private Connection con;
+	private boolean connected = false;
 	
 	/**
 	 * Opens a connection to the mysql server
 	 * @return Whether the connection was successful or not
 	 */
-	public boolean openConnection() {
+	public boolean openConnection(boolean unitTestConnection) {
 		// Please guys only make ONE connection for the whole program
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://" + endPoint + ":" + port + "/" + dbName, userName, pw);
+			if(unitTestConnection) {
+				 // Registering the HSQLDB JDBC driver
+		         Class.forName("org.hsqldb.jdbcDriver");
+		         con = DriverManager.getConnection("jdbc:hsqldb:mem:testdb", "psyfb2", "");
+			} else {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				con = DriverManager.getConnection("jdbc:mysql://" + endPoint + ":" + port + "/" + dbName, userName, pw);
+			}
+			connected = true;
 		} catch(Exception e) {
 			return false;
 		}
@@ -61,6 +69,13 @@ public class DatabaseConnection {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * @return True if a successful connection has been made using openConnection, else False
+	 */
+	public boolean isConnected() {
+		return connected;
 	}
 	
 }

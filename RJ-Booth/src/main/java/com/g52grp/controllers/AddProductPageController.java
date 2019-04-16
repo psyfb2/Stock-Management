@@ -1,10 +1,9 @@
-package com.g52grp.warehouse.controller;
+package com.g52grp.controllers;
 
 import java.awt.Toolkit;
 
+import com.g52grp.backend.ConcreteProductManager;
 import com.g52grp.main.Main;
-import com.g52grp.stockout.ConcreteProductManager;
-import com.g52grp.views.TableViewUpdate;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,6 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * @author psyys4
+ */
 public class AddProductPageController {
 	
 	@FXML
@@ -32,18 +34,46 @@ public class AddProductPageController {
 	@FXML
 	private Label errorMessage;
 	
+	@FXML
+	private TextField price;
+	
 	private ConcreteProductManager pm = new ConcreteProductManager(Main.con);
 	TableViewUpdate tb; // used to update the table after a product is added
 	
+	/**
+	 * Pass data to this controller using this method
+	 * @param tb object with an updateTableView method to update the table view
+	 */
 	public void initData(TableViewUpdate tb) {
 		this.tb = tb;
 	}
 	
+	/**
+	 * Adds a new product to the database, called when the confirm button is clicked
+	 */
 	@FXML void confirmButtonClicked() {
+		errorMessage.setText("");
 		String code = productCode.getText();
 		String des = description.getText();
 		String bar = barcode.getText();
+		
+		if(code.length() > 255) {
+			errorMessage.setText("Error: Product Code too long");
+			return;
+		}
+		
+		if(des.length() > 255) {
+			errorMessage.setText("Error: Description too long");
+			return;
+		}
 
+		if(bar.length() > 128) {
+			errorMessage.setText("Error: Barcode too long");
+			return;
+		}
+		
+		// wtf is this spaghetti code....seriously guys
+		
 		if( code.length() != 0 && des.length() != 0) {
 			//check the product already exits in the database
 			if(pm.getProductFromProductcodeAndDescription(code, des) != null) {			
@@ -57,7 +87,7 @@ public class AddProductPageController {
 			}else {
 				//Check if barcode is illegal.
 				if(!bar.matches("[0-9]{1,}") && bar.length() != 0) {
-					
+			
 					errorMessage.setText("Please only enter digits for barcode");
 				}else if(bar.length() < 4 && bar.length() != 0){
 					errorMessage.setText("Barcode must have at least 4 digits");
@@ -65,8 +95,14 @@ public class AddProductPageController {
 					if(bar.length() == 0) {
 						bar = null;
 					}
-							
-					if(pm.addNewProduct(code, des, bar)) {					
+					float pri;
+					try {
+						pri = Float.parseFloat(price.getText());
+					} catch(NumberFormatException ex) {
+						errorMessage.setText("Please enter a number for Price");
+						return;
+					}
+					if(pm.addNewProduct(code, des, bar, pri)) {					
 						Stage stage = (Stage)cancelButton.getScene().getWindow();
 						stage.close();
 					}else {
@@ -84,6 +120,9 @@ public class AddProductPageController {
 		
 	}
 	
+	/**
+	 * Close this window
+	 */
 	@FXML void cancelButtonClicked() {
 		Stage stage = (Stage)cancelButton.getScene().getWindow();
 		stage.close();

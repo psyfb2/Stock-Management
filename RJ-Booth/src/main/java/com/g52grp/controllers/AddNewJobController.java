@@ -1,8 +1,8 @@
-package com.g52grp.views;
+package com.g52grp.controllers;
 
+import com.g52grp.backend.ConcreteJobManager;
+import com.g52grp.backend.JobManager;
 import com.g52grp.main.Main;
-import com.g52grp.stockout.ConcreteJobManager;
-import com.g52grp.stockout.JobManager;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,10 +23,12 @@ public class AddNewJobController {
 	@FXML TextField plotNumber;
 	@FXML Label errorMessage; // initially empty, lets user know if they have done something wrong (e.g. empty siteName or plotNumber)
 	@FXML Button addJob;
+	    
 	TableViewUpdate tb; // used to update the table after job is added
 	
 	/**
-	 * @param tb
+	 * Pass data to this controller using this method
+	 * @param tb object with an updateTableView method to update the table view
 	 */
 	public void initData(TableViewUpdate tb) {
 		this.tb = tb;
@@ -45,6 +47,15 @@ public class AddNewJobController {
 			return;
 		} else if(pn.isEmpty()) {
 			errorMessage.setText("Plot Number must not be empty");
+			return;
+		}
+		
+		if(sn.length() > 255) {
+			errorMessage.setText("Site Name cannot be longer then 255 characters");
+			return;
+		}
+		if(pn.length() > 10) {
+			errorMessage.setText("Plot Number cannot be more then 10 digits");
 			return;
 		}
 		
