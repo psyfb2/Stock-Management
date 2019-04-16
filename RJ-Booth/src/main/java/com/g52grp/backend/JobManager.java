@@ -38,7 +38,7 @@ public interface JobManager {
 	
 	/**
 	 * Label a job as active
-	 * @param jobID
+	 * @param jobID jobID
 	 * @return success of operation
 	 */
 	boolean unarchiveJob(int jobID);

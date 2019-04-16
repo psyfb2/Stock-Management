@@ -66,6 +66,7 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 
 	/**
 	 * Called when the addNewJob button is clicked, brings a pop up for the user to add a new job
+	 * @param e ActionEvent
 	 * @throws IOException Failed to load AddNewJob.fxml
 	 */
 	@FXML public void newJobModal(ActionEvent e) throws IOException {
@@ -104,7 +105,7 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	
 	/**
 	 * Called when user hits enter on auto search bar. Searches for the job and highlights it
-	 * @param e
+	 * @param e ActionEvent
 	 */
 	@FXML public void searchForJob(ActionEvent e) {
 		String findMe = searchJobs.getText();

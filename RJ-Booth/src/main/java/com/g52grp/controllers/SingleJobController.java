@@ -102,7 +102,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	
 	/**
 	 * Label this job as archived and move to the job menu.
-	 * @param e
+	 * @param e ActionEvent
 	 */
 	@FXML public void archiveJob(ActionEvent e) {
 		errorMessage.setText("");
@@ -128,7 +128,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	 * Then increases quantity used by 1 for that product for this job.
 	 * 
 	 * If scan in radio button is selected the opposite occurs. Stock is increased by 1 and quantity used for this job decreased by 1.
-	 * @param e
+	 * @param e ActionEvent
 	 */
 	@FXML public void barcodeScanned(ActionEvent e) {
 		errorMessage.setText("");
@@ -203,7 +203,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 
 	/**
 	 * Called when the back button is clicked (to go back to the Job Menu)
-	 * @param e
+	 * @param e ActionEvent
 	 */
 	@FXML public void back(ActionEvent e) {
 		try {
@@ -220,7 +220,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	
 	/**
 	 * Called when the delete job button is clicked, A delete job modal will be loaded to confirm this with the user
-	 * @param e
+	 * @param e ActionEvent
 	 */
 	@FXML public void deleteJob(ActionEvent e) {
 		Alert confirmation = new Alert(AlertType.CONFIRMATION);
@@ -242,7 +242,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	/**
 	 * Called when the user hits enter on the searchproductToAdd text field
 	 * This will add the product to the job if the product is not already within the job
-	 * @param e
+	 * @param e ActionEvent
 	 */
 	@FXML public void addProductToJobManual(ActionEvent e) {
 		// get the product code and description (separated by a space) from the user input
@@ -289,7 +289,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	
 	/**
 	 * Called when the user attempts to change the quantity used for a product within the TableView (no other column is editable) 
-	 * @param e
+	 * @param edittedCell CellEditEvent
 	 */
 	@FXML public void changeQuantityUsedCellEvent(@SuppressWarnings("rawtypes") CellEditEvent edittedCell) {
 		errorMessage.setText("");
@@ -374,6 +374,7 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 	/**
 	 * Call this from other controllers to pass information to this controller when switching scenes
 	 * @param jobId jobID within the mysql database of the job to view
+	 * @param jobTitle title of the job to be displayed at the top of the page
 	 */
 	public void initData(int jobId, String jobTitle) {
 		this.jobId = jobId;

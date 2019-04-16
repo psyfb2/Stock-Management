@@ -51,7 +51,7 @@ public class ReportsController implements Initializable {
 	/**
 	 * Called when the combobox value is changed. 
 	 * Calculates spend for the selected month and displays this.
-	 * @param e
+	 * @param e ActionEvent
 	 */
 	@FXML public void comboChanged(ActionEvent e) {
 		float spend = calcSpending(selectMonth.getValue());

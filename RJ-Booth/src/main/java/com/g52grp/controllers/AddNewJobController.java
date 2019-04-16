@@ -37,6 +37,7 @@ public class AddNewJobController {
 	/**
 	 * Called when addJob button is clicked
 	 * will get inputs from text fields siteName and plotNumber also ensuring these are both non-empty before adding anything to the db
+	 * @param e ActionEvent
 	 */
 	@FXML public void addNewJob(ActionEvent e) {
 		String sn = siteName.getText();

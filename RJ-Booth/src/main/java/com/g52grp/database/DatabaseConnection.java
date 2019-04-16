@@ -18,6 +18,7 @@ public class DatabaseConnection {
 	
 	/**
 	 * Opens a connection to the mysql server
+	 * @param unitTestConnection Pass true if this connection is to a hqldb for testing, else false
 	 * @return Whether the connection was successful or not
 	 */
 	public boolean openConnection(boolean unitTestConnection) {
@@ -39,10 +40,9 @@ public class DatabaseConnection {
 	}
 	
 	/**
-	 * @param sql SQL query to be sent to the database, typically a SQL SELECT statement
-	 * @return ResultSet for the query, null if query was unsuccessful 
 	 * Only use for static SQL queries (e.g. CREATE, ALTER etc)
 	 * @return Statement object which can used to produce a result set
+	 * @throws SQLException
 	 */
 	public Statement getStatement() throws SQLException {
 		return con.createStatement();

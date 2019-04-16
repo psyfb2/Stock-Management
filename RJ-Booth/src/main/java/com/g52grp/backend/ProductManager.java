@@ -130,25 +130,25 @@ public interface ProductManager {
 	
 	/**
 	 * Update minimum quantity of a product
-	 * @param id 
-	 * @param newMinQuantity
+	 * @param id productID
+	 * @param newMinQuantity new minimum quantity
 	 * @return success of operation
 	 */
 	public boolean updateMinQuantity(int id, int newMinQuantity);
 	
 	/**
 	 * Update barcode of a product
-	 * @param id
-	 * @param newBarcode
+	 * @param id productID
+	 * @param newBarcode barcode
 	 * @return success of operation
 	 */
 	public boolean updateBarcode(int id, String newBarcode);
 	
 	/**
 	 * Get the stock remaining for a product
-	 * @param code
-	 * @param description
-	 * @return
+	 * @param code productCode
+	 * @param description description
+	 * @return stock remaining for the given product
 	 */
 	public int getStockForOne(String code, String description);
 }

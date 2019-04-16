@@ -19,18 +19,6 @@ public class DisplayableProduct {
 	private SimpleStringProperty minQuantity;
 	private SimpleBooleanProperty delete;
 	
-	/**
-	 * 
-	 * @param productId
-	 * @param productCode
-	 * @param description
-	 * @param barCode
-	 * @param pricePerUnit
-	 * @param quantity
-	 * @param minQuantity
-	 * 
-	 * Setting stock table parameter
-	 */
 	public DisplayableProduct(int productId, String productCode,
 			String description, String barCode, float pricePerUnit, 
 			int quantity, String minQuantity) {
