@@ -48,6 +48,11 @@ public class ReportsController implements Initializable {
 		new HomePage(theStage);
 	}
 	
+	/**
+	 * Called when the combobox value is changed. 
+	 * Calculates spend for the selected month and displays this.
+	 * @param e
+	 */
 	@FXML public void comboChanged(ActionEvent e) {
 		float spend = calcSpending(selectMonth.getValue());
 		if(spend < 0) {
@@ -77,6 +82,10 @@ public class ReportsController implements Initializable {
 		cumulativeYearlySpend.getData().add(points);
 	}
 	
+	/**
+	 * @param month Month to get net spend for (e.g. "august")
+	 * @return Amount spent in the given month (calculated by looking at jobs and there registered products)
+	 */
 	private float calcSpending(String month) {
 		errorMessage.setText("");
 		ArrayList<Job> jobsInMonth = getJobsForSpecificMonth(month);
@@ -96,6 +105,10 @@ public class ReportsController implements Initializable {
 		return spend;
 	}
 	
+	/**
+	 * @param month Month to search for
+	 * @return All jobs which were created in a given month
+	 */
 	private ArrayList<Job> getJobsForSpecificMonth(String month) {
 		month = month.toLowerCase();
 		String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));

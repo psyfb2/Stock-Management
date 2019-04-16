@@ -83,6 +83,10 @@ public class JobMenuController implements Initializable, TableViewUpdate {
         stage.show();
 	}
 	
+	/**
+	 * Called when user clicks archive/unarchive button. Cause only archived or unarchived jobs to be displayed
+	 * @param e
+	 */
 	@FXML public void toggleArchive(ActionEvent e) {
 		archivedView = !archivedView;
 		if(archivedView) {
@@ -98,6 +102,10 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 		new HomePage(theStage);
 	}
 	
+	/**
+	 * Called when user hits enter on auto search bar. Searches for the job and highlights it
+	 * @param e
+	 */
 	@FXML public void searchForJob(ActionEvent e) {
 		String findMe = searchJobs.getText();
 		int i = 0;

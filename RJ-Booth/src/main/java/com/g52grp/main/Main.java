@@ -47,6 +47,12 @@ public class Main extends Application {
 	    super.stop();
 	}
 	
+	/**
+	 * Use this method to load an FXML file
+	 * @param clazz getClass() of the caller
+	 * @param resourceName path of FXML file to load
+	 * @return FXMLLoader for this FXML file, call .load() on this loader to get the root
+	 */
 	public static FXMLLoader getFXMLFile(Class<?> clazz, String resourceName) {
 		try {
 			return new FXMLLoader(Main.class.getClassLoader().getResource(resourceName));
@@ -55,6 +61,11 @@ public class Main extends Application {
 		}
 	}
 	
+	/**
+	 * Use this class to load an image recource
+	 * @param resourcePath Path of image
+	 * @return Image object
+	 */
 	public static Image getImageResource(String resourcePath) {
 		return new Image(Main.class.getClassLoader().getResourceAsStream(resourcePath));
 	}
@@ -63,6 +74,10 @@ public class Main extends Application {
 		return Main.class.getClassLoader().getResource(resourcePath).toExternalForm();
 	}
 	
+	/**
+	 * Make the screen fullscreen. Only need to call once for the first page which is laoded.
+	 * @param theStage Stage object of the screen
+	 */
 	public static void fullscreen(Stage theStage) {
 		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 		

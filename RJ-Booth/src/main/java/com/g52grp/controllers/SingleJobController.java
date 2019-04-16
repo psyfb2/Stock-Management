@@ -100,6 +100,10 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		barcodeHiddenInput.requestFocus();
 	}
 	
+	/**
+	 * Label this job as archived and move to the job menu.
+	 * @param e
+	 */
 	@FXML public void archiveJob(ActionEvent e) {
 		errorMessage.setText("");
 		
@@ -118,6 +122,14 @@ public class SingleJobController implements Initializable, TableViewUpdate {
 		back(e);
 	}
 	
+	/**
+	 * Called when the barcode is scanned.
+	 * Gets barcode input and decreases stock corrosponding to that product by 1.
+	 * Then increases quantity used by 1 for that product for this job.
+	 * 
+	 * If scan in radio button is selected the opposite occurs. Stock is increased by 1 and quantity used for this job decreased by 1.
+	 * @param e
+	 */
 	@FXML public void barcodeScanned(ActionEvent e) {
 		errorMessage.setText("");
 		// make sure table has most up to date data

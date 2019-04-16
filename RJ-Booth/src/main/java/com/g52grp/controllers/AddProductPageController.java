@@ -11,6 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * @author psyys4
+ */
 public class AddProductPageController {
 	
 	@FXML
@@ -37,10 +40,17 @@ public class AddProductPageController {
 	private ConcreteProductManager pm = new ConcreteProductManager(Main.con);
 	TableViewUpdate tb; // used to update the table after a product is added
 	
+	/**
+	 * Pass data to this controller using this method
+	 * @param tb object with an updateTableView method to update the table view
+	 */
 	public void initData(TableViewUpdate tb) {
 		this.tb = tb;
 	}
 	
+	/**
+	 * Adds a new product to the database, called when the confirm button is clicked
+	 */
 	@FXML void confirmButtonClicked() {
 		errorMessage.setText("");
 		String code = productCode.getText();
@@ -110,6 +120,9 @@ public class AddProductPageController {
 		
 	}
 	
+	/**
+	 * Close this window
+	 */
 	@FXML void cancelButtonClicked() {
 		Stage stage = (Stage)cancelButton.getScene().getWindow();
 		stage.close();

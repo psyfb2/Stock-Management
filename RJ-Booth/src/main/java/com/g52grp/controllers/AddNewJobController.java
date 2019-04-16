@@ -27,7 +27,8 @@ public class AddNewJobController {
 	TableViewUpdate tb; // used to update the table after job is added
 	
 	/**
-	 * @param tb
+	 * Pass data to this controller using this method
+	 * @param tb object with an updateTableView method to update the table view
 	 */
 	public void initData(TableViewUpdate tb) {
 		this.tb = tb;
