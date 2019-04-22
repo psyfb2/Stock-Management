@@ -15,20 +15,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;" stylesheets="@../stylesheet.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.warehouse.controller.StockManagementPageController">
+<GridPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;" stylesheets="@../stylesheet.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.controllers.StockManagementPageController">
   <columnConstraints>
     <ColumnConstraints hgrow="ALWAYS" minWidth="720.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="352.0" minHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="352.0" minHeight="3.0" prefHeight="12.0" vgrow="ALWAYS" />
-    <RowConstraints maxHeight="1060.0" minHeight="80.0" prefHeight="80.0" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="1060.0" minHeight="1.0" prefHeight="37.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="1060.0" minHeight="10.0" prefHeight="660.0" vgrow="ALWAYS" />
-      <RowConstraints maxHeight="1060.0" minHeight="40.0" prefHeight="367.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
+    <RowConstraints maxHeight="-Infinity" minHeight="80.0" prefHeight="80.0" vgrow="ALWAYS" />
+      <RowConstraints minHeight="10.0" prefHeight="660.0" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <GridPane style="-fx-background-color: #afeeee;" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+      <GridPane style="-fx-background-color: #27a0c6;" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="634.0" minWidth="100.0" prefWidth="80.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="1235.0" minWidth="50.0" prefWidth="50.0" />
@@ -38,20 +36,21 @@
           <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="homePageButton" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onMouseClicked="#homePageButtonClicked" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #e1ffff; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Return" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+            <Button fx:id="homePageButton" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onMouseClicked="#homePageButtonClicked" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #6dd7f8; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Home" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
          </children>
       </GridPane>
-      <GridPane minWidth="400.0" prefHeight="400.0" prefWidth="1370.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <GridPane minWidth="400.0" prefHeight="400.0" prefWidth="1370.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <columnConstraints>
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="365.0" minWidth="10.0" prefWidth="123.0" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="365.0" minWidth="60.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="365.0" minWidth="60.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="746.0" minWidth="60.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="1167.0" minWidth="60.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="1167.0" minWidth="60.0" prefWidth="100.0" />
-            <ColumnConstraints maxWidth="1459.0" minWidth="10.0" prefWidth="498.0" />
-            <ColumnConstraints maxWidth="1459.0" minWidth="10.0" prefWidth="458.0" />
-            <ColumnConstraints maxWidth="1459.0" minWidth="10.0" prefWidth="454.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="123.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="365.0" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="365.0" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="746.0" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1167.0" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1167.0" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1167.0" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints minWidth="10.0" prefWidth="498.0" />
+            <ColumnConstraints maxWidth="-Infinity" minWidth="10.0" prefWidth="458.0" />
+            <ColumnConstraints minWidth="10.0" prefWidth="454.0" />
             <ColumnConstraints />
          </columnConstraints>
          <rowConstraints>
@@ -59,7 +58,7 @@
             <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" valignment="CENTER" vgrow="ALWAYS" />
          </rowConstraints>
          <children>
-            <Button fx:id="addButton" minHeight="42.0" minWidth="42.0" mnemonicParsing="false" onMouseClicked="#addButtonClicked" prefHeight="42.0" prefWidth="42.0" style="-fx-background-color: transparent;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+            <Button fx:id="addButton" minHeight="42.0" minWidth="42.0" mnemonicParsing="false" onMouseClicked="#addButtonClicked" prefHeight="42.0" prefWidth="42.0" style="-fx-background-color: transparent;" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <graphic>
                   <ImageView fitHeight="42.0" fitWidth="42.0">
                      <image>
@@ -68,7 +67,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="deleteButton" minHeight="42.0" minWidth="42.0" mnemonicParsing="false" onMouseClicked="#deleteButtonClicked" prefHeight="42.0" prefWidth="42.0" style="-fx-background-color: transparent;" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+            <Button fx:id="deleteButton" minHeight="42.0" minWidth="42.0" mnemonicParsing="false" onMouseClicked="#deleteButtonClicked" prefHeight="42.0" prefWidth="42.0" style="-fx-background-color: transparent;" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <graphic>
                   <ImageView fitHeight="42.0" fitWidth="42.0">
                      <image>
@@ -83,9 +82,9 @@
                   <Cursor fx:constant="H_RESIZE" />
                </cursor>
             </Button>
-            <Button fx:id="saveButton" minHeight="42.0" minWidth="42.0" mnemonicParsing="false" onMouseClicked="#saveButtonClicked" prefHeight="42.0" prefWidth="42.0" style="-fx-background-color: transparent;" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+            <Button fx:id="confirmButton" minHeight="42.0" minWidth="42.0" mnemonicParsing="false" onMouseClicked="#confirmButtonClicked" prefHeight="42.0" prefWidth="42.0" style="-fx-background-color: transparent;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <graphic>
-                  <ImageView fitHeight="42.0" fitWidth="42.0">
+                  <ImageView>
                      <image>
                         <Image url="@../saveButton.PNG" />
                      </image>
@@ -101,32 +100,32 @@
                   </ImageView>
                </graphic>
             </Button>
-            <GridPane GridPane.columnIndex="7" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+            <GridPane GridPane.columnIndex="8" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="errorSearchMessage" prefHeight="15.0" prefWidth="431.0" style="-fx-background-color: #ffffff;" textFill="RED" GridPane.rowIndex="2">
+                  <Label fx:id="errorSearchMessage" minWidth="15.0" prefHeight="15.0" prefWidth="431.0" style="-fx-background-color: #ffffff;" textFill="RED" GridPane.rowIndex="2">
                      <font>
                         <Font size="16.0" />
                      </font></Label>
-                  <TextField fx:id="searchProduct" promptText="Search here" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                  <TextField fx:id="searchProduct" minHeight="10.0" promptText="Search here" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                      <font>
                         <Font size="14.0" />
                      </font></TextField>
                </children>
             </GridPane>
-            <Label fx:id="errorMinQuantityMessage" prefHeight="22.0" prefWidth="447.0" style="-fx-background-color: transparent;" textFill="#ed3b09" wrapText="true" GridPane.columnIndex="8" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+            <Label fx:id="errorMinQuantityMessage" prefHeight="22.0" prefWidth="447.0" style="-fx-background-color: transparent;" textFill="#ff3700" wrapText="true" GridPane.columnIndex="9" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="13.0" />
                </font>
             </Label>
-            <Button fx:id="cancelButton" minHeight="42.0" minWidth="42.0" mnemonicParsing="false" onMouseClicked="#cancelButtonClicked" prefHeight="42.0" prefWidth="42.0" style="-fx-background-color: transparent;" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+            <Button fx:id="cancelButton" minHeight="42.0" minWidth="42.0" mnemonicParsing="false" onMouseClicked="#cancelButtonClicked" prefHeight="42.0" prefWidth="42.0" style="-fx-background-color: transparent;" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                <graphic>
                   <ImageView fitHeight="42.0" fitWidth="42.0">
                      <image>
@@ -134,38 +133,51 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Label minHeight="15.0" prefHeight="15.0" prefWidth="53.0" text=" import" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label minHeight="15.0" prefHeight="15.0" prefWidth="49.0" text="   add" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label minHeight="15.0" prefHeight="15.0" prefWidth="53.0" text="  delete" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label minHeight="15.0" prefHeight="15.0" prefWidth="53.0" text=" Import" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
                   <Font name="System Bold Italic" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="saveLabel" minHeight="15.0" prefHeight="15.0" prefWidth="54.0" text=" confirm" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label minHeight="15.0" prefHeight="15.0" prefWidth="49.0" text="   Add" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold Italic" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="cancelLabel" prefHeight="15.0" prefWidth="47.0" text=" cancel" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label fx:id="deleteLabel" minHeight="15.0" prefHeight="15.0" prefWidth="53.0" text="  Delete" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="confirmLabel" minHeight="15.0" prefHeight="15.0" prefWidth="54.0" text=" confirm" visible="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="cancelLabel" prefHeight="15.0" prefWidth="47.0" text=" cancel" visible="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <Button fx:id="exportButton" minHeight="42.0" minWidth="42.0" mnemonicParsing="false" onMouseClicked="#exportButtonClicked" prefHeight="42.0" prefWidth="42.0" style="-fx-background-color: transparent;" text="Export" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <graphic>
+                  <ImageView fitHeight="42.0" fitWidth="42.0">
+                     <image>
+                        <Image url="@../exportButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Label prefHeight="17.0" prefWidth="51.0" text="   Export" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
                </font>
             </Label>
          </children>
       </GridPane>
-      <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
+      <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
          <columnConstraints>
-            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -187,7 +199,7 @@
             </TableView>
          </children>
       </GridPane>
-      <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+      <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="671.0" minWidth="10.0" prefWidth="264.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="671.0" minWidth="349.0" prefWidth="476.0" />
@@ -196,9 +208,7 @@
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="403.0" minWidth="279.0" prefWidth="279.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints maxHeight="144.0" minHeight="30.0" prefHeight="96.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="144.0" minHeight="30.0" prefHeight="96.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Text fx:id="totalValue" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="473.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
@@ -218,6 +228,6 @@
             </Label>
          </children>
       </GridPane>
-      <Line endX="1820.029296875" endY="0.8787274956703186" startX="-107.77818298339844" startY="0.878711462020874" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
+      <Line endX="4000.0" endY="3.2928779125213623" startX="1393.585693359375" startY="2.2908854484558105" GridPane.valignment="BOTTOM" />
    </children>
 </GridPane>

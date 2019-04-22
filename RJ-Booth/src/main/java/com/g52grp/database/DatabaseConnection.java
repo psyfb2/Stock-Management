@@ -3,9 +3,9 @@ package com.g52grp.database;
 import java.sql.*;
 
 /**
- * @author psyfb2
  * Connect to the mysql database
  * Tables: Jobs, Stocks, JobStockLink
+ * @author psyfb2
  */
 public class DatabaseConnection {
 	private static final String endPoint = "stocks.cv2g2wcvs9bq.us-east-1.rds.amazonaws.com";
@@ -14,16 +14,25 @@ public class DatabaseConnection {
 	private static final String pw = "G52GROUPPROJECT";
 	private static final String dbName = "stocks";
 	private Connection con;
+	private boolean connected = false;
 	
 	/**
 	 * Opens a connection to the mysql server
+	 * @param unitTestConnection Pass true if this connection is to a hqldb for testing, else false
 	 * @return Whether the connection was successful or not
 	 */
-	public boolean openConnection() {
+	public boolean openConnection(boolean unitTestConnection) {
 		// Please guys only make ONE connection for the whole program
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://" + endPoint + ":" + port + "/" + dbName, userName, pw);
+			if(unitTestConnection) {
+				 // Registering the HSQLDB JDBC driver
+		         Class.forName("org.hsqldb.jdbcDriver");
+		         con = DriverManager.getConnection("jdbc:hsqldb:mem:testdb", "psyfb2", "");
+			} else {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				con = DriverManager.getConnection("jdbc:mysql://" + endPoint + ":" + port + "/" + dbName, userName, pw);
+			}
+			connected = true;
 		} catch(Exception e) {
 			return false;
 		}
@@ -31,10 +40,9 @@ public class DatabaseConnection {
 	}
 	
 	/**
-	 * @param sql SQL query to be sent to the database, typically a SQL SELECT statement
-	 * @return ResultSet for the query, null if query was unsuccessful 
 	 * Only use for static SQL queries (e.g. CREATE, ALTER etc)
 	 * @return Statement object which can used to produce a result set
+	 * @throws SQLException connection lost
 	 */
 	public Statement getStatement() throws SQLException {
 		return con.createStatement();
@@ -44,6 +52,7 @@ public class DatabaseConnection {
 	 * prepared statements are much faster then normal statements and safer (cannot do SQL Injection)
 	 * @param preparedStatement MYSQL statement e.g. insert into Emp values(?,?)
 	 * @return PreparedStatement object, you can call set methods on the preparedStatement to dynamically replace the question marks with values
+	 * @throws SQLException connection lost
 	 */
 	public PreparedStatement getPreparedStatement(String preparedStatement) throws SQLException {
 		return con.prepareStatement(preparedStatement);
@@ -61,6 +70,13 @@ public class DatabaseConnection {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * @return True if a successful connection has been made using openConnection, else False
+	 */
+	public boolean isConnected() {
+		return connected;
 	}
 	
 }

@@ -1,8 +1,8 @@
 package com.g52grp.database;
 
 /**
- * @author psyfb2
  * Represents product within Stocks table
+ * @author psyfb2
  */
 public class Product {
 	private int productId; // unique PRIMARY KEY

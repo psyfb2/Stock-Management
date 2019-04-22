@@ -1,8 +1,8 @@
 package com.g52grp.database;
 
 /**
- * @author psyfb2
  * Represents JobStockLink table entry within the database
+ * @author psyfb2
  */
 public class JobProduct {
 	private int jobId;
