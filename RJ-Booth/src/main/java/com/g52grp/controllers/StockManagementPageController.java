@@ -45,8 +45,10 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
- * Operation of StockManagementPage
- * @author psyzh1 psyys4
+ * Allow user to view all the product
+ * Allow user to create, delete product
+ * Allow user to import and export product
+ * @author psyzh1 psyys4 psyajwo
  */
 public class StockManagementPageController implements TableViewUpdate{
 	
@@ -185,6 +187,7 @@ public class StockManagementPageController implements TableViewUpdate{
 			}).collect(Collectors.toList());
 		});
 		
+		//Allow user to search the product
 		searchProduct.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent key) {
@@ -204,7 +207,7 @@ public class StockManagementPageController implements TableViewUpdate{
 					if(findKey == false) {
 						errorSearchMessage.setVisible(true);
 						if(text.length() < 36) {
-							errorSearchMessage.setText("The Product '" + text + "' cannot be found.");
+							errorSearchMessage.setText("This Product cannot be found.");
 						} else {
 							errorSearchMessage.setText("Product not found.");
 						}
@@ -215,6 +218,7 @@ public class StockManagementPageController implements TableViewUpdate{
 			
 		});
 		
+		//Allow user to edit minimum quantity
 		minQuantityCol.setOnEditCommit(
 	            new EventHandler<CellEditEvent<DisplayableProduct, String>>() {
 	                @Override
@@ -268,6 +272,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	            }
 	        );
 		
+		//Allow user to edit barcode
 		barcodeCol.setOnEditCommit( new EventHandler<CellEditEvent<DisplayableProduct, String>>(){
 			@Override
 			public void handle(CellEditEvent<DisplayableProduct, String> t) {
@@ -332,7 +337,7 @@ public class StockManagementPageController implements TableViewUpdate{
     }
     
     /**
-     * Add new item into database.
+     * Create another page AddProductPage to add new product
      * @throws IOException
      */
     @FXML
@@ -341,7 +346,7 @@ public class StockManagementPageController implements TableViewUpdate{
     }
 
     /**
-     * return to the HomePage
+     * Back to home page and closing current page
      */
     @FXML
     void homePageButtonClicked(MouseEvent e) throws IOException {
@@ -368,8 +373,11 @@ public class StockManagementPageController implements TableViewUpdate{
  		quantityCol.setPrefWidth(268);
  		
  		minQuantityCol.setPrefWidth(250);
- 		
+
  		deleteCol.setPrefWidth(90);
+ 		
+ 		barcodeCol.setEditable(false);
+ 		minQuantityCol.setEditable(false);
  		
 		deleteCol.setVisible(true);
 		confirmButton.setVisible(true);
@@ -384,11 +392,12 @@ public class StockManagementPageController implements TableViewUpdate{
 	 /**
 	  * confirm user delete operation and set confirm button
 	  * and delete column to be invisible.
+	  * barcodeCol and minQuantityCol cannot edit here.
 	  */
 	@FXML
 	private void confirmButtonClicked() {
 		boolean deleteConfirm = false;
-		String deleteItem = "";
+		String deleteItem = "you will delete following items:" + "\n";
 		for(DisplayableProduct product : stockTable.getItems()) {
 			if(product.getDelete()) {
 				deleteConfirm = true;
@@ -403,7 +412,7 @@ public class StockManagementPageController implements TableViewUpdate{
 		}
 		
 		Alert confirmation = new Alert(AlertType.CONFIRMATION);
-		confirmation.setTitle("you will delete following items");
+		confirmation.setTitle("CHECK");
 		confirmation.setHeaderText(null);
 		confirmation.setContentText(deleteItem);
 		// add the RJB logo to the dialog box
@@ -443,14 +452,16 @@ public class StockManagementPageController implements TableViewUpdate{
 			confirmLabel.setVisible(false);
 			cancelLabel.setVisible(false);
 			deleteButton.setVisible(true);
-			deleteLabel.setVisible(true);			
+			deleteLabel.setVisible(true);
+	 		barcodeCol.setEditable(true);
+	 		minQuantityCol.setEditable(true);
 		}
 	}
 	
 	/**
 	 * 
-	 * Cancel the operation when click
-	 * cancel button.
+	 * Cancel the operation when click cancel button.
+	 * Tableview will return to the beginning.
 	 * 
 	 */
 	@FXML
@@ -475,6 +486,9 @@ public class StockManagementPageController implements TableViewUpdate{
 		cancelLabel.setVisible(false);
 		deleteButton.setVisible(true);
 		deleteLabel.setVisible(true);
+		
+ 		barcodeCol.setEditable(true);
+ 		minQuantityCol.setEditable(true);
 	}
 	
 	/**
@@ -523,7 +537,7 @@ public class StockManagementPageController implements TableViewUpdate{
 	
 	/**
 	 * 
-	 * Export CSV file from system.
+	 * Export CSV file to system.
 	 */
 	@FXML
 	private void exportButtonClicked() {

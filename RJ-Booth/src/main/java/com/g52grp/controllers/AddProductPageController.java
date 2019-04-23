@@ -1,7 +1,5 @@
 package com.g52grp.controllers;
 
-import java.awt.Toolkit;
-
 import com.g52grp.backend.ConcreteProductManager;
 import com.g52grp.main.Main;
 
@@ -57,6 +55,7 @@ public class AddProductPageController {
 		String code = productCode.getText();
 		String des = description.getText();
 		String bar = barcode.getText();
+		String pri = price.getText();
 		
 		if(code.length() > 255) {
 			errorMessage.setText("Error: Product Code too long");
@@ -73,48 +72,51 @@ public class AddProductPageController {
 			return;
 		}
 		
-		// wtf is this spaghetti code....seriously guys
-		
-		if( code.length() != 0 && des.length() != 0) {
-			//check the product already exits in the database
-			if(pm.getProductFromProductcodeAndDescription(code, des) != null) {			
-				//errorMessage.setText(des + " with " + code + " already exits in the warehouse.");
-				if(Toolkit.getDefaultToolkit().getScreenSize().getWidth()  >1700) {
-					errorMessage.setText("Product " + code +  " (" + des + ") already exits in the warehouse.");	  
-				}else {
-					//errorMessage.setPrefHeight(222);
-					errorMessage.setText(des + " with " + code + " already exits in the warehouse.");	
-				}
-			}else {
-				//Check if barcode is illegal.
-				if(!bar.matches("[0-9]{1,}") && bar.length() != 0) {
-			
-					errorMessage.setText("Please only enter digits for barcode");
-				}else if(bar.length() < 4 && bar.length() != 0){
-					errorMessage.setText("Barcode must have at least 4 digits");
-				}else {
-					if(bar.length() == 0) {
-						bar = null;
-					}
-					float pri;
-					try {
-						pri = Float.parseFloat(price.getText());
-					} catch(NumberFormatException ex) {
-						errorMessage.setText("Please enter a number for Price");
-						return;
-					}
-					if(pm.addNewProduct(code, des, bar, pri)) {					
-						Stage stage = (Stage)cancelButton.getScene().getWindow();
-						stage.close();
-					}else {
-						errorMessage.setText("Failed to add the product: error accessing database");
-					}
-				}				
-			}
-		}else {
-			errorMessage.setText("Please enter both the code and description.");
+		//check if the user enter all the required fields
+		if(code.length() == 0 || des.length() == 0 || pri.length() == 0) {
+			errorMessage.setText("Please enter product code, description and price.");
+			return;
 		}
 		
+		//check if the product already exits in the database
+		if(pm.getProductFromProductcodeAndDescription(code, des) != null) {			
+			errorMessage.setText(des + " (" + code + ") already exits in the warehouse.");
+			return;
+		}
+		
+		//check if the barcode is illegal
+		if(bar.length() != 0) {
+			if(!bar.matches("[0-9]{1,}")) {			
+				errorMessage.setText("Please only enter digits for barcode");
+				return;
+			}else if(bar.length() < 4){
+				errorMessage.setText("Barcode must have at least 4 digits");
+				return;
+			}
+		}else {
+			bar = null;			
+		}
+		
+		//check if the price is illegal
+		float price;
+		try {
+			price = Float.parseFloat(pri);
+			if(price < 0) {
+				errorMessage.setText("Please enter a positive number for price");
+				return;
+			}
+		} catch(NumberFormatException ex) {
+			errorMessage.setText("Please enter a positive number for price");
+			return;
+		}
+		
+		if(pm.addNewProduct(code, des, bar, price)) {					
+			Stage stage = (Stage)cancelButton.getScene().getWindow();
+			stage.close();
+		}else {
+			errorMessage.setText("Failed to add the product: error accessing database");
+		}
+				
 		if(tb != null) {
 			tb.updateTableView();
 		}

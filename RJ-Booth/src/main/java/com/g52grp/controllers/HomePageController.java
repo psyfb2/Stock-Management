@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 /**
  * Controller for home page
+ * user can switch to stockmanagement, job management and report with their decision.
  * @author psyzh1
  */
 public class HomePageController {

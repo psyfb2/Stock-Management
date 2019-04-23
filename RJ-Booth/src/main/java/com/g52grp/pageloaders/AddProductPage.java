@@ -13,7 +13,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
- * Load add product page
+ * Load AddProductPage.fxml
+ * edit item information and update into database when click confirm button.
  * @author psyys4
  */
 public class AddProductPage {

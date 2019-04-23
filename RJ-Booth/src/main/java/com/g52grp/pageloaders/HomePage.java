@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import com.g52grp.main.Main;
 
 /**
- * Open HomePage fxml
+ * Load HomePage.fxml
  * @author psyzh1
  */
 public class HomePage {

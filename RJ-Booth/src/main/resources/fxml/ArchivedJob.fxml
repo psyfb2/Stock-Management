@@ -173,6 +173,7 @@
          </rowConstraints>
          <children>
             <Button fx:id="homePageButton" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#goToHomePage" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #6dd7f8; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Home" />
+            <Button minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #6dd7f8; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Job" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </children>

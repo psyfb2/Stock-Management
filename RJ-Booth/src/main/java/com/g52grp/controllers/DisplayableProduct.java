@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 /**
  * 
+ * displayableProduct is a flat version which only contains Strings, Integer etc
+ * also here we use SimpleStringProperty, SimpleIntegerProperty etc to allow columns to be editable
  * @author psyys4
  *
  */
