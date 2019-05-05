@@ -49,13 +49,14 @@
             <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label fx:id="jobTableLabel" prefHeight="35.0" prefWidth="202.0" text="Current Jobs" GridPane.columnIndex="1" GridPane.valignment="CENTER">
+            <Label fx:id="jobTableLabel" prefHeight="35.0" prefWidth="202.0" text="Active Jobs" GridPane.columnIndex="1" GridPane.valignment="CENTER">
                <font>
                   <Font name="Century Gothic" size="24.0" />
                </font>
             </Label>
             <TextField fx:id="searchJobs" maxWidth="-Infinity" minWidth="296.0" onAction="#searchForJob" prefHeight="25.0" prefWidth="296.0" promptText="Search Job" GridPane.columnIndex="2" />
-            <Label text="Doubloe click for more infoamtion" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Double click to view a job" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Line endX="4530.6669921875" endY="2.2910234928131104" startX="1393.585693359375" startY="2.2908854484558105" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
          </children>
       </GridPane>
       <GridPane GridPane.rowIndex="3">
@@ -99,6 +100,5 @@
             </TableView>
          </children>
       </GridPane>
-      <Line endX="4000.0" endY="3.2928779125213623" startX="1393.585693359375" startY="2.2908854484558105" GridPane.valignment="BOTTOM" />
    </children>
 </GridPane>

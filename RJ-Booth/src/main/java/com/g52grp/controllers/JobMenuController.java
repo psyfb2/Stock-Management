@@ -113,7 +113,7 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	 * Show the current jobs in the table
 	 */
     @FXML private void activeJobButtonClicked() {
-    	jobTableLabel.setText("Current Job");
+    	jobTableLabel.setText("Active Jobs");
     	archivedView = false;
 		updateTableView();
     }
@@ -122,7 +122,7 @@ public class JobMenuController implements Initializable, TableViewUpdate {
 	 * Show the archived jobs in the table
 	 */
     @FXML private void archivedJobButtonClicked() {
-    	jobTableLabel.setText("Archived Job");
+    	jobTableLabel.setText("Archived Jobs");
     	archivedView = true;
 		updateTableView();
     }

@@ -3,13 +3,8 @@ package com.g52grp.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-
-import org.controlsfx.control.textfield.TextFields;
-
 import com.g52grp.backend.ConcreteJobManager;
 import com.g52grp.backend.ConcreteProductManager;
 import com.g52grp.backend.JobManager;
@@ -19,7 +14,6 @@ import com.g52grp.database.Product;
 import com.g52grp.main.Main;
 import com.g52grp.pageloaders.HomePage;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,19 +25,12 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -76,9 +63,6 @@ public class ArchivedJobController implements Initializable, TableViewUpdate {
 	@FXML Button unArchiveJobButton;
 	@FXML Label errorMessage;
 	@FXML Button homePageButton;
-	
-	// barcode scanner is recognised as a keyboard
-	// send its input to this text hidden text field
 	
 	public ArchivedJobController() {
 		jobId = -1;

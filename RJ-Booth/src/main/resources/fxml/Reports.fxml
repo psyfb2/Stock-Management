@@ -33,7 +33,6 @@
          </rowConstraints>
          <children>
             <Button fx:id="homePageButton" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#homePageButtonClicked" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #6dd7f8; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Home" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-            <Line endX="4000.0" endY="3.2928779125213623" startX="1393.585693359375" startY="2.2908854484558105" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS" />
          </children>
       </GridPane>
       <Label minHeight="-Infinity" minWidth="-Infinity" text="Reports" GridPane.halignment="CENTER" GridPane.rowIndex="1">
@@ -73,5 +72,6 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
+      <Line endX="4500.0" endY="1.8786516189575195" startX="1390.0499267578125" startY="1.8786451816558838" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS" />
    </children>
 </GridPane>

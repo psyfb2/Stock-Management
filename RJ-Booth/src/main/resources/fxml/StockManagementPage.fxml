@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -22,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;" stylesheets="@../stylesheet.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.controllers.StockManagementPageController">
+<GridPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;" stylesheets="@../stylesheet.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.g52grp.controllers.StockManagementPageController">
   <columnConstraints>
     <ColumnConstraints hgrow="ALWAYS" minWidth="720.0" prefWidth="100.0" />
   </columnConstraints>
@@ -177,6 +170,7 @@
                   <Font name="System Bold Italic" size="12.0" />
                </font>
             </Label>
+            <Line endX="4500.0" endY="2.2908918857574463" startX="1393.585693359375" startY="2.2908854484558105" GridPane.valignment="TOP" />
          </children>
       </GridPane>
       <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
@@ -234,6 +228,5 @@
             </Label>
          </children>
       </GridPane>
-      <Line endX="4000.0" endY="3.2928779125213623" startX="1393.585693359375" startY="2.2908854484558105" GridPane.valignment="BOTTOM" />
    </children>
 </GridPane>

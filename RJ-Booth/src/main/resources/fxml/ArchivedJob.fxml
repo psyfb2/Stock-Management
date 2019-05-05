@@ -25,7 +25,7 @@
       <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Line endX="3000.0" endY="0.7928932309150696" startX="-100.0" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+      <Line endX="2239.21240234375" endY="-0.0012120604515075684" startX="-100.0" GridPane.rowIndex="1" GridPane.valignment="TOP" />
       <GridPane>
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="119.0" />
@@ -173,7 +173,7 @@
          </rowConstraints>
          <children>
             <Button fx:id="homePageButton" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#goToHomePage" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #6dd7f8; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Home" />
-            <Button minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #6dd7f8; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Job" GridPane.columnIndex="1" />
+            <Button minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #6dd7f8; -fx-border-color: #000000; -fx-border-width: 0.2;" text="Back" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </children>
