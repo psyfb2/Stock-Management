@@ -18,12 +18,6 @@ The team includes
   - Yuxi Sun (username: psyys4)
   - Audrey Wong (username: psyajwo)
 
-
-## Supervisor
-
-The supervisor for this project is: Dr Stuart Reeves
-
-
 ## Software and Hardware Requirements
 
 Software Requirements
@@ -35,22 +29,3 @@ Software Requirements
 Hardware Requirements
   - Internet Connection
   - Barcode Scanner (Afanda barcode scanner used in development, can't garuntee will work with any barcode scanner due to drivers/wierd java stuff etc)
-
-
-## Trello Board
-
-Trello board link: 
-https://trello.com/g52grpteam3/home
-
-If you cannot access the trello board (possibly because you are not added as a member) please contact psyfb2@nottingham.ac.uk
-
-## Documentation
-
-Documentation can be found in the following google drive repository:
-https://drive.google.com/drive/folders/1b3GnMUq0y67nY9SHDkPGQZzGy-jEEfRG?usp=sharing
-
-
-If you have any querries please contact: psyfb2@nottingham.ac.uk
-    
-
-
