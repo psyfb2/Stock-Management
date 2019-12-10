@@ -1,4 +1,4 @@
-# RJ-Booth Group Project
+# RJ-Booth STOCK MANAGEMENT SYSTEM
 
 RJ-Booth are a company which wire houses, apartments, flats, garages, security / fire alarms etc. 
 They have a centrilised depot containing stocks and employees who use this stock for jobs.
