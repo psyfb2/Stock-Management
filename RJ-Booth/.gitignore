@@ -24,6 +24,9 @@ Thumbs.db
 # Log file
 *.log
 
+# property files
+.properties
+
 # BlueJ files
 *.ctxt
 

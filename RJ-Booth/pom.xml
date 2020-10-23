@@ -57,6 +57,16 @@
 	    <version>1.7.26</version>
 	    <scope>test</scope>
 	</dependency>
+	<dependency>
+	    <groupId>org.openjfx</groupId>
+	    <artifactId>javafx-controls</artifactId>
+	    <version>11</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.openjfx</groupId>
+	    <artifactId>javafx-fxml</artifactId>
+	    <version>11</version>
+	</dependency>
   </dependencies>
   
   
@@ -84,6 +94,14 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+		        <groupId>org.openjfx</groupId>
+		        <artifactId>javafx-maven-plugin</artifactId>
+		        <version>0.0.5</version>
+		        <configuration>
+		            <mainClass>GuiStarter</mainClass>
+		        </configuration>
+		    </plugin>
         </plugins>
     </build>
 </project>

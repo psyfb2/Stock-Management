@@ -1,7 +1,9 @@
 # RJ-Booth STOCK MANAGEMENT SYSTEM
 
 RJ-Booth are a company which wire houses, apartments, flats, garages, security / fire alarms etc. 
-They have a centrilised depot containing stocks and employees who use this stock for jobs.
+They have a centrilised depot containing stocks and employees who use this stock for jobs.  
+
+Demo Video: https://youtu.be/8xs1s4bruQk  
 
 Whats required in short
   - Tracking all products and there stock within the centralized depot.
@@ -28,4 +30,4 @@ Software Requirements
 
 Hardware Requirements
   - Internet Connection
-  - Barcode Scanner (Afanda barcode scanner used in development, can't garuntee will work with any barcode scanner due to drivers/wierd java stuff etc)
+  - Barcode Scanner (Afanda barcode scanner used in development, can't garuntee will work with any barcode scanner due to drivers)

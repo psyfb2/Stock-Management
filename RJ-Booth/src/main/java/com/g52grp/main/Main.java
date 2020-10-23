@@ -22,6 +22,7 @@ public class Main extends Application {
     public static final String BACKIMAGEPATH 			= "backButton.png";
     public static final String DELETEIMAGEPATH			= "deleteJobButton.png";
     public static final String UNARCHIVEIMAGEPATH 		= "unarchiveJobButton.png";
+    public static final String CONFIGPATH 		        = "config.properties";
     
     public static final String JOBMENUPATH_FXML 		= "fxml/JobMenu.fxml";
     public static final String SINGLEJOBPATH_FXML 		= "fxml/SingleJob.fxml";
@@ -32,6 +33,11 @@ public class Main extends Application {
     public static final String REPORTS_FXML 			= "fxml/Reports.fxml";
     public static final String ARCHIVIEDJOB_FXML        = "fxml/ArchivedJob.fxml";
     
+    /*
+	 * if you get
+	 * Error: JavaFX runtime components are missing, and are required to run this application
+	 * try running main method in GuiStarter.java instead as the entry point
+	 */
 	public static void main(String[] args) {
 		con.openConnection(false);
 		launch(args);
@@ -63,7 +69,7 @@ public class Main extends Application {
 	}
 	
 	/**
-	 * Use this class to load an image recource
+	 * Use this class to load an image resource
 	 * @param resourcePath Path of image
 	 * @return Image object
 	 */

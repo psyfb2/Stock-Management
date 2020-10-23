@@ -1,5 +1,13 @@
 package com.g52grp.database;
 
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Properties;
+
+import com.g52grp.main.Main;
+
 import java.sql.*;
 
 /**
@@ -8,13 +16,33 @@ import java.sql.*;
  * @author psyfb2
  */
 public class DatabaseConnection {
-	private static final String endPoint = "stocks.cv2g2wcvs9bq.us-east-1.rds.amazonaws.com";
-	private static final String port = "8080";
-	private static final String userName = "psyfb2";
-	private static final String pw = "G52GROUPPROJECT";
-	private static final String dbName = "stocks";
+	private HashMap<String, String> result;
+	private String endPoint;
+	private String port;
+	private String userName;
+	private String pw;
+	private String dbName;
 	private Connection con;
-	private boolean connected = false;
+	private boolean connected;
+	
+	public DatabaseConnection() {
+		try {
+			result = getConfigValues();
+			endPoint = result.get("endPoint");
+			port = result.get("port");
+			userName = result.get("userName");
+			pw = result.get("pw");
+			dbName = result.get("dbName");
+		} catch(IOException e) {
+			e.printStackTrace();
+			result = null;
+			endPoint = "";
+			port = "";
+			pw = "";
+			dbName = "";
+		}
+		connected = false;
+	}
 	
 	/**
 	 * Opens a connection to the mysql server
@@ -34,6 +62,7 @@ public class DatabaseConnection {
 			}
 			connected = true;
 		} catch(Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 		return true;
@@ -79,4 +108,29 @@ public class DatabaseConnection {
 		return connected;
 	}
 	
+	private HashMap<String, String> getConfigValues() throws IOException {
+		InputStream inputStream = null;
+		HashMap<String, String> result = new HashMap<>();
+		try {
+			Properties prop = new Properties();
+			inputStream = getClass().getClassLoader().getResourceAsStream(Main.CONFIGPATH);
+			
+			if(inputStream != null) {
+				prop.load(inputStream);
+			} else {
+				throw new FileNotFoundException("property file " + Main.CONFIGPATH + " not found in classpath");
+			}
+			
+			result.put("endPoint", prop.getProperty("endPoint"));
+			result.put("port", prop.getProperty("port"));
+			result.put("userName", prop.getProperty("userName"));
+			result.put("pw", prop.getProperty("pw"));
+			result.put("dbName", prop.getProperty("dbName")); 
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			inputStream.close();
+		}
+		return result;
+	}
 }

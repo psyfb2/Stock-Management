@@ -606,7 +606,8 @@ public class StockManagementPageController implements TableViewUpdate{
 		for(DisplayableProduct product : stockTable.getItems()) {
 			value += product.getPricePerUnit() * product.getQuantity();
 		}
-		totalValue.setText( textInfo + Double.toString(value));
+
+		totalValue.setText( textInfo + String.format("%.2f",value));
 	}
 	
 	/**
