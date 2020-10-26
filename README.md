@@ -14,11 +14,11 @@ Whats required in short
 ## Team Members
 
 The team includes
-  - Fady Benattayallah (username: psyfb2)
-  - Arshia Sobhani (username: psyas8)
-  - Zhongyue Huang (username: psyzh1)
-  - Yuxi Sun (username: psyys4)
-  - Audrey Wong (username: psyajwo)
+  - Fady Benattayallah
+  - Arshia Sobhani
+  - Zhongyue Huang
+  - Yuxi Sun
+  - Audrey Wong
 
 ## Software and Hardware Requirements
 
